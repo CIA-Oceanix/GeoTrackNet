@@ -9,7 +9,7 @@ Created on Fri Apr 20 16:43:49 2018
 import numpy as np
 import tensorflow as tf
 
-l_embedding_sizes = [350,1050,30,72]
+l_embedding_sizes = [300,300,30,72]
 
 def sample_one_hot(prob_):
     prob = prob_/tf.tile(tf.reduce_sum(prob_,axis=1,keep_dims=True),
@@ -32,8 +32,8 @@ def sample_from_max_logits(logit):
     ind_lon = tf.argmax(logit_lon,axis = 1)
     ind_sog = tf.argmax(logit_sog,axis = 1)
     ind_cog = tf.argmax(logit_cog,axis = 1)
-    onehot_lat = tf.one_hot(ind_lat,500)
-    onehot_lon = tf.one_hot(ind_lon,1000)
+    onehot_lat = tf.one_hot(ind_lat,300)
+    onehot_lon = tf.one_hot(ind_lon,300)
     onehot_sog = tf.one_hot(ind_sog,30)
     onehot_cog = tf.one_hot(ind_cog,72)
     fourhot = tf.concat([onehot_lat,onehot_lon,onehot_sog,onehot_cog],axis = 1)

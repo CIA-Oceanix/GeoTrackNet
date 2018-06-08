@@ -35,7 +35,7 @@ def create_eval_graph(inputs, targets, lengths, model, config, missing_data = Fa
     t0 = tf.constant(0, tf.int32)
     init_states = model.zero_state(batch_size * num_samples, tf.float32)
     
-    ta_names = ['sampleds','trues']
+    ta_names = ['log_weights_t','sampleds','trues']
     tas = [tf.TensorArray(tf.float32, max_seq_len, name='%s_ta' % n)
              for n in ta_names]
     
@@ -126,7 +126,7 @@ def create_eval_graph(inputs, targets, lengths, model, config, missing_data = Fa
             new_sample_ = nested.gather_tensors(new_sample_, ancestor_inds)
         
         # Update the  Tensorarrays and accumulators.
-        ta_updates = [new_sample_[0], new_sample_[1]]
+        ta_updates = [log_alpha, new_sample_[0], new_sample_[1]]
     #    ta_updates = [log_weights_acc, log_ess]
         new_tas = [ta.write(t, x) for ta, x in zip(tas, ta_updates)]
         
@@ -151,7 +151,7 @@ def create_eval_graph(inputs, targets, lengths, model, config, missing_data = Fa
     
     
     #log_weights, log_ess = [x.stack() for x in tas]
-    track_sample, track_true = [x.stack() for x in tas]
+    log_weights, track_sample, track_true = [x.stack() for x in tas]
     
     #log_weights, log_ess, resampled = [x.stack() for x in tas]
     if config.bound == "fivo":
@@ -170,7 +170,7 @@ def create_eval_graph(inputs, targets, lengths, model, config, missing_data = Fa
     ll_per_t = ll_per_seq / tf.to_float(lengths)
     #        ll_per_t = tf.reduce_mean(ll_per_seq / tf.to_float(lengths))
     #        ll_per_seq = tf.reduce_mean(ll_per_seq)
-    return track_sample, track_true, ll_per_t, final_log_weights/tf.to_float(lengths)
+    return track_sample, track_true, log_weights, ll_per_t, final_log_weights/tf.to_float(lengths), 
 
 def create_dataset_and_model(config, split, shuffle, repeat):
     

@@ -48,7 +48,7 @@ tf.app.flags.DEFINE_integer("num_samples", 16,
 
 tf.app.flags.DEFINE_string("split", "train",
                            "Split to evaluate the model on. Can be 'train', 'valid', or 'test'.")
-tf.app.flags.DEFINE_string("dataset_name", "dataset5/dataset5_train_nocyclones.pkl",
+tf.app.flags.DEFINE_string("dataset_name", "dataset8/dataset8_train.pkl",
                            "Path to load the dataset from.")
 
 tf.app.flags.DEFINE_string("model", "vrnn",
@@ -91,10 +91,10 @@ tf.app.flags.DEFINE_boolean("stagger_workers", True,
 
 
 FLAGS = tf.app.flags.FLAGS
-lat_bins = 350; lon_bins = 1050; sog_bins = 30; cog_bins = 72
+lat_bins = 300; lon_bins = 300; sog_bins = 30; cog_bins = 72
 FLAGS.data_dim  = lat_bins + lon_bins + sog_bins + cog_bins # error with data_dimension
-#FLAGS.dataset_path = "/users/local/dnguyen/Datasets/AIS_datasets/MarineC/2014/01/" + FLAGS.dataset_name
-FLAGS.dataset_path = "/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/MarineC/" + FLAGS.dataset_name
+#FLAGS.dataset_path = "/users/local/dnguyen/Datasets/AIS_datasets/MarineC/2014/" + FLAGS.dataset_name
+FLAGS.dataset_path = "/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/mt314/" + FLAGS.dataset_name
 config = FLAGS
 logdir_name = "/" + config.bound + "-" + os.path.basename(config.dataset_name) + "-data_dim-" + str(config.data_dim)\
              + "-latent_size-" + str(config.latent_size)\
