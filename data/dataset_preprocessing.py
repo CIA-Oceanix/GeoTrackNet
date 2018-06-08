@@ -4,6 +4,8 @@
 Created on Tue Mar 20 18:13:06 2018
 
 @author: vnguye04
+
+Preprocessing script for MultitaskAIS
 """
 
 from __future__ import absolute_import
@@ -14,6 +16,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from math import radians, cos, sin, asin, sqrt
 import sys
+import os
 sys.path.append("..")
 import utils
 import pickle
@@ -26,18 +29,18 @@ from pyproj import Geod
 geod = Geod(ellps='WGS84')
 #import utm
 
-# AMERICA #lon : [-98, -86.8], lat : [26.16, 30]
-## dataset0 and dataset 1
-#LAT_MIN = 25.0
+# Golf of Mexico
+#LAT_MIN = 26.5
 #LAT_MAX = 30.0
-#LON_MIN = -98.0
-#LON_MAX = -84.0
+#LON_MIN = -97.5
+#LON_MAX = -87
 
-## dataset2
-LAT_MIN = 26.5
-LAT_MAX = 30.0
-LON_MIN = -97.5
-LON_MAX = -87.0
+
+## Bretagne
+LAT_MIN = 47.0
+LAT_MAX = 50.0
+LON_MIN = -7.0
+LON_MAX = -4.0
 
 LAT_RANGE = LAT_MAX - LAT_MIN
 LON_RANGE = LON_MAX - LON_MIN
@@ -48,19 +51,13 @@ LAT, LON, SOG, COG, HEADING, ROT, NAV_STT, TIMESTAMP, MMSI = range(9)
 
 # DATA PATH
 
-data_path = "/users/local/dnguyen/Datasets/AIS_datasets/MarineC/2014/"
-dict_list = [] # List of data dictionary
-month_list = ["01","02"]
-zone_list = ['14','15','16']
-filename_list = []
-for month in month_list:
-    for zone in zone_list:
-        filename = data_path + month + "/Zone" + zone + "_2014_"+month+".pkl"
-        filename_list.append(filename)
-        print("Loading ", filename, "...")
-        with open(filename,"rb") as f:
-            temp = pickle.load(f)
-            dict_list.append(temp)
+dataset_path = "/users/local/dnguyen/Datasets/AIS_datasets/mt314/aivdm/2017/"
+filename_list = [os.path.join(dataset_path,"010203_position.pkl")] 
+dict_list = []
+for filename in filename_list:
+    with open(filename,"rb") as f:
+        temp = pickle.load(f)
+        dict_list.append(temp)
 
 ## Uncomment if you want to create shapefile
 #for Vi,zone in zip(dict_list, zone_list):
@@ -68,11 +65,12 @@ for month in month_list:
 #    print("Creating " + filename + "...")
 #    utils.createShapefile(filename,Vi)
     
-# REMOVING ABNORMAL TIMESTAMPS AND ABNORMAL SPEEDS AND MERGING ZONES
+# STEP1: REMOVING ABNORMAL TIMESTAMPS AND ABNORMAL SPEEDS AND MERGING ZONES
+###############################################################################
 print("REMOVING ABNORMAL TIMESTAMPS AND ABNORMAL SPEEDS AND MERGING ZONES...")
 print("CHANGING BOUNDARY (LAT, LON)...")
-t_min = time.mktime(time.strptime("01/01/2014 00:00:00", "%d/%m/%Y %H:%M:%S"))
-t_max = time.mktime(time.strptime("28/02/2014 23:59:59", "%d/%m/%Y %H:%M:%S"))
+t_min = time.mktime(time.strptime("01/01/2017 00:00:00", "%d/%m/%Y %H:%M:%S"))
+t_max = time.mktime(time.strptime("31/03/2017 23:59:59", "%d/%m/%Y %H:%M:%S"))
 Vs = dict()
 for Vi,filename in zip(dict_list, filename_list):
     print(filename)
@@ -102,16 +100,9 @@ for Vi,filename in zip(dict_list, filename_list):
             Vs[mmsi] = np.concatenate((Vs[mmsi],Vi[mmsi]),axis = 0)
             del Vi[mmsi]
 #del dict_list, Vi, abnormal_speed_idx, abnormal_timestamp_idx
-              
+             
 
-#v_speed_max = [] 
-#
-#for mmsi in Vs.keys():
-#    speed_max_tmp = np.max(Vs[mmsi][:,LON])
-#    v_speed_max.append(speed_max_tmp)
-#plt.hist(v_speed_max)
-
-# STEP 1: Cutting discontinuous voyages into smaller voyages (5176 -> 48817)
+# STEP 2: Cutting discontinuous voyages into smaller voyages 
 ###############################################################################
 print("Cutting discontinuous voyages into smaller voyages...")
 count = 0
@@ -132,17 +123,17 @@ for mmsi in Vs.keys():
             count += 1
             
 
-# STEP 2: Removing AIS track whose length is smaller than 20 or who lasts less than 4h (48817 -> 26715)
+# STEP 3: Removing AIS track whose length is smaller than 20 or who lasts less than 4h
 ###############################################################################
-print("Removing AIS track whose length is smaller than 20 or who lasts less than 4h")
+print("Removing AIS track whose length is smaller than 20 or who lasts less than 4h...")
 for mmsi in voyages.keys():
     duration = voyages[mmsi][-1,TIMESTAMP] - voyages[mmsi][0,TIMESTAMP]
     if (len(voyages[mmsi]) < 20) or (duration < 4*3600):
         voyages.pop(mmsi, None)
-        
 
-# STEP 3: Removing anomalous message (26715 -> 31274)
+# STEP 4: Removing anomalous message
 ###############################################################################
+print("Removing anomalous message...")
 error_count = 0
 tick = time.time()
 for mmsi in voyages.keys(): 
@@ -157,21 +148,13 @@ for mmsi in voyages.keys():
             voyages[mmsi] = voyages[mmsi][np.invert(o_calcul)]
     except:
         voyages.pop(mmsi,None)
-        count += 1
+        error_count += 1
 tok = time.time()
-print("STEP 3: duration = ",(tok - tick)/60) # 125.02797935 mins
+print("STEP 4: duration = ",(tok - tick)/60) # 0.33280659914 mins
 
-
-with open("/users/local/dnguyen/Datasets/AIS_datasets/MarineC/2014/dataset2/voyages0102_step3.pkl","wb") as f:
-    pickle.dump(voyages,f) # 49676
-#with open("/users/local/dnguyen/Datasets/AIS_datasets/MarineC/2014/dataset2/voyages0102_step3.pkl","rb") as f:
-#    voyages = pickle.load(f)
-
-
-
-## STEP 4: Removing 'moored' or 'ar anchor' tracks (xxxx -> 39038) # 45796975 AIS messages in total
+## STEP 5: Removing 'moored' or 'ar anchor' tracks
 ###############################################################################
-print("Removing 'moored' or 'ar anchor' tracks")
+print("Removing 'moored' or 'ar anchor' tracks...")
 for mmsi in voyages.keys():
     d_L = float(len(voyages[mmsi]))
     
@@ -184,43 +167,10 @@ for mmsi in voyages.keys():
         voyages.pop(mmsi,None)
 
 
-## Visualisation
-#######################################
-#l_keys = voyages.keys()
-#num_samples = len(voyages)
-#v_idx = np.random.permutation(num_samples)
-#count = 0
-#FIG_DPI = 150
-#plt.figure(figsize=(1920/FIG_DPI, 686/FIG_DPI), dpi=FIG_DPI)
-#for d_i in v_idx[0:int(num_samples/2)]:
-#    count += 1
-#    print(count)
-#    m_V = voyages[l_keys[d_i]]
-#    v_lon = m_V[:,LON]
-#    v_lat = m_V[:,LAT]
-#    plt.plot(v_lon,v_lat)
-#
-#dataset_name = "dataset1"
-#plt.title("Visualisation of {0} AIS tracks in the dataset ({1})".format(int(num_samples/2),dataset_name))
-#plt.xlabel("Longitude (normalized)")
-#plt.ylabel("Latitude (normalized)")
-#plt.xlim([LON_MIN,LON_MAX])
-#plt.ylim([LAT_MIN,LAT_MAX])
-#plt.xlim([-97.5,-87])
-#plt.ylim([26.5,30])
-#plt.show()
-
-
-
-#no_msg = 0
-#for mmsi in voyages.keys():
-#    no_msg += len(voyages[mmsi])
-#print("Total number of AIS messages:  ", no_msg)
-
-# Step 5: Sampling (24285 -> 15681), resolution = 5 min
+# Step 6: Sampling, resolution = 5 min
 ###############################################################################
 tick = time.time()
-print('STEP 5: Sampling...')
+print('Sampling...')
 Vs = dict()
 count = 0
 for k in voyages.keys():
@@ -237,27 +187,17 @@ for k in voyages.keys():
     if sampling_track is not None:
         Vs[count] = sampling_track
         count += 1
-tok = time.time() #51.23
+tok = time.time()
 
-
-with open("/users/local/dnguyen/Datasets/AIS_datasets/MarineC/2014/dataset2/voyages0102_step5.pkl","wb") as f:
-    pickle.dump(Vs,f) #39036
-    
-#with open("/users/local/dnguyen/Datasets/AIS_datasets/MarineC/2014/voyages0102_step5.pkl","rb") as f:
-#    voyages = pickle.load(f)
-
-## (24285 -> 20566)
-
-print("Removing 'low speed' tracks") #39036->25219
+print("Removing 'low speed' tracks") 
 for mmsi in Vs.keys():
     d_L = float(len(Vs[mmsi]))    
     if np.count_nonzero(Vs[mmsi][:,SOG] < 2)/d_L > 0.8:
         Vs.pop(mmsi,None)
-# (20566 -> 15681)
 
-# STEP 6: Re-Splitting (25219-> 51796)
+# STEP 7: Re-Splitting
 ###############################################################################
-print('STEP 6: Re-Splitting...')
+print('Re-Splitting...')
 Data = dict() 
 count = 0
 for mmsi in Vs.keys(): # 
@@ -270,17 +210,10 @@ for mmsi in Vs.keys(): #
         if len(subtrack) > 12*4: 
             Data[count] = subtrack
             count += 1
-## STATISTICS
-#num_msgs = 0
-#nav_stt = np.empty((0,))
-#for mmsi in Data.keys():
-#    num_msgs += len(Data[mmsi])
-#    nav_stt = np.hstack((nav_stt,Data[mmsi][:,NAV_STT]))
 
-
-# Step 7: Normalisation (51796)
+# Step 7: Normalisation 
 ###############################################################################
-print('STEP 7: Normalisation...')
+print('Normalisation...')
 for k in Data.keys():
     v = Data[k]
     v[:,LAT] = (v[:,LAT] - LAT_MIN)/(LAT_MAX-LAT_MIN)
@@ -288,118 +221,69 @@ for k in Data.keys():
     v[:,SOG][v[:,SOG] > SPEED_MAX] = SPEED_MAX
     v[:,SOG] = v[:,SOG]/SPEED_MAX
     v[:,COG] = v[:,COG]/360.0
-with open("/users/local/dnguyen/Datasets/AIS_datasets/MarineC/2014/dataset2/dataset2.pkl","wb") as f:
+
+with open("/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/mt314/dataset8/dataset8_test.pkl","wb") as f:
     pickle.dump(Data,f)
     
-## Train-test splitting
-v_all_idx = np.random.permutation(len(Data))
-l_keys = Data.keys()
-Vs_train = dict()
-Vs_test = dict()
-for d_i in v_all_idx[:int(len(Data)*0.8)]:
-    key = l_keys[d_i]
-    Vs_train[key] = Data[key]
-for d_i in v_all_idx[int(len(Data)*0.8):]:
-    key = l_keys[d_i]
-    Vs_test[key] = Data[key]
-    
-with open("/users/local/dnguyen/Datasets/AIS_datasets/MarineC/2014/dataset2/dataset2_train.pkl","wb") as f:
-    pickle.dump(Vs_train,f)
-with open("/users/local/dnguyen/Datasets/AIS_datasets/MarineC/2014/dataset2/dataset2_test.pkl","wb") as f:
-    pickle.dump(Vs_test,f)
-
-
-# Step 8: Density normalisation
+# Step 7bis: Density normalisation
 ###############################################################################
-with open("/users/local/dnguyen/Datasets/AIS_datasets/MarineC/2014/dataset2/dataset2.pkl","rb") as f:
-    Vs = pickle.load(f)
-    
-Tiles = dict()
-for d_i in range(10):
-    for d_j in range(10):
-        Tiles[str(d_i)+str(d_j)] = []   
-for key in Vs.keys():
-    m_V = Vs[key]
-    lon_mean = np.mean(m_V[:,LON])
-    lat_mean = np.mean(m_V[:,LAT])
-    if lon_mean == 1:
-        lon_mean = 0.99999
-    if lat_mean == 1:
-        lat_mean = 0.99999
-    Tiles[str(int(lat_mean*10))+str((int(lon_mean*10)))].append(key)
+#with open("/users/local/dnguyen/Datasets/AIS_datasets/MarineC/2014/dataset7/dataset7_full.pkl","rb") as f:
+#    Vs = pickle.load(f)
 
-v_density = np.empty((100,))
-for d_i in range(100):
-    key = "{0:02d}".format(d_i)
-    v_density[d_i] = len(Tiles[key])    
-plt.bar(range(100),v_density)
-plt.xlabel("Tile (lat+lon)")
-plt.ylabel("Density (unnormalised)")
-plt.title("Dataset2")
-
-for d_i in range(100):
-    key_Tiles = "{0:02d}".format(d_i)
-    if len(Tiles[key_Tiles]) > 1500:
-        for key_Vs in Tiles[key_Tiles][1500:]:
-            Vs.pop(key_Vs,None)
+#Tiles = dict()
+#for d_i in range(10):
+#    for d_j in range(10):
+#        Tiles[str(d_i)+str(d_j)] = []   
+#for key in Vs.keys():
+#    m_V = Vs[key]
+#    lon_mean = np.mean(m_V[:,LON])
+#    lat_mean = np.mean(m_V[:,LAT])
+#    if lon_mean == 1:
+#        lon_mean = 0.99999
+#    if lat_mean == 1:
+#        lat_mean = 0.99999
+#    Tiles[str(int(lat_mean*10))+str((int(lon_mean*10)))].append(key)
+#
+#v_density = np.empty((100,))
+#for d_i in range(100):
+#    key = "{0:02d}".format(d_i)
+#    v_density[d_i] = len(Tiles[key])    
+#plt.bar(range(100),v_density)
+#plt.xlabel("Tile (lat+lon)")
+#plt.ylabel("Density (unnormalised)")
+#plt.title("Dataset2")
+#
+#d_density_max = 2500
+#for d_i in range(100):
+#    key_Tiles = "{0:02d}".format(d_i)
+#    if len(Tiles[key_Tiles]) > d_density_max:
+#        for key_Vs in Tiles[key_Tiles][d_density_max:]:
+#            Vs.pop(key_Vs,None)
             
-with open("/users/local/dnguyen/Datasets/AIS_datasets/MarineC/2014/dataset3/dataset3.pkl","wb") as f:
-    pickle.dump(Vs,f)
-    
-## Train-test splitting
+
+# Step 7bis:Train-test splitting
+###############################################################################
+print('Train-test splitting...')
+
+Vs = Data
 v_all_idx = np.random.permutation(len(Vs))
 l_keys = Vs.keys()
 Vs_train = dict()
+Vs_valid = dict()
 Vs_test = dict()
-for d_i in v_all_idx[:int(len(Vs)*0.8)]:
+for d_i in v_all_idx[:int(len(Vs)*0.6)]:
     key = l_keys[d_i]
     Vs_train[key] = Vs[key]
-for d_i in v_all_idx[int(len(Vs)*0.8):]:
+for d_i in v_all_idx[int(len(Vs)*0.6):int(len(Vs)*0.9)]:
+    key = l_keys[d_i]
+    Vs_valid[key] = Vs[key]
+for d_i in v_all_idx[int(len(Vs)*0.9):]:
     key = l_keys[d_i]
     Vs_test[key] = Vs[key]
     
-with open("/users/local/dnguyen/Datasets/AIS_datasets/MarineC/2014/dataset3/dataset3_train.pkl","wb") as f:
+with open("/users/local/dnguyen/Datasets/AIS_datasets/mt314/aivdm/2017/dataset8/dataset8_train.pkl","wb") as f:
     pickle.dump(Vs_train,f)
-with open("/users/local/dnguyen/Datasets/AIS_datasets/MarineC/2014/dataset3/dataset3_test.pkl","wb") as f:
+with open("/users/local/dnguyen/Datasets/AIS_datasets/mt314/aivdm/2017/dataset8/dataset8_valid.pkl","wb") as f:
+    pickle.dump(Vs_valid,f)
+with open("/users/local/dnguyen/Datasets/AIS_datasets/mt314/aivdm/2017/dataset8/dataset8_test.pkl","wb") as f:
     pickle.dump(Vs_test,f)
-    
-
-# Step 9: 1/2-day dataset 
-###############################################################################
-#os.makedirs("/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/MarineC/datasets4")
-with open("/users/local/dnguyen/Datasets/AIS_datasets/MarineC/2014/dataset3/dataset3_train.pkl","rb") as f:
-    Vs_train = pickle.load(f)
-with open("/users/local/dnguyen/Datasets/AIS_datasets/MarineC/2014/dataset3/dataset3_test.pkl","rb") as f:
-    Vs_test = pickle.load(f)
-
-Vs = Vs_train
-Vs = Vs_test
-for key in Vs.keys():
-    if len(Vs[key]) < 144:
-        Vs.pop(key,None)
-        
-with open("/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/MarineC/dataset4/dataset4_train.pkl","wb") as f:
-    pickle.dump(Vs,f)
-with open("/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/MarineC/dataset4/dataset4_test.pkl","wb") as f:
-    pickle.dump(Vs,f)
-
-
-# Step 9: 8-hour dataset 
-###############################################################################
-#os.makedirs("/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/MarineC/dataset5")
-with open("/users/local/dnguyen/Datasets/AIS_datasets/MarineC/2014/dataset3/dataset3_train.pkl","rb") as f:
-    Vs_train = pickle.load(f)
-with open("/users/local/dnguyen/Datasets/AIS_datasets/MarineC/2014/dataset3/dataset3_test.pkl","rb") as f:
-    Vs_test = pickle.load(f)
-
-Vs = Vs_train
-Vs = Vs_test
-for key in Vs.keys():
-    if len(Vs[key]) < 8*12:
-        Vs.pop(key,None)
-        
-with open("/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/MarineC/dataset5/dataset5_train.pkl","wb") as f:
-    pickle.dump(Vs,f)
-with open("/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/MarineC/dataset5/dataset5_test.pkl","wb") as f:
-    pickle.dump(Vs,f)
-    

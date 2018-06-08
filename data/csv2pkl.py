@@ -12,7 +12,7 @@ from __future__ import print_function
 
 import numpy as np
 import matplotlib.pyplot as plt
-from math import radians, cos, sin, asin, sqrt
+import os
 import sys
 import utils
 import pickle
@@ -26,63 +26,82 @@ from io import StringIO
 
 
 # AMERICA
-LAT_MIN = 18.0
-LAT_MAX = 30.0
-LON_MIN = -98
-LON_MAX = -84
+LAT_MIN = 47.0
+LAT_MAX = 50.0
+LON_MIN = -7.0
+LON_MAX = -4.0
 LAT_RANGE = LAT_MAX - LAT_MIN
 LON_RANGE = LON_MAX - LON_MIN
-SPEED_MAX = 30.0  # knots
+SOG_MAX = 30.0  # knots
 
 EPOCH = datetime(1970, 1, 1)
 LAT, LON, SOG, COG, HEADING, ROT, NAV_STT, TIMESTAMP, MMSI = range(9)
 
 # DATA PATH
-data_path = "/users/local/dnguyen/AIS_dataset/MarineC/2014/"
-
-for month in range(1,5):
-    for zone in [14,15,16]:
-        csv_filename = data_path + "{0:02d}/Zone{1:02d}_2014_{0:02d}.csv".format(month,zone) # 61722685 msgs
-        # data structure: 
-        # [lon (0), lat, SOG (2), COG, Heading (4), ROT, DATETIME (6), status, VoyageID, MMSI (9), ....]
-        data = []
-        with open(csv_filename, 'r') as f:
-            print("Reading ", csv_filename, "...")
-            reader = csv.reader(f)
-            reader.next() # skip the label row
-            for row in reader:
-                lat = float(row[1])
-                lon = float(row[0])
-                if lat > LAT_MAX or lat < LAT_MIN or lon > LON_MAX or lon < LON_MIN:
-                    continue
-                utc_time = datetime.strptime(row[6], "%Y/%m/%d %H:%M:%S")
-                timestamp = (utc_time - EPOCH).total_seconds()
-                data.append([lat, lon, 
-                             float(row[2]), float(row[3]),
-                             float(row[4]), int(row[5]), 
-                             int(row[7]), 
-                             int(timestamp), int(row[9])])
-        print("Total number of AIS messages in the ROI: ", len(data))
-        # Convert to dict of vessel's tracks
-        print("Convert to dict of vessel's tracks...")
-        Vs = dict()
-        for msg in data:
-            mmsi = msg[MMSI]
-            if not (mmsi in Vs.keys()):
-                Vs[mmsi] = np.empty((0,9))
-            Vs[mmsi] = np.concatenate((Vs[mmsi], np.expand_dims(msg,0)), axis = 0)
-        print("Pickling...")        
-        with open(csv_filename.replace(".csv","2.pkl"), "wb") as f:
-            pickle.dump(Vs,f)
-        del Vs
+l_l_msg = []
+dataset_path = "/users/local/dnguyen/Datasets/AIS_datasets/mt314/aivdm/2017/"
+with open(os.path.join(dataset_path,"010203_position.csv"),"rb") as f:
+    csvReader = csv.reader(f)
+    csvReader.next() # skip the legend row
+    for row in csvReader:
+        utc_time = datetime.strptime(row[7], "%Y/%m/%d %H:%M:%S")
+        timestamp = (utc_time - EPOCH).total_seconds()
+        l_l_msg.append([float(row[1]),float(row[0]),
+                       float(row[3]),float(row[5]),
+                       int(row[4]),0,
+                       int(row[6]),int(timestamp),
+                       int(row[2])])
     
+    
+m_msg = np.array(l_l_msg)        
+n, bins, patches = plt.hist(m_msg[:,LAT],bins=44+np.arange(13)/2,cumulative=True)
+np.count_nonzero(m_msg[:,LAT]>47)/float(len(m_msg))
+np.count_nonzero(m_msg[:,LAT]<50)/float(len(m_msg))
 
-#with open(csv_filename.replace("csv","pkl"), "wb") as f:
-#    pickle.dump(data,f)
+n, bins, patches = plt.hist(m_msg[:,LON],bins=-7+np.arange(13)/5,cumulative=True)
+np.count_nonzero(m_msg[:,LON]>-7)/float(len(m_msg))
+np.count_nonzero(m_msg[:,LON]<-4)/float(len(m_msg))
+np.count_nonzero(m_msg[:,SOG]<0)/float(len(m_msg))
 
-#speeds = np.array([x[SOG] for x in data])
-#plt.hist(speeds[speeds > 0.01], bins = 100)
+np.count_nonzero(m_msg[:,SOG]>30)/float(len(m_msg))
 
+
+## LAT LON
+m_msg = m_msg[m_msg[:,LAT]>=LAT_MIN]
+m_msg = m_msg[m_msg[:,LAT]<=LAT_MAX]
+m_msg = m_msg[m_msg[:,LON]>=LON_MIN]
+m_msg = m_msg[m_msg[:,LON]<=LON_MAX]
+# SOG
+m_msg = m_msg[m_msg[:,SOG]>=0]
+m_msg = m_msg[m_msg[:,SOG]<=SOG_MAX]
+# COG
+m_msg = m_msg[m_msg[:,SOG]>=0]
+m_msg = m_msg[m_msg[:,COG]<=360]
+# TIME
+m_msg = m_msg[m_msg[:,TIMESTAMP]>=0]
+timestamp_max = (datetime(2017, 03, 31, 23, 59, 59) - EPOCH).total_seconds()
+m_msg = m_msg[m_msg[:,TIMESTAMP]<=timestamp_max]
+
+print("Convert to dict of vessel's tracks...")
+Vs = dict()
+for v_msg in m_msg:
+    mmsi = int(v_msg[MMSI])
+    if not (mmsi in Vs.keys()):
+        Vs[mmsi] = np.empty((0,9))
+    Vs[mmsi] = np.concatenate((Vs[mmsi], np.expand_dims(v_msg,0)), axis = 0)
+for key in Vs.keys():
+    Vs[key] = np.array(sorted(Vs[key], key=lambda m_entry: m_entry[TIMESTAMP]))
+    
+for key in Vs.keys():
+    tmp = Vs[key]
+    plt.plot(tmp[:,LON],tmp[:,LAT])
+
+print("Pickling...")        
+with open(os.path.join(dataset_path,"010203_position.pkl"),"wb") as f:
+    pickle.dump(Vs,f)
+
+            
+#cmap = plt.cm.get_cmap('Blues')
 
 """
 VISUALISATION

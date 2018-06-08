@@ -1,0 +1,24 @@
+
+*** These modified files were found in JOE when it aborted on Fri Jun  8 12:48:47 2018
+*** JOE was aborted because the terminal closed
+
+*** Fichier '/sanssauvegarde/homes/vnguye04/Codes/MultitaskAIS/.git/COMMIT_EDITMSG'
+
+# Veuil saisir le message de validation pour vos modifications. Les lignes
+# commençant par '#' seront ignorées, et un message vide abandonne la validation.
+# Sur la branche master
+# Votre branche est à jour avec 'origin/master'.
+#
+# Modifications qui seront validées :
+#	nouveau fichier : contrario.py
+#
+
+*** Fichier '(Sans nom)'
+/users/local/dnguyen/polluNet/.git/COMMIT_EDITMSG
+/sanssauvegarde/homes/vnguye04/Codes/MultitaskAIS/.git/COMMIT_EDITMSG
+
+*** Fichier '* Startup Log *'
+Processing '/etc/joe/editorrc'...
+Processing '/etc/joe/ftyperc'...
+Finished processing /etc/joe/ftyperc
+Finished processing /etc/joe/editorrc

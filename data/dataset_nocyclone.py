@@ -40,7 +40,7 @@ with open("/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/MarineC/dataset5/datas
 ## Test set moved cyclone
 ###############################################################################
 
-with open("/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/MarineC/dataset3/dataset3_test.pkl","rb") as f:
+with open("/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/MarineC/dataset7/dataset7_test.pkl","rb") as f:
     Vs_test = pickle.load(f)
 
 # For dataset4_movedcyclone: because there are no cyclones whose duration > 12h in the dataset4_test, we
@@ -55,19 +55,27 @@ for key in Vs.keys():
     lon_min = np.min(tmp[:,LON])
     if (lat_max < 0.24) and (lat_min > 0.155) and (lon_max<0.53) and (lon_min>0.485):
         print("key: ", key, "mmsi: ", tmp[0,MMSI])
-        Vs[key][:,LON] += 2/10.5
-        Vs[key][:,LAT] += 1.55/3.5
+        Vs[key][:,LON] += 3.8/10.5
+        Vs[key][:,LAT] += 0.5/3.5
     else:
         Vs.pop(key,None)
 
-with open("/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/MarineC/dataset3/dataset3_test_movedcyclones.pkl","wb") as f:
+for key in Vs.keys():
+    tmp = Vs[key]
+    plt.plot(tmp[:,1],tmp[:,0])
+plt.xlim([0,1])
+plt.ylim([0,1])
+plt.show()
+
+
+with open("/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/MarineC/dataset7/dataset7_test_movedcyclones2.pkl","wb") as f:
     pickle.dump(Vs,f)
 
 
 ## Test set only cyclone
 ###############################################################################
 
-with open("/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/MarineC/dataset3/dataset3_test.pkl","rb") as f:
+with open("/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/MarineC/dataset7/dataset7_test.pkl","rb") as f:
     Vs_test = pickle.load(f)
 
 # For dataset4_movedcyclone: because there are no cyclones whose duration > 12h in the dataset4_test, we
@@ -85,15 +93,15 @@ for key in Vs.keys():
     else:
         Vs.pop(key,None)
 
-with open("/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/MarineC/dataset3/dataset3_test_cyclones.pkl","wb") as f:
+with open("/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/MarineC/dataset7/dataset7_test_cyclones.pkl","wb") as f:
     pickle.dump(Vs,f)
 
 # Step 10: Route Divergence
 ###############################################################################
-with open("/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/MarineC/dataset5/dataset5_test.pkl","rb") as f:
+with open("/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/MarineC/dataset7/dataset7_train.pkl","rb") as f:
+    Vs_train = pickle.load(f)
+with open("/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/MarineC/dataset7/dataset7_test0.pkl","rb") as f:
     Vs_test = pickle.load(f)
-
-Vs = Vs_test
 
 #for key in Vs.keys():
 #    tmp = Vs[key]
@@ -117,9 +125,18 @@ Vs = Vs_test
 #    plt.xlim([0,1])
 #    plt.ylim([0,1])
 
+FIG_DPI = 150
+plt.figure(figsize=(1920/FIG_DPI, 640/FIG_DPI), dpi=FIG_DPI)  
+cmap = plt.cm.get_cmap('Blues')
 
+
+Vs = Vs_test
+d_i = 0
+N = len(Vs)
 for key in Vs.keys():
     tmp = Vs[key]
+    c = cmap(float(d_i)/(N-1))
+    d_i+=1
     lat_begin = tmp[0,LAT]
     lat_end = tmp[-1,LAT]
     lon_begin = tmp[0,LON]
@@ -129,21 +146,25 @@ for key in Vs.keys():
             plt.plot(tmp[:,1],tmp[:,0],color='g',linewidth=2)
             v_true = np.copy(tmp)    
     else:
-        plt.plot(tmp[:,1],tmp[:,0],color='b')
+        plt.plot(tmp[:,1],tmp[:,0],color=c,linewidth=0.3)
 plt.xlim([0,1])
 plt.ylim([0,1])
 
 Vs_divergence = dict()
-for e in range(-3,1):
+for e in range(-5,6):
     Vs_divergence[e] = np.copy(v_true)
     Vs_divergence[e][:,LAT] += e*0.01
+#    Vs_divergence[e][:,LON] += 0.5 # divergences 2 only
     
     
 for key in Vs_divergence.keys():
     tmp = Vs_divergence[key]
-    plt.plot(tmp[:,1],tmp[:,0],linewidth=2)
+    plt.plot(tmp[:,1],tmp[:,0],linewidth=0.8)
+plt.xlim([0,1])
+plt.ylim([0,1])
+plt.show()
 
-with open("/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/MarineC/dataset3/dataset3_test_divergences.pkl","wb") as f:
+with open("/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/MarineC/dataset7/dataset7_test_divergences.pkl","wb") as f:
     pickle.dump(Vs_divergence,f)
 
 Vs_turns = dict()    
@@ -151,9 +172,9 @@ v_turn = np.zeros(175)
 v_turn[115:] = np.arange(60)
 for e in range(0,5):
     Vs_turns[e] = np.copy(v_true)
-    Vs_turns[e][:,LAT] += (e)*0.0001*v_turn
+    Vs_turns[e][:,LAT] += (e)*0.0002*v_turn
 for key in Vs_turns.keys():
     tmp = Vs_turns[key]
-    plt.plot(tmp[:,1],tmp[:,0],linewidth=2)
-with open("/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/MarineC/dataset3/dataset3_test_turns.pkl","wb") as f:
+    plt.plot(tmp[:,1],tmp[:,0],linewidth=1)
+with open("/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/MarineC/dataset7/dataset7_test_turns2.pkl","wb") as f:
     pickle.dump(Vs_turns,f)

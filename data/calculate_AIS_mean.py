@@ -5,7 +5,7 @@ Created on Wed Feb 28 16:42:00 2018
 
 @author: vnguye04
 
-Calculate mean of the US AIS dataset
+Calculate mean of AIS dataset
 """
 
 from __future__ import absolute_import
@@ -17,7 +17,7 @@ import pickle
 import os
 import sys
 sys.path.append("./data/")
-dataset_path = "/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/MarineC/dataset5/dataset5_train.pkl"
+dataset_path = "/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/mt314/dataset8/dataset8_train.pkl"
 import tensorflow as tf
 from datasets import sparse_AIS_to_dense
 
@@ -30,7 +30,7 @@ with tf.gfile.Open(dataset_path, "r") as f:
 
 #latlon_bins = 500;sog_bins = 10;cog_bins = 36
 #data_dim = 2*latlon_bins + sog_bins + cog_bins
-lat_bins = 350; lon_bins = 1050; sog_bins = 30; cog_bins = 72
+lat_bins = 300; lon_bins = 300; sog_bins = 30; cog_bins = 72
 data_dim = lat_bins + lon_bins + sog_bins + cog_bins
 
 mean_all = np.zeros((data_dim,))
