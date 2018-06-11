@@ -1,8 +1,5 @@
 # MultitaskAIS
 
-Thank openstreetmap, google brain team
-
-
 This folder contains the TensorFlow implementation of the model proposed in
 
 "paper name"
@@ -62,6 +59,13 @@ python multitaskAIS.py \
 
 ### Running task-specific submodels
 
+After the Embedding layer is trained, we can run task-specific blocks.
+To avoid re-caculating the $log[p(x_t|x_{1..t-1},x_{1..t-1})]$, we 
+To optimize the calculatetion time, we 
+
+#### Trajectory reconstruction
+
+We tested the Trajectory re
 
 
 ### Acknowledgement
