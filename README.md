@@ -1,9 +1,6 @@
 # MultitaskAIS
 
-This folder contains the TensorFlow implementation of the model proposed in
-
-"paper name"
-"paper arxiv link"
+TensorFlow implementation of the model proposed in "Multi-task Learning for Maritime Traffic Surveillance from AIS Data Streams" (https://arxiv.org/abs/1806.03972)
 
 All the codes related to the Embedding block are adapted from the source code of Filtering Variational Objectives:
 https://github.com/tensorflow/models/tree/master/research/fivo
@@ -35,7 +32,7 @@ The Brittany dataset is provided by Collecte Localisation Satellites
 #### Preprocess the Data
 
 Converting to csv:
-* MarineC dataset: we use GDIS (http://gdis.seul.org/) to convert the original metadata format to csv files.
+* MarineC dataset: we use QGIS (https://qgis.org/en/site/) to convert the original metadata format to csv files.
 * Brittany dataset: we use libais (https://github.com/schwehr/libais) to decode raw AIS messages to csv files.
 
 `csv2pkl.py` then loads the data from csv files, selects AIS messages in the pre-defined ROI then saves them as pickle format.
