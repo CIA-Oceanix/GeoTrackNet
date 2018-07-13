@@ -176,6 +176,10 @@ outcomes_save_name = "results/"\
             + str(config.latent_size) + ".pkl"
 
 if config.mode == "save_outcomes":
+    """ SAVE_OUTCOMES
+    Calculate and save the log[p(x_t|x_{1..t-1},x_{1..t-1})] of each track in
+    the test set.
+    """
     l_dict = []
     for d_i in range(dataset_size):
         D = dict()
@@ -196,19 +200,27 @@ if config.mode == "save_outcomes":
         pickle.dump(l_dict,f)            
 
 elif config.mode == "ll":
-    ## LL
-    ###########################################################################
+    """ LL
+    Plot the distribution of the log[p(x_t|x_{1..t-1},x_{1..t-1})] of each 
+    track in the test set.
+    """
+    with open(outcomes_save_name,"rb") as f:
+        l_dict = pickle.load(f)    
+
     v_ll = np.empty((0,))
-    v_mmsi = np.empty((0,))
+    v_ll_stable = np.empty((0,))
     
-    for d_i in range(int(dataset_size)):
-        print(d_i)
-        ll_t = sess.run(ll_per_t)
-        v_ll = np.concatenate((v_ll,ll_t))
-    
+    count = 0
+    for D in l_dict:
+        print(count)
+        count+=1
+        log_weights_np = D["log_weights"]
+        ll_t = np.mean(log_weights_np)
+        v_ll = np.concatenate((v_ll,[ll_t]))
+
     d_mean = np.mean(v_ll)
     d_std = np.std(v_ll)
-    d_thresh = d_mean - 2*d_std
+    d_thresh = d_mean - 3*d_std
     
     plt.figure(figsize=(1920*2/FIG_DPI, 640*2/FIG_DPI), dpi=FIG_DPI)  
     plt.plot(v_ll,'o')        
@@ -224,7 +236,7 @@ elif config.mode == "ll":
             + os.path.basename(config.trainingset_name) + "-"\
             + os.path.basename(config.testset_name)\
             + "-latent_size-" + str(config.latent_size)\
-            + "-ll_thresh" + str(config.ll_thresh)\
+            + "-ll_thresh" + str(d_thresh)\
             + ".png"
     plt.savefig(fig_name,dpi = FIG_DPI)
     plt.close()
