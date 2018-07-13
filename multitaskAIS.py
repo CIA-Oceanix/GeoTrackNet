@@ -11,9 +11,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-# ==============================================================================
+# =============================================================================
 
-"""A script to run training for sequential latent variable models.
+"""
+A script to run training for the Embedding layer of MultitaskAIS
+The code is adapted from 
+https://github.com/tensorflow/models/tree/master/research/fivo 
 """
 
 from __future__ import absolute_import
@@ -26,14 +29,15 @@ import tensorflow as tf
 import runners as runners
 import logging
 
-# Shared flags.
+
+## Shared flags.
 tf.app.flags.DEFINE_string("mode", "train",
                            "The mode of the binary. Must be 'train' or 'eval'.")
 
 tf.app.flags.DEFINE_string("bound", "elbo",
-                           "The bound to optimize. Can be 'elbo', 'iwae', or 'fivo'.")
+                           "The bound to optimize. Can be 'elbo', or 'fivo'.")
 
-tf.app.flags.DEFINE_integer("latent_size", 200,
+tf.app.flags.DEFINE_integer("latent_size", 100,
                             "The size of the latent state of the model.")
 
 tf.app.flags.DEFINE_string("log_dir", "./chkpt",
@@ -45,28 +49,27 @@ tf.app.flags.DEFINE_integer("num_samples", 16,
                            "The number of samples (or particles) for multisample "
                            "algorithms.")
 
-
 tf.app.flags.DEFINE_string("split", "train",
                            "Split to evaluate the model on. Can be 'train', 'valid', or 'test'.")
 tf.app.flags.DEFINE_string("dataset_name", "dataset8/dataset8_train.pkl",
                            "Path to load the dataset from.")
 
+tf.app.flags.DEFINE_integer("lat_bins", 300,
+                            "Length of the latitdue one-hot vectors.")
+tf.app.flags.DEFINE_integer("lon_bins", 300,
+                            "Length of the longitude one-hot vectors.")
+tf.app.flags.DEFINE_integer("sog_bins", 30,
+                            "Length of the SOG one-hot vectors.")
+tf.app.flags.DEFINE_integer("cog_bins", 72,
+                            "Length of the COG one-hot vectors.")
+
 tf.app.flags.DEFINE_string("model", "vrnn",
                            "Model choice. Currently only 'vrnn' is supported.")
-tf.app.flags.DEFINE_string("dataset_type", "pianoroll",
-                           "The type of dataset, either 'pianoroll' or 'speech'.")
-
-tf.app.flags.DEFINE_integer("data_dimension", None,
-                            "The dimension of each vector in the data sequence. "
-                            "Defaults to 88 for pianoroll datasets and 200 for speech "
-                            "datasets. Should not need to be changed except for "
-                            "testing.")
 
 tf.app.flags.DEFINE_integer("random_seed", None,
                             "A random seed for seeding the TensorFlow graph.")
 
 # Training flags.
-
 tf.app.flags.DEFINE_boolean("normalize_by_seq_len", True,
                             "If true, normalize the loss by the number of timesteps "
                             "per sequence.")
@@ -88,15 +91,16 @@ tf.app.flags.DEFINE_boolean("stagger_workers", True,
                             "If true, bring one worker online every 1000 steps.")
 
 # Evaluation flags.
-
-
 FLAGS = tf.app.flags.FLAGS
-lat_bins = 300; lon_bins = 300; sog_bins = 30; cog_bins = 72
-FLAGS.data_dim  = lat_bins + lon_bins + sog_bins + cog_bins # error with data_dimension
-#FLAGS.dataset_path = "/users/local/dnguyen/Datasets/AIS_datasets/MarineC/2014/" + FLAGS.dataset_name
-FLAGS.dataset_path = "/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/mt314/" + FLAGS.dataset_name
 config = FLAGS
-logdir_name = "/" + config.bound + "-" + os.path.basename(config.dataset_name) + "-data_dim-" + str(config.data_dim)\
+config.data_dim  = config.lat_bins + config.lon_bins + config.sog_bins + config.cog_bins
+#FLAGS.dataset_path = "/users/local/dnguyen/Datasets/AIS_datasets/MarineC/2014/"\
+#                     + FLAGS.dataset_name
+config.dataset_path = "/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/mt314/"\
+                     + FLAGS.dataset_name
+
+logdir_name = "/" + config.bound + "-" + os.path.basename(config.dataset_name)\
+             + "-data_dim-" + str(config.data_dim)\
              + "-latent_size-" + str(config.latent_size)\
              + "-batch_size-" + str(config.batch_size)
 config.logdir = config.log_dir + logdir_name
