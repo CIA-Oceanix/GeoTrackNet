@@ -57,7 +57,7 @@ python multitaskAIS.py \
 ### Running task-specific submodels
 
 After the Embedding layer is trained, we can run task-specific blocks.
-To avoid re-caculating the $log[p(x_t|x_{1..t-1},x_{1..t-1})]$, we 
+To avoid re-caculating the $log[p(x_t|x_{1..t-1},x_{1..t-1})]$ for each tasks, we calculate them once and save as  
 To optimize the calculatetion time, we 
 
 #### Trajectory reconstruction
