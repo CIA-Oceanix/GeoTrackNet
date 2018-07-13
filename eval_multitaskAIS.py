@@ -1,3 +1,8 @@
+# Copyright 2017 The TensorFlow Authors All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
 #
 #     http://www.apache.org/licenses/LICENSE-2.0
 #
@@ -6,9 +11,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-# ==============================================================================
+# =============================================================================
 
-"""A script to run training for sequential latent variable models.
+"""
+A script to run training for the Embedding layer of MultitaskAIS
+The code is adapted from 
+https://github.com/tensorflow/models/tree/master/research/fivo 
 """
 
 from __future__ import absolute_import
@@ -22,26 +30,25 @@ import pickle
 
 import runners as runners
 
-
 LAT_MIN = 26.5
 LAT_MAX = 30.0
 LON_MIN = -97.5
 LON_MAX = -87.0
-
 LAT_RANGE = LAT_MAX - LAT_MIN
 LON_RANGE = LON_MAX - LON_MIN
 SPEED_MAX = 30.0  # knots
 FIG_DPI = 300
 
 # Shared flags.
-tf.app.flags.DEFINE_string("mode", "superposition_density",
+tf.app.flags.DEFINE_string("mode", "save_outcomes",
                            "The mode of the binary. "
-                           "'ll','superposition','traj_speed','traj_reconstruction'.")
+                           "'ll','superposition','traj_speed','traj_reconstruction',"
+                           "'log_density', 'superposition_density', 'save_outcomes'.")
 
 tf.app.flags.DEFINE_string("bound", "elbo",
-                           "The bound to optimize. Can be 'elbo', 'iwae', or 'fivo'.")
+                           "The bound to optimize. Can be 'elbo', or 'fivo'.")
 
-tf.app.flags.DEFINE_integer("latent_size", 200,
+tf.app.flags.DEFINE_integer("latent_size", 100,
                             "The size of the latent state of the model.")
 
 tf.app.flags.DEFINE_string("log_dir", "./chkpt",
@@ -49,34 +56,28 @@ tf.app.flags.DEFINE_string("log_dir", "./chkpt",
 
 tf.app.flags.DEFINE_integer("batch_size", 1,
                             "Batch size.")
-tf.app.flags.DEFINE_integer("min_duration", 8,
+tf.app.flags.DEFINE_integer("min_duration", 4,
                             "Min duration (hour) of a vessel track")
 tf.app.flags.DEFINE_integer("num_samples", 16,
                            "The number of samples (or particles) for multisample "
                            "algorithms.")
 tf.app.flags.DEFINE_float("ll_thresh", -10.73,
                           "Log likelihood for the anomaly detection.")
-tf.app.flags.DEFINE_float("minus_log", -3.0,
-                          "Log likelihood for the anomaly detection.")
+tf.app.flags.DEFINE_float("anomaly_lat_reso", 0.1,
+                          "Lat resolution for anomaly detection.")
+tf.app.flags.DEFINE_float("anomaly_lon_reso", 0.1,
+                          "Lon resolution for anomaly detection.")
 
 
 tf.app.flags.DEFINE_string("split", "test",
                            "Split to evaluate the model on. Can be 'train', 'valid', or 'test'.")
-tf.app.flags.DEFINE_string("trainingset_name", "dataset3/dataset3_train.pkl",
+tf.app.flags.DEFINE_string("trainingset_name", "dataset8/dataset8_train.pkl",
                            "Path to load the trainingset from.")
-tf.app.flags.DEFINE_string("testset_name", "dataset3/dataset3_test_turns.pkl",
+tf.app.flags.DEFINE_string("testset_name", "dataset8/dataset8_test_Uturn.pkl",
                            "Path to load the testset from.")    
 
 tf.app.flags.DEFINE_string("model", "vrnn",
                            "Model choice. Currently only 'vrnn' is supported.")
-tf.app.flags.DEFINE_string("dataset_type", "pianoroll",
-                           "The type of dataset, either 'pianoroll' or 'speech'.")
-
-tf.app.flags.DEFINE_integer("data_dimension", None,
-                            "The dimension of each vector in the data sequence. "
-                            "Defaults to 88 for pianoroll datasets and 200 for speech "
-                            "datasets. Should not need to be changed except for "
-                            "testing.")
 
 tf.app.flags.DEFINE_integer("random_seed", None,
                             "A random seed for seeding the TensorFlow graph.")
@@ -107,7 +108,7 @@ tf.app.flags.DEFINE_boolean("stagger_workers", True,
 
 
 FLAGS = tf.app.flags.FLAGS
-lat_bins = 350; lon_bins = 1050; sog_bins = 30; cog_bins = 72
+lat_bins = 300; lon_bins = 300; sog_bins = 30; cog_bins = 72
 FLAGS.data_dim  = lat_bins + lon_bins + sog_bins + cog_bins # error with data_dimension
 config = FLAGS
 
@@ -124,9 +125,9 @@ if not os.path.exists(config.logdir):
 # TESTSET_PATH
 if config.testset_name == "":
     config.testset_name = config.trainingset_name.replace("_train","_test")
-config.trainingset_path = "/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/MarineC/" + config.trainingset_name
-config.testset_path = "/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/MarineC/" + config.testset_name
-# lazy purpose
+config.trainingset_path = "/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/mt314/" + config.trainingset_name
+config.testset_path = "/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/mt314/" + config.testset_name
+# lazy reason
 config.dataset_path = config.testset_path
 
 print("Training set: " + config.trainingset_path)
@@ -154,11 +155,10 @@ if config.mode == "traj_reconstruction":
 else:
     missing_data = False
 
-track_sample, track_true, ll_per_t, ll_acc\
+track_sample, track_true, log_weights, ll_per_t, ll_acc\
                                     = runners.create_eval_graph(inputs, targets,
                                                            lengths, model, config,
                                                            missing_data = missing_data)
-
 saver = tf.train.Saver()
 sess = tf.train.SingularMonitoredSession()
 import matplotlib.pyplot as plt
@@ -168,7 +168,34 @@ step = sess.run(global_step)
 #print(np.sum([np.prod(v.get_shape().as_list()) for v in tf.trainable_variables()]))
 
 
-if config.mode == "ll":
+outcomes_save_name = "results/"\
+            + config.trainingset_path.split("/")[-2] + "/"\
+            + "outcomes-"\
+            + os.path.basename(config.trainingset_name) + "-"\
+            + os.path.basename(config.testset_name) + "-"\
+            + str(config.latent_size) + ".pkl"
+
+if config.mode == "save_outcomes":
+    l_dict = []
+    for d_i in range(dataset_size):
+        D = dict()
+        print(d_i)
+        inp, tar, mmsi, log_weights_np, sample_np, true_np, ll_t =\
+                 sess.run([inputs, targets, mmsis, log_weights, track_sample, track_true, ll_per_t])
+        D["inp"] = np.nonzero(tar[:,0,:])[1].reshape(-1,4)
+        D["mmsi"] = mmsi
+        D["log_weights"] = log_weights_np
+        try: 
+            D["samples"] = np.nonzero(sample_np[:,:,:])[2].reshape(-1,4)
+        except:
+            D["samples"] = np.nonzero(sample_np[:,:,:])
+        l_dict.append(D)
+    if not os.path.exists(os.path.dirname(outcomes_save_name)):
+        os.makedirs(os.path.dirname(outcomes_save_name))
+    with open(outcomes_save_name,"wb") as f:
+        pickle.dump(l_dict,f)            
+
+elif config.mode == "ll":
     ## LL
     ###########################################################################
     v_ll = np.empty((0,))
