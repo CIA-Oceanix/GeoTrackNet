@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Copyright 2017 The TensorFlow Authors All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,6 +18,12 @@
 A script to run training for the Embedding layer of MultitaskAIS
 The code is adapted from 
 https://github.com/tensorflow/models/tree/master/research/fivo 
+=======
+"""
+A script to run training for the Embedding block of MultitaskAIS
+This code is adapted from FIVO code:
+https://github.com/tensorflow/models/tree/master/research/fivo
+>>>>>>> dd36b564a9f49dbab1c52600ca328cb616b5d68b
 """
 
 from __future__ import absolute_import
