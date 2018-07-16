@@ -124,5 +124,5 @@ We would like to thank MarineCadastre, Tensorflow team and OpenStreetmap for the
 
 ### Contact
 
-This code is a raw version of MultitaskAIS. We are sorry for not providing a clean version of the code, but it will be maintained and obtimized.
+This code is a raw version of MultitaskAIS. We are sorry for not providing a clean version of the code, but it is being maintained and obtimized.
 For any questions/issues, please contact Duong NGUYEN via van.nguyen1@imt-atlantique.fr
