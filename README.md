@@ -1,6 +1,6 @@
 # MultitaskAIS
 
-TensorFlow implementation of the model proposed in "Multi-task Learning for Maritime Traffic Surveillance from AIS Data Streams" (https://arxiv.org/abs/1806.03972)
+TensorFlow implementation of the model proposed in "Multi-task Learning for Maritime Traffic Surveillance from AIS Data Streams" (https://arxiv.org/abs/1806.03972).
 
 All the codes related to the Embedding block are adapted from the source code of Filtering Variational Objectives:
 https://github.com/tensorflow/models/tree/master/research/fivo
@@ -45,7 +45,7 @@ First we must train the Embedding layer:
 ```
 python multitaskAIS.py \
   --mode=train \
-  --logdir=/tmp/multitaskAIS \
+  --logdir=./chkpt \
   --bound=elbo \
   --summarize_every=100 \
   --latent_size=100 \
@@ -57,20 +57,62 @@ python multitaskAIS.py \
 ### Running task-specific submodels
 
 After the Embedding layer is trained, we can run task-specific blocks.
-To avoid re-caculating the $log[p(x_t|x_{1..t-1},x_{1..t-1})]$ for each tasks, we calculate them once and save as  
-To optimize the calculatetion time, we 
 
-#### Trajectory reconstruction
+## save_outcomes
+To avoid re-caculating the $log[p(x_t|x_{1..t-1},x_{1..t-1})]$ for each tasks, we calculate them once and save as .pkl file. 
+```
+python eval_multitaskAIS.py \
+  --mode=save_outcomes \
+  --logdir=./chkpt \
+  --trainingset_name=dataset8/dataset8_train.pkl \
+  --testset_name=dataset8/dataset8_valid.pkl \
+  --bound=elbo \
+  --latent_size=100 \
+  --batch_size=1 \
+  --num_samples=16 \
+``` 
+Similarly for the test set (```testset_name=dataset8/dataset8_valid.pkl```).
 
-We tested the Trajectory re
+## log_density
+*log_density* calculates the distribution of $log[p(x_t|x_{1..t-1},x_{1..t-1})]$ in each small cells of the ROI.
+```
+python eval_multitaskAIS.py \
+  --mode=save_outcomes \
+  --logdir=./chkpt \
+  --trainingset_name=dataset8/dataset8_train.pkl \
+  --testset_name=dataset8/dataset8_valid.pkl \
+  --bound=elbo \
+  --latent_size=100 \
+  --batch_size=1 \
+  --num_samples=16 \
+``` 
+
+## contrario detection
+*contrario.py* performs the contrario detection and plots the results.
+```
+python contrario.py \
+``` 
+## traj_reconstruction
+*traj_reconstruction* performs the trajectory reconstruction
+```
+python eval_multitaskAIS.py \
+  --mode=traj_reconstruction \
+  --logdir=./chkpt \
+  --trainingset_name=dataset8/dataset8_train.pkl \
+  --testset_name=dataset8/dataset8_test.pkl \
+  --bound=elbo \
+  --latent_size=100 \
+  --batch_size=1 \
+  --num_samples=16 \
+``` 
 
 
 ### Acknowledgement
 
-We would like to thank Tensorflow team and OpenStreetmap for the open-source code and data.
+We would like to thank MarineCadastre, Tensorflow team and OpenStreetmap for the open-source code and data.
 
 
 ### Contact
 
-This code is a raw version of MultitaskAIS. The code will be maintained and obtimized.
+This code is a raw version of MultitaskAIS. We are sorry for not providing a clean version of the code, it will be maintained and obtimized.
 For any questions/issues, please contact Duong NGUYEN via van.nguyen1@imt-atlantique.fr
