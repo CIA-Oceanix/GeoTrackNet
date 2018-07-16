@@ -56,13 +56,11 @@ print("LAT_RESO",LAT_RESO,"EPSILON ",CONTRARIO_EPS)
 """
 LOADING SAVED DATA
 """
-
-
 ## Loading coastline polygon. 
 # For visualisation purpose, delete this part if you do not have coastline 
 # shapfile
 coastline_filename = "/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/"\
-                     + "coastlines-split-4326/streetmap_coastline_Bretagne.pkl""
+                     + "coastlines-split-4326/streetmap_coastline_Bretagne.pkl"
 with open(coastline_filename, 'r') as f: 
     l_coastline_poly = pickle.load(f)
 
@@ -93,7 +91,7 @@ plt.tight_layout()
 
 ## Loading the parameters of the distribution in each cell (calculated by the
 # tracks in the validation set) 
-save_dir = "/homes/vnguye04/Bureau/Sanssauvegarde/Codes/Bretagne_MultitaskAIS/"\
+save_dir = "/homes/vnguye04/Bureau/Sanssauvegarde/Codes/MultitaskAIS/"\
             + "results/dataset8/log_density-dataset8_train.pkl-dataset8_valid.pkl-100/"
 m_map_ll_mean = np.load(save_dir+"map_ll_mean-"+str(LAT_RESO)+"-"+str(LON_RESO) + ".npy")
 m_map_ll_std = np.load(save_dir+"map_ll_std-"+str(LAT_RESO)+"-"+str(LON_RESO) + ".npy")
@@ -101,7 +99,7 @@ m_map_ll_std = np.load(save_dir+"map_ll_std-"+str(LAT_RESO)+"-"+str(LON_RESO) + 
 
 ## Loading the log[p(x_t|x_{1..t-1},z_{1..t-1})] of points in AIS tracks in 
 # the test set
-save_dir = "/homes/vnguye04/Bureau/Sanssauvegarde/Codes/Bretagne_MultitaskAIS/results/dataset8/"
+save_dir = "/homes/vnguye04/Bureau/Sanssauvegarde/Codes/MultitaskAIS/results/dataset8/"
 save_filename = "outcomes-dataset8_train.pkl-dataset8_test.pkl-100.pkl"
 
 with open(save_dir+save_filename,"rb") as f:
@@ -184,6 +182,10 @@ for D in l_dict_anomaly:
 ## Abnormal tracks
 d_n_anomalies = len(l_dict_anomaly)
 print("Number of abnormal tracks detected: ",len(l_dict_anomaly))
+
+if not os.path.exists(save_dir+"/contrario/"):
+    os.makedirs(save_dir+"/contrario/")
+
 save_pkl_filename = save_dir+"/contrario/"\
                     +save_filename.replace("outcomes","contrario")\
                                         +"-resolution-"+str(LAT_RESO)\
@@ -196,7 +198,7 @@ fig_name = save_dir+"/contrario/"\
             +save_filename.replace("outcomes","contrario")\
                                         +"-resolution-"+str(LAT_RESO)\
                                         +"-epsilon-"+str(CONTRARIO_EPS)\
-                                        "-"+str(d_n_anomalies)+".png"
+                                        +"-"+str(d_n_anomalies)+".png"
 plt.savefig(fig_name,dpi = FIG_DPI)
 plt.close()
 

@@ -80,8 +80,8 @@ def contrario_detection(v_A_,epsilon=0.0091):
         
     """
     v_anomalies = np.zeros(len(v_A_))
-    for d_ns in range(L,0,-1):
-        for d_ci in range(L+1-d_ns):
+    for d_ns in range(MAX_SEQUENCE_LENGTH,0,-1):
+        for d_ci in range(MAX_SEQUENCE_LENGTH+1-d_ns):
             v_xi = v_A_[d_ci:d_ci+d_ns]
             d_k_xi = int(np.count_nonzero(v_xi))
             if NFA(d_ns,d_k_xi)<epsilon:

@@ -40,7 +40,7 @@ SPEED_MAX = 30.0  # knots
 FIG_DPI = 300
 
 # Shared flags.
-tf.app.flags.DEFINE_string("mode", "traj_reconstruction",
+tf.app.flags.DEFINE_string("mode", "log_density",
                            "The mode of the binary. "
                            "'save_outcomes','ll','log_density','visualisation'"
                            "'traj_reconstruction'.")
@@ -73,7 +73,7 @@ tf.app.flags.DEFINE_string("split", "test",
                            "Split to evaluate the model on. Can be 'train', 'valid', or 'test'.")
 tf.app.flags.DEFINE_string("trainingset_name", "dataset8/dataset8_train.pkl",
                            "Path to load the trainingset from.")
-tf.app.flags.DEFINE_string("testset_name", "dataset8/dataset8_test.pkl",
+tf.app.flags.DEFINE_string("testset_name", "dataset8/dataset8_valid.pkl",
                            "Path to load the testset from.")    
 
 tf.app.flags.DEFINE_string("model", "vrnn",
