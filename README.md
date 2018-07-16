@@ -68,7 +68,7 @@ python multitaskAIS.py \
 
 After the Embedding layer is trained, we can run task-specific blocks.
 
-## save_outcomes
+##### save_outcomes
 To avoid re-caculating the $log[p(x_t|x_{1..t-1},x_{1..t-1})]$ for each tasks, we calculate them once and save as .pkl file. 
 ```
 python eval_multitaskAIS.py \
