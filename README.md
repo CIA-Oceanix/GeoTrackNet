@@ -9,9 +9,16 @@ https://github.com/tensorflow/models/tree/master/research/fivo
 The elements of the code are organized as follows:
 
 ```
-multitaskAIS.py                   # cript to train the Embedding layer
+multitaskAIS.py                   # script to train the Embedding layer
 runners.py                        # graph construction code for training and evaluation
 bounds.py                         # code for computing each bound
+eval_multitaskAIS.py              # script to run task-specific layers (except the Contrario detection)
+contrario.py                      # script to run the Contrario detection block
+contrario_utils.py
+distribution_utils.py
+nested_utils.py
+utils.py
+get_coastline_streetmap.py        # script to download the coastline shapefile
 data
 ├── datasets.py                   # readers for AIS dataset
 ├── calculate_AIS_mean.py         # calculates the mean of AIS "four-hot" vectors
@@ -19,7 +26,10 @@ data
 └── csv2pkl.py                    # loads AIS data from *.csv files 
 models
 └── vrnn.py                       # variational RNN implementation
-
+chkpt
+└── ...                           # directory to keep checkpoints and summaries in
+results
+└── ...                           # directory to save outcomes
 ```
 
 ### Datasets:
