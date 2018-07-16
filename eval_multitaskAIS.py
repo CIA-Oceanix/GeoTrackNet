@@ -14,7 +14,7 @@
 # =============================================================================
 
 """
-A script to run training for the Embedding layer of MultitaskAIS
+A script to run the task-specific blocks of MultitaskAIS
 The code is adapted from 
 https://github.com/tensorflow/models/tree/master/research/fivo 
 """
@@ -30,10 +30,10 @@ import pickle
 
 import runners as runners
 
-LAT_MIN = 26.5
-LAT_MAX = 30.0
-LON_MIN = -97.5
-LON_MAX = -87.0
+LAT_MIN = 47.0
+LAT_MAX = 50.0
+LON_MIN = -7.0
+LON_MAX = -4.0
 LAT_RANGE = LAT_MAX - LAT_MIN
 LON_RANGE = LON_MAX - LON_MIN
 SPEED_MAX = 30.0  # knots
