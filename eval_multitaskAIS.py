@@ -40,10 +40,10 @@ SPEED_MAX = 30.0  # knots
 FIG_DPI = 300
 
 # Shared flags.
-tf.app.flags.DEFINE_string("mode", "save_outcomes",
+tf.app.flags.DEFINE_string("mode", "traj_reconstruction",
                            "The mode of the binary. "
-                           "'save_outcomes','ll','visualisation','traj_speed','traj_reconstruction',"
-                           "'log_density', 'superposition_density', 'save_outcomes'.")
+                           "'save_outcomes','ll','log_density','visualisation'"
+                           "'traj_reconstruction'.")
 
 tf.app.flags.DEFINE_string("bound", "elbo",
                            "The bound to optimize. Can be 'elbo', or 'fivo'.")
@@ -397,6 +397,56 @@ elif config.mode == "visualisation":
             + ".png"
     plt.savefig(fig_name,dpi = FIG_DPI)
     plt.close()
+elif config.mode == "traj_reconstruction":
+    """ TRAJECTORY RECONSTRUCTION
+    We delete a segment of 2 hours in each tracks (in the test set), then 
+    reconstruct this part by the information embedded in the Embedding block.
+    """    
+    save_dir = "results/"\
+                + config.trainingset_path.split("/")[-2] + "/"\
+                + "traj_reconstruction-"\
+                + os.path.basename(config.trainingset_name) + "-"\
+                + os.path.basename(config.testset_name) + "-"\
+                + str(config.latent_size) + "/"
+    if not os.path.exists(save_dir):
+        os.makedirs(save_dir)
+
+    for d_i in range(dataset_size):
+        print(d_i)
+        tar, mmsi, dense_sample, ll_t, ll_tracks\
+                            = sess.run([targets, mmsis, track_sample, ll_per_t, ll_acc])
+        if len(tar) < config.min_duration:
+            continue
+        
+        sparse_tar = np.nonzero(np.squeeze(tar))[1].reshape(-1,4)
+        for d_i_sample in range(config.num_samples):
+            ## Plot received messages by blue dot, missing messages by red dot,
+            # starting position by green dot.
+            plt.figure()
+            plt.subplot(2,1,1)
+            plt.plot(sparse_tar[:,1],sparse_tar[:,0],'bo')
+            plt.plot(sparse_tar[-18:-6,1],sparse_tar[-18:-6,0],'ro')
+            plt.plot(sparse_tar[0,1],sparse_tar[0,0],'go')
+            plt.ylim([0,300])
+            plt.xlim([300,600])
+            # Zoom-in
+            plt.subplot(2,1,2)
+            plt.plot(sparse_tar[:,1],sparse_tar[:,0],'bo')
+            plt.plot(sparse_tar[-18:-6,1],sparse_tar[-18:-6,0],'ro')
+            plt.plot(sparse_tar[0,1],sparse_tar[0,0],'go')
+            ## Reconstructed positions
+            logit_lat = np.argmax(dense_sample[:,d_i_sample,0:300], axis = 1)
+            logit_lon = np.argmax(dense_sample[:,d_i_sample,300:600], axis = 1) + 300
+            plt.plot(logit_lon[1:],logit_lat[1:],'b')
+            plt.plot(logit_lon[-17:-5],logit_lat[-17:-5],'r')
+            plt.xlim([np.min(sparse_tar[:,1]) - 5, np.max(sparse_tar[:,1]) + 5])
+            plt.ylim([np.min(sparse_tar[:,0]) - 5, np.max(sparse_tar[:,0]) + 5])
+            
+            fig_name = str(d_i)+"_"+str(d_i_sample)+"_"+str(mmsi)+"_"+str(ll_t)+".png"
+            plt.savefig(os.path.join(save_dir,fig_name))
+            plt.close()
+
+
 
 #
 #elif config.mode == "traj_speed":
@@ -449,51 +499,7 @@ elif config.mode == "visualisation":
 #            plt.savefig(fig_name,dpi = FIG_DPI)
 #            plt.close()
 #
-#elif config.mode == "traj_reconstruction":
-#    ## TRAJECTORY RECONSTRUCTION
-#    ###########################################################################    
-#    save_dir = "results/"\
-#                + config.trainingset_path.split("/")[-2] + "/"\
-#                + "traj_reconstruction-"\
-#                + os.path.basename(config.trainingset_name) + "-"\
-#                + os.path.basename(config.testset_name) + "-"\
-#                + str(config.latent_size) + "/"
-#    if not os.path.exists(save_dir):
-#        os.makedirs(save_dir)
-#
-#    for d_i in range(dataset_size):
-#        print(d_i)
-#        tar, mmsi, dense_sample, ll_t, ll_tracks\
-#                            = sess.run([targets, mmsis, track_sample, ll_per_t, ll_acc])
-#        if len(inp) < config.min_duration:
-#            continue
-#        
-#        sparse_tar = np.nonzero(np.squeeze(tar))[1].reshape(-1,4)
-#    
-#        for d_i_sample in range(config.num_samples):
-#            plt.figure()
-#            plt.subplot(2,1,1)
-#            plt.plot(sparse_tar[:,1],sparse_tar[:,0],'b')
-#            plt.plot(sparse_tar[-12:-6,1],sparse_tar[-12:-6,0],'r')
-#            plt.plot(sparse_tar[0,1],sparse_tar[0,0],'go')
-#            plt.ylim([0,350])
-#            plt.xlim([350,1050])
-#            
-#            plt.subplot(2,1,2)
-#            plt.plot(sparse_tar[:,1],sparse_tar[:,0],'b')
-#            plt.plot(sparse_tar[-12:-6,1],sparse_tar[-12:-6,0],'r')
-#            plt.plot(sparse_tar[0,1],sparse_tar[0,0],'go')
-#            # Reconstructed positions
-#            logit_lat = np.argmax(dense_sample[:,d_i_sample,0:500], axis = 1)
-#            logit_lon = np.argmax(dense_sample[:,d_i_sample,500:1500], axis = 1) + 500
-#            plt.plot(logit_lon[1:],logit_lat[1:],'bo')
-#            plt.plot(logit_lon[-11:-5],logit_lat[-11:-5],'ro')
-#            plt.xlim([np.min(sparse_tar[:,1]) - 5, np.max(sparse_tar[:,1]) + 5])
-#            plt.ylim([np.min(sparse_tar[:,0]) - 5, np.max(sparse_tar[:,0]) + 5])
-#            
-#            fig_name = str(d_i)+"_"+str(d_i_sample)+"_"+str(mmsi)+"_"+str(ll_t)+".png"
-#            plt.savefig(os.path.join(save_dir,fig_name))
-#            plt.close()
+
 #    
 #    
 #elif config.mode == "log_density":
