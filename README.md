@@ -68,7 +68,7 @@ python multitaskAIS.py \
 
 After the Embedding layer is trained, we can run task-specific blocks.
 
-##### save_outcomes
+#### save_outcomes
 To avoid re-caculating the $log[p(x_t|x_{1..t-1},x_{1..t-1})]$ for each tasks, we calculate them once and save as .pkl file. 
 ```
 python eval_multitaskAIS.py \
@@ -83,7 +83,7 @@ python eval_multitaskAIS.py \
 ``` 
 Similarly for the test set (```testset_name=dataset8/dataset8_valid.pkl```).
 
-## log_density
+#### log_density
 *log_density* calculates the distribution of $log[p(x_t|x_{1..t-1},x_{1..t-1})]$ in each small cells of the ROI.
 ```
 python eval_multitaskAIS.py \
@@ -97,12 +97,12 @@ python eval_multitaskAIS.py \
   --num_samples=16 \
 ``` 
 
-## contrario detection
+#### contrario detection
 *contrario.py* performs the contrario detection and plots the results.
 ```
 python contrario.py \
 ``` 
-## traj_reconstruction
+#### traj_reconstruction
 *traj_reconstruction* performs the trajectory reconstruction.
 ```
 python eval_multitaskAIS.py \
