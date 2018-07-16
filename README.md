@@ -36,7 +36,7 @@ results
 
 The MarineC dataset is availble at [https://marinecadastre.gov/ais/]
 
-The Brittany dataset is provided by Collecte Localisation Satellites
+The Brittany dataset is provided by CLS-Collecte Localisation Satellites (https://www.cls.fr/en/)
 
 
 #### Preprocess the Data
@@ -103,7 +103,7 @@ python eval_multitaskAIS.py \
 python contrario.py \
 ``` 
 ## traj_reconstruction
-*traj_reconstruction* performs the trajectory reconstruction
+*traj_reconstruction* performs the trajectory reconstruction.
 ```
 python eval_multitaskAIS.py \
   --mode=traj_reconstruction \
@@ -124,5 +124,5 @@ We would like to thank MarineCadastre, Tensorflow team and OpenStreetmap for the
 
 ### Contact
 
-This code is a raw version of MultitaskAIS. We are sorry for not providing a clean version of the code, it will be maintained and obtimized.
+This code is a raw version of MultitaskAIS. We are sorry for not providing a clean version of the code, but it will be maintained and obtimized.
 For any questions/issues, please contact Duong NGUYEN via van.nguyen1@imt-atlantique.fr
