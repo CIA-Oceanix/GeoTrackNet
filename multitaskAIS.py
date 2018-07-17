@@ -49,11 +49,15 @@ tf.app.flags.DEFINE_integer("num_samples", 16,
                            "The number of samples (or particles) for multisample "
                            "algorithms.")
 
-tf.app.flags.DEFINE_string("split", "train",
+# Dataset flags.
+tf.app.flags.DEFINE_string("dataset", "Brittany",
                            "Split to evaluate the model on. Can be 'train', 'valid', or 'test'.")
 tf.app.flags.DEFINE_string("dataset_name", "dataset8/dataset8_train.pkl",
                            "Path to load the dataset from.")
+tf.app.flags.DEFINE_string("split", "train",
+                           "Split to evaluate the model on. Can be 'train', 'valid', or 'test'.")
 
+# Resolution flags.
 tf.app.flags.DEFINE_integer("lat_bins", 300,
                             "Length of the latitdue one-hot vectors.")
 tf.app.flags.DEFINE_integer("lon_bins", 300,
@@ -94,10 +98,15 @@ tf.app.flags.DEFINE_boolean("stagger_workers", True,
 FLAGS = tf.app.flags.FLAGS
 config = FLAGS
 config.data_dim  = config.lat_bins + config.lon_bins + config.sog_bins + config.cog_bins
-#FLAGS.dataset_path = "/users/local/dnguyen/Datasets/AIS_datasets/MarineC/2014/"\
-#                     + FLAGS.dataset_name
-config.dataset_path = "/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/mt314/"\
+
+if config.dataset == "Brittany":
+    config.dataset_path = "/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/mt314/"\
                      + FLAGS.dataset_name
+elif config.dataset == "MarineC":
+    config.dataset_path = "/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/MarineC/"\
+                     + FLAGS.dataset_name
+else:
+    raise ValueError("Unkown dataset (must be 'Brittany' or 'MarineC'.")
 
 logdir_name = "/" + config.bound + "-" + os.path.basename(config.dataset_name)\
              + "-data_dim-" + str(config.data_dim)\

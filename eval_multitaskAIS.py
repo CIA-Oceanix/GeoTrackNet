@@ -28,7 +28,7 @@ import tensorflow as tf
 import numpy as np
 import pickle
 
-import runners as runners
+import runners2 as runners
 
 LAT_MIN = 47.0
 LAT_MAX = 50.0
@@ -63,18 +63,31 @@ tf.app.flags.DEFINE_integer("num_samples", 16,
                            "algorithms.")
 tf.app.flags.DEFINE_float("ll_thresh", -10.73,
                           "Log likelihood for the anomaly detection.")
+
+# Resolution flags.
+tf.app.flags.DEFINE_integer("lat_bins", 300,
+                            "Number of bins of the lat one-hot vector")
+tf.app.flags.DEFINE_integer("lon_bins", 300,
+                            "Number of bins of the lon one-hot vector")
+tf.app.flags.DEFINE_integer("sog_bins", 30,
+                            "Number of bins of the sog one-hot vector")
+tf.app.flags.DEFINE_integer("cog_bins", 72,
+                            "Number of bins of the cog one-hot vector")
+
 tf.app.flags.DEFINE_float("anomaly_lat_reso", 0.1,
                           "Lat resolution for anomaly detection.")
 tf.app.flags.DEFINE_float("anomaly_lon_reso", 0.1,
                           "Lon resolution for anomaly detection.")
 
-
-tf.app.flags.DEFINE_string("split", "test",
-                           "Split to evaluate the model on. Can be 'train', 'valid', or 'test'.")
+# Dataset flags
+tf.app.flags.DEFINE_string("dataset", "Brittany",
+                           "Dataset. Can be 'Brittany' or 'MarineC'.")
 tf.app.flags.DEFINE_string("trainingset_name", "dataset8/dataset8_train.pkl",
                            "Path to load the trainingset from.")
 tf.app.flags.DEFINE_string("testset_name", "dataset8/dataset8_valid.pkl",
-                           "Path to load the testset from.")    
+                           "Path to load the testset from.")  
+tf.app.flags.DEFINE_string("split", "test",
+                           "Split to evaluate the model on. Can be 'train', 'valid', or 'test'.")  
 
 tf.app.flags.DEFINE_string("model", "vrnn",
                            "Model choice. Currently only 'vrnn' is supported.")
@@ -104,23 +117,16 @@ tf.app.flags.DEFINE_integer("ps_tasks", 0,
 tf.app.flags.DEFINE_boolean("stagger_workers", True,
                             "If true, bring one worker online every 1000 steps.")
 
-# Evaluation flags.
-
 
 FLAGS = tf.app.flags.FLAGS
-lat_bins = 300; lon_bins = 300; sog_bins = 30; cog_bins = 72
-FLAGS.data_dim  = lat_bins + lon_bins + sog_bins + cog_bins # error with data_dimension
 config = FLAGS
+config.data_dim  = config.lat_bins + config.lon_bins\
+                 + config.sog_bins + config.cog_bins # error with data_dimension
 
-# LOG DIR
-logdir_name = "/" + config.bound + "-"\
-             + os.path.basename(config.trainingset_name)\
-             + "-data_dim-" + str(config.data_dim)\
-             + "-latent_size-" + str(config.latent_size)\
-             + "-batch_size-50"
-config.logdir = config.log_dir + logdir_name
-if not os.path.exists(config.logdir):
-    print(config.logdir + " doesnt exist")
+if config.dataset == "Brittany":
+    config.dataset_path = "/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/mt314/"
+elif config.dataset == "MarineC":
+    config.dataset_path = "/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/MarineC/"
 
 # TESTSET_PATH
 if config.testset_name == "":
@@ -138,6 +144,16 @@ with open(config.testset_path,"rb") as f:
 dataset_size = len(Vs_test)
 
 config.min_duration *= 6 # converting from hour to sequence length
+
+# LOG DIR
+logdir_name = "/" + config.bound + "-"\
+             + os.path.basename(config.trainingset_name)\
+             + "-data_dim-" + str(config.data_dim)\
+             + "-latent_size-" + str(config.latent_size)\
+             + "-batch_size-50"
+config.logdir = config.log_dir + logdir_name
+if not os.path.exists(config.logdir):
+    raise ValueError(config.logdir + " doesnt exist")
 
 LAT_RESO = config.anomaly_lat_reso
 LON_RESO = config.anomaly_lon_reso
@@ -160,7 +176,7 @@ if config.mode == "traj_reconstruction":
 else:
     missing_data = False
 
-track_sample, track_true, log_weights, ll_per_t, ll_acc\
+track_sample, track_true, log_weights, ll_per_t, ll_acc,_,_,_\
                                     = runners.create_eval_graph(inputs, targets,
                                                            lengths, model, config,
                                                            missing_data = missing_data)

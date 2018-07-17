@@ -10,7 +10,7 @@ import numpy as np
 import tensorflow as tf
 
 import bounds
-from data import datasets
+from data import datasets as datasets
 from models import vrnn
 import nested_utils as nested
 import distribution_utils as dists
@@ -35,7 +35,7 @@ def create_eval_graph(inputs, targets, lengths, model, config, missing_data = Fa
     t0 = tf.constant(0, tf.int32)
     init_states = model.zero_state(batch_size * num_samples, tf.float32)
     
-    ta_names = ['log_weights_t','sampleds','trues']
+    ta_names = ['log_weights_t','sampleds','trues','rnn_states','rnn_latents', 'rnn_outs']
     tas = [tf.TensorArray(tf.float32, max_seq_len, name='%s_ta' % n)
              for n in ta_names]
     
@@ -81,7 +81,11 @@ def create_eval_graph(inputs, targets, lengths, model, config, missing_data = Fa
                                                                 return_value = "probs"
                                                                 )
                                                         
-        new_sample0 = dists.sample_from_probs(dists_return)
+        new_sample0 = dists.sample_from_probs(dists_return,
+                                              config.lat_bins,
+                                              config.lon_bins,
+                                              config.sog_bins,
+                                              config.cog_bins)
         new_sample0 = tf.cast(new_sample0, tf.float32)
         new_sample_ = (new_sample0, tf.zeros_like(new_sample0, dtype = tf.float32))
                                                                 
@@ -126,7 +130,8 @@ def create_eval_graph(inputs, targets, lengths, model, config, missing_data = Fa
             new_sample_ = nested.gather_tensors(new_sample_, ancestor_inds)
         
         # Update the  Tensorarrays and accumulators.
-        ta_updates = [log_alpha, new_sample_[0], new_sample_[1]]
+        ta_updates = [log_alpha, new_sample_[0], new_sample_[1],
+                                  new_state[0], new_state[1], new_rnn_out]
     #    ta_updates = [log_weights_acc, log_ess]
         new_tas = [ta.write(t, x) for ta, x in zip(tas, ta_updates)]
         
@@ -151,7 +156,8 @@ def create_eval_graph(inputs, targets, lengths, model, config, missing_data = Fa
     
     
     #log_weights, log_ess = [x.stack() for x in tas]
-    log_weights, track_sample, track_true = [x.stack() for x in tas]
+    log_weights, track_sample, track_true, \
+            rnn_state_tf, rnn_latent_tf, rnn_out_tf = [x.stack() for x in tas] 
     
     #log_weights, log_ess, resampled = [x.stack() for x in tas]
     if config.bound == "fivo":
@@ -170,7 +176,8 @@ def create_eval_graph(inputs, targets, lengths, model, config, missing_data = Fa
     ll_per_t = ll_per_seq / tf.to_float(lengths)
     #        ll_per_t = tf.reduce_mean(ll_per_seq / tf.to_float(lengths))
     #        ll_per_seq = tf.reduce_mean(ll_per_seq)
-    return track_sample, track_true, log_weights, ll_per_t, final_log_weights/tf.to_float(lengths), 
+    return track_sample, track_true, log_weights, ll_per_t, \
+            final_log_weights/tf.to_float(lengths), rnn_state_tf, rnn_latent_tf, rnn_out_tf
 
 def create_dataset_and_model(config, split, shuffle, repeat):
     
@@ -178,9 +185,13 @@ def create_dataset_and_model(config, split, shuffle, repeat):
                                                           config.split,
                                                           config.batch_size,
                                                           config.data_dim,
+                                                          config.lat_bins,
+                                                          config.lon_bins,
+                                                          config.sog_bins,
+                                                          config.cog_bins,
                                                           shuffle=shuffle,
                                                           repeat=repeat)
-        # Convert the mean of the training set to logit space so it can be used to
+    # Convert the mean of the training set to logit space so it can be used to
     # initialize the bias of the generative distribution.
     generative_bias_init = -tf.log(1. / tf.clip_by_value(mean, 0.0001, 0.9999) - 1)
     generative_distribution_class = vrnn.ConditionalBernoulliDistribution

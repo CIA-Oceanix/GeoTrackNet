@@ -29,35 +29,44 @@ LAT, LON, SOG, COG, HEADING, ROT, NAV_STT, TIMESTAMP, MMSI = range(9)
 # The default number of threads used to process data in parallel.
 DEFAULT_PARALLELISM = 12
 
-def sparse_AIS_to_dense(msgs_,num_timesteps, mmsis):
-    lat_bins = 300; lon_bins = 300; sog_bins = 30; cog_bins = 72
-    def create_dense_vect(msg,lat_bins = 300, lon_bins = 300, sog_bins = 30 ,cog_bins = 72): 
-        lat, lon, sog, cog = msg[0], msg[1], msg[2], msg[3]
-        data_dim = lat_bins + lon_bins + sog_bins + cog_bins
-        dense_vect = np.zeros(data_dim)
-        dense_vect[int(lat*lat_bins)] = 1.0
-        dense_vect[int(lon*lon_bins) + lat_bins] = 1.0
-        dense_vect[int(sog*sog_bins) + lat_bins + lon_bins] = 1.0
-        dense_vect[int(cog*cog_bins) + lat_bins + lon_bins + sog_bins] = 1.0       
-        return dense_vect
-#    msgs_[msgs_ == 1] = 0.99999
-    dense_msgs = []
-    for msg in msgs_:
-        dense_msgs.append(create_dense_vect(msg,
-                                            lat_bins = lat_bins,
-                                            lon_bins = lon_bins,
-                                            sog_bins = sog_bins,
-                                            cog_bins = cog_bins))
-    dense_msgs = np.array(dense_msgs)
-    return dense_msgs, num_timesteps, mmsis
+
 
 def create_AIS_dataset(dataset_path,
                        split,
                        batch_size,
                        data_dim,
+                       lat_bins,
+                       lon_bins,
+                       sog_bins,
+                       cog_bins,
                        num_parallel_calls=DEFAULT_PARALLELISM,
                        shuffle=True,
                        repeat=True):
+    lat_bins_ = lat_bins; lon_bins_ = lon_bins
+    sog_bins_ = sog_bins; cog_bins_ = cog_bins 
+    def sparse_AIS_to_dense(msgs_,num_timesteps, mmsis):
+#        lat_bins = 300; lon_bins = 300; sog_bins = 30; cog_bins = 72
+        def create_dense_vect(msg,lat_bins = 300, lon_bins = 300, sog_bins = 30 ,cog_bins = 72): 
+            lat, lon, sog, cog = msg[0], msg[1], msg[2], msg[3]
+            data_dim = lat_bins + lon_bins + sog_bins + cog_bins
+            dense_vect = np.zeros(data_dim)
+            dense_vect[int(lat*lat_bins)] = 1.0
+            dense_vect[int(lon*lon_bins) + lat_bins] = 1.0
+            dense_vect[int(sog*sog_bins) + lat_bins + lon_bins] = 1.0
+            dense_vect[int(cog*cog_bins) + lat_bins + lon_bins + sog_bins] = 1.0       
+            return dense_vect
+    #    msgs_[msgs_ == 1] = 0.99999
+        dense_msgs = []
+        for msg in msgs_:
+            dense_msgs.append(create_dense_vect(msg,
+                                                lat_bins = lat_bins_,
+                                                lon_bins = lon_bins_,
+                                                sog_bins = sog_bins_,
+                                                cog_bins = cog_bins_))
+        dense_msgs = np.array(dense_msgs)
+        return dense_msgs, num_timesteps, mmsis
+    
+    
     # Load the data from disk.
     with tf.gfile.Open(dataset_path, "r") as f:
         raw_data = pickle.load(f)
