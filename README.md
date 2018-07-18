@@ -34,9 +34,9 @@ results
 
 ### Datasets:
 
-The MarineC dataset is availble at [https://marinecadastre.gov/ais/]
+The MarineC dataset is provided by MarineCadastre.gov, Bureau of Ocean Energy Management, and National Oceanic and Atmospheric Administration, (marinecadastre.gov), and availble at (https://marinecadastre.gov/ais/)
 
-The Brittany dataset is provided by CLS-Collecte Localisation Satellites (https://www.cls.fr/en/)
+The Brittany dataset is provided by CLS-Collecte Localisation Satellites (https://www.cls.fr/en/) and Erwan Guegueniat, contains AIS messages captured by station receivers in Ushant, from 07/2011 to 01/2018. We provide here a set of preprocessed AIS messages (data/dataset8.zip) on which readers can re-produce the results in the paper. This set contains dynamic information of AIS tracks (LAT, LON, SOG, COG, HEADING, ROT, NAV_STT, TIMESTAMP, MMSI) from 01/2017 to 03/2017, downsampled to a resolution of 5 minutes. For the full Brittany dataset, please contact CLS (G.Hajduch, ghajduch@groupcls.com).  
 
 
 #### Preprocess the Data
@@ -119,7 +119,7 @@ python eval_multitaskAIS.py \
 
 ### Acknowledgement
 
-We would like to thank MarineCadastre, Tensorflow team and OpenStreetmap for the open-source code and data.
+We would like to thank MarineCadastre, CLS and Erwan Guegueniat, Tensorflow team and OpenStreetmap for the data and the open-source code.
 
 
 ### Contact
