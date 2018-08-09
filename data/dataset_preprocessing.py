@@ -280,7 +280,6 @@ for d_i in range(100):
         for key_Vs in Tiles[key_Tiles][d_density_max:]:
             Vs.pop(key_Vs,None)
             
-
 # Step 7bis:Train-test splitting
 ###############################################################################
 print('Train-test splitting...')

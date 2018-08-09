@@ -20,10 +20,8 @@ sys.path.append("./data/")
 dataset_path = "/users/local/dnguyen/Datasets/AIS_datasets/MarineC/MarineC_Jan2014_norm/MarineC_Jan2014_norm_train.pkl"
 import tensorflow as tf
 
-
 #lat_bins = 300; lon_bins = 300; sog_bins = 30; cog_bins = 72
 LAT_BINS = 350; LON_BINS = 1050; SOG_BINS = 30; COG_BINS = 72
-
 
 def sparse_AIS_to_dense(msgs_,num_timesteps, mmsis):
     def create_dense_vect(msg,lat_bins = 300, lon_bins = 300, sog_bins = 30 ,cog_bins = 72): 
@@ -77,4 +75,6 @@ mean = sum_all/total_ais_msg
 
 with open(dirname + "/mean.pkl","wb") as f:
     pickle.dump(mean,f)
+
+
 

@@ -99,7 +99,6 @@ FLAGS = tf.app.flags.FLAGS
 config = FLAGS
 config.data_dim  = config.lat_bins + config.lon_bins + config.sog_bins + config.cog_bins
 
-
 #### SC-PC-086  
 #if config.dataset == "Brittany":
 #    config.dataset_path = "/users/local/dnguyen/Datasets/AIS_datasets/mt314/"\
@@ -109,7 +108,6 @@ config.data_dim  = config.lat_bins + config.lon_bins + config.sog_bins + config.
 #                     + FLAGS.dataset_name
 #else:
 #    raise ValueError("Unkown dataset (must be 'Brittany' or 'MarineC'.")
-        
 
 ## Other PCs  
 if config.dataset == "Brittany":

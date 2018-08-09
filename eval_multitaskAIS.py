@@ -500,8 +500,10 @@ elif config.mode == "traj_reconstruction":
             plt.close()
 
 elif config.mode == "traj_speed":
-    ## SAVE ABNORMAL TRAJECTORY AND SPEED
-    ###########################################################################
+    """ SAVE SPEED PATTERN OF ABNORMAL TRACKS
+    Save the speed pattern of abnormal tracks detected by the global 
+    thresholding detector
+    """
     save_dirname = "results/"\
                     + config.trainingset_path.split("/")[-2] + "/"\
                     + "traj_speed-"\

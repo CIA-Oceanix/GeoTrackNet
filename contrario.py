@@ -239,7 +239,7 @@ for D in l_dict_anomaly:
     try:
         c = cmap_anomaly(float(d_i_anomaly)/(N_anomaly-1))
     except:
-        c = 'r'
+        c = 'r'on or check with
     d_i_anomaly += 1
     tmp = D["inp"]
     m_log_weights_np = D["log_weights"]
@@ -261,3 +261,5 @@ for D in l_dict_anomaly:
                                         +"-"+str(d_i_anomaly)+".png"
     plt.savefig(fig_name,dpi = FIG_DPI)
     plt.close()
+    
+

@@ -164,14 +164,3 @@ plt.show()
 with open("/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/MarineC/MarineC_Jan2014_norm/MarineC_Jan2014_norm_test_divergences.pkl","wb") as f:
     pickle.dump(Vs_divergence,f)
 
-Vs_turns = dict()    
-v_turn = np.zeros(175)
-v_turn[115:] = np.arange(60)
-for e in range(0,5):
-    Vs_turns[e] = np.copy(v_true)
-    Vs_turns[e][:,LAT] += (e)*0.0002*v_turn
-for key in Vs_turns.keys():
-    tmp = Vs_turns[key]
-    plt.plot(tmp[:,1],tmp[:,0],linewidth=1)
-with open("/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/MarineC/dataset7/dataset7_test_turns2.pkl","wb") as f:
-    pickle.dump(Vs_turns,f)
