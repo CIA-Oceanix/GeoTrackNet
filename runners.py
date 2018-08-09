@@ -15,7 +15,7 @@ from models import vrnn
 import nested_utils as nested
 import distribution_utils as dists
 
-def create_eval_graph(inputs, targets, lengths, model, config, missing_data = False):
+def create_eval_graph(inputs, targets, lengths, model, config):
     parallel_iterations=30
     swap_memory=True
     batch_size = tf.shape(lengths)[0]
@@ -68,7 +68,7 @@ def create_eval_graph(inputs, targets, lengths, model, config, missing_data = Fa
             log_weights_acc, log_p_hat_acc, kl_acc = accs
         cur_inputs, cur_mask = nested.read_tas([inputs_ta, mask_ta], t)
     
-        if missing_data:
+        if config.missing_data:
             cur_inputs = tf.cond(tf.logical_and(t < max_seq_len - 6,t >= max_seq_len - 18),
                                  lambda: while_samples, 
                                  lambda: cur_inputs)

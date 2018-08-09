@@ -40,11 +40,8 @@ with open("/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/MarineC/dataset5/datas
 ## Test set moved cyclone
 ###############################################################################
 
-with open("/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/MarineC/dataset7/dataset7_test.pkl","rb") as f:
+with open("/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/MarineC/MarineC_Jan2014_norm/MarineC_Jan2014_norm_train.pkl","rb") as f:
     Vs_test = pickle.load(f)
-
-# For dataset4_movedcyclone: because there are no cyclones whose duration > 12h in the dataset4_test, we
-# used cyclones in the dataset4_train 
 
 Vs = Vs_test
 for key in Vs.keys():
@@ -68,18 +65,15 @@ plt.ylim([0,1])
 plt.show()
 
 
-with open("/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/MarineC/dataset7/dataset7_test_movedcyclones2.pkl","wb") as f:
+with open("/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/MarineC/MarineC_Jan2014_norm/MarineC_Jan2014_norm_test_movedcyclones.pkl","wb") as f:
     pickle.dump(Vs,f)
 
 
 ## Test set only cyclone
 ###############################################################################
 
-with open("/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/MarineC/dataset7/dataset7_test.pkl","rb") as f:
+with open("/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/MarineC/MarineC_Jan2014_norm/MarineC_Jan2014_norm_train.pkl","rb") as f:
     Vs_test = pickle.load(f)
-
-# For dataset4_movedcyclone: because there are no cyclones whose duration > 12h in the dataset4_test, we
-# used cyclones in the dataset4_train 
 
 Vs = Vs_test
 for key in Vs.keys():
@@ -93,14 +87,14 @@ for key in Vs.keys():
     else:
         Vs.pop(key,None)
 
-with open("/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/MarineC/dataset7/dataset7_test_cyclones.pkl","wb") as f:
+with open("/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/MarineC/MarineC_Jan2014_norm/MarineC_Jan2014_norm_test_onlycyclones.pkl","wb") as f:
     pickle.dump(Vs,f)
 
 # Step 10: Route Divergence
 ###############################################################################
-with open("/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/MarineC/dataset7/dataset7_train.pkl","rb") as f:
+with open("/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/MarineC/MarineC_Jan2014_norm/MarineC_Jan2014_norm_train.pkl","rb") as f:
     Vs_train = pickle.load(f)
-with open("/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/MarineC/dataset7/dataset7_test0.pkl","rb") as f:
+with open("/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/MarineC/MarineC_Jan2014_norm/MarineC_Jan2014_norm_test.pkl","rb") as f:
     Vs_test = pickle.load(f)
 
 #for key in Vs.keys():
@@ -133,6 +127,7 @@ cmap = plt.cm.get_cmap('Blues')
 Vs = Vs_test
 d_i = 0
 N = len(Vs)
+l_v_true = []
 for key in Vs.keys():
     tmp = Vs[key]
     c = cmap(float(d_i)/(N-1))
@@ -142,9 +137,11 @@ for key in Vs.keys():
     lon_begin = tmp[0,LON]
     lon_end = tmp[-1,LON]
     if (lat_end < 0.38) and (lat_end > 0.35) and (lon_end <0.43) and (lon_end >0.36):
-        if int(tmp[0,MMSI]) == 368040076:
+        if int(tmp[0,MMSI]) == 538200309:
+#        if True:
             plt.plot(tmp[:,1],tmp[:,0],color='g',linewidth=2)
-            v_true = np.copy(tmp)    
+            v_true = np.copy(tmp)
+            l_v_true.append(v_true)
     else:
         plt.plot(tmp[:,1],tmp[:,0],color=c,linewidth=0.3)
 plt.xlim([0,1])
@@ -164,7 +161,7 @@ plt.xlim([0,1])
 plt.ylim([0,1])
 plt.show()
 
-with open("/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/MarineC/dataset7/dataset7_test_divergences.pkl","wb") as f:
+with open("/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/MarineC/MarineC_Jan2014_norm/MarineC_Jan2014_norm_test_divergences.pkl","wb") as f:
     pickle.dump(Vs_divergence,f)
 
 Vs_turns = dict()    

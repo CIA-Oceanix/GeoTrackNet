@@ -37,7 +37,7 @@ tf.app.flags.DEFINE_string("mode", "train",
 tf.app.flags.DEFINE_string("bound", "elbo",
                            "The bound to optimize. Can be 'elbo', or 'fivo'.")
 
-tf.app.flags.DEFINE_integer("latent_size", 100,
+tf.app.flags.DEFINE_integer("latent_size", 400,
                             "The size of the latent state of the model.")
 
 tf.app.flags.DEFINE_string("log_dir", "./chkpt",
@@ -50,17 +50,17 @@ tf.app.flags.DEFINE_integer("num_samples", 16,
                            "algorithms.")
 
 # Dataset flags.
-tf.app.flags.DEFINE_string("dataset", "Brittany",
+tf.app.flags.DEFINE_string("dataset", "MarineC",
                            "Split to evaluate the model on. Can be 'train', 'valid', or 'test'.")
-tf.app.flags.DEFINE_string("dataset_name", "dataset8/dataset8_train.pkl",
+tf.app.flags.DEFINE_string("dataset_name", "MarineC_Jan2014_norm/MarineC_Jan2014_norm_train.pkl",
                            "Path to load the dataset from.")
 tf.app.flags.DEFINE_string("split", "train",
                            "Split to evaluate the model on. Can be 'train', 'valid', or 'test'.")
 
 # Resolution flags.
-tf.app.flags.DEFINE_integer("lat_bins", 300,
+tf.app.flags.DEFINE_integer("lat_bins", 350,
                             "Length of the latitdue one-hot vectors.")
-tf.app.flags.DEFINE_integer("lon_bins", 300,
+tf.app.flags.DEFINE_integer("lon_bins", 1050,
                             "Length of the longitude one-hot vectors.")
 tf.app.flags.DEFINE_integer("sog_bins", 30,
                             "Length of the SOG one-hot vectors.")
@@ -99,6 +99,19 @@ FLAGS = tf.app.flags.FLAGS
 config = FLAGS
 config.data_dim  = config.lat_bins + config.lon_bins + config.sog_bins + config.cog_bins
 
+
+#### SC-PC-086  
+#if config.dataset == "Brittany":
+#    config.dataset_path = "/users/local/dnguyen/Datasets/AIS_datasets/mt314/"\
+#                     + FLAGS.dataset_name
+#elif config.dataset == "MarineC":
+#    config.dataset_path = "/users/local/dnguyen/Datasets/AIS_datasets/MarineC/"\
+#                     + FLAGS.dataset_name
+#else:
+#    raise ValueError("Unkown dataset (must be 'Brittany' or 'MarineC'.")
+        
+
+## Other PCs  
 if config.dataset == "Brittany":
     config.dataset_path = "/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/mt314/"\
                      + FLAGS.dataset_name
@@ -107,6 +120,7 @@ elif config.dataset == "MarineC":
                      + FLAGS.dataset_name
 else:
     raise ValueError("Unkown dataset (must be 'Brittany' or 'MarineC'.")
+
 
 logdir_name = "/" + config.bound + "-" + os.path.basename(config.dataset_name)\
              + "-data_dim-" + str(config.data_dim)\

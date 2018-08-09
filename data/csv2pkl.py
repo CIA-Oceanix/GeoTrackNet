@@ -24,12 +24,18 @@ import time
 from io import StringIO
 #import utm
 
+## Gulf of Mexico
+LAT_MIN = 27
+LAT_MAX = 30.0
+LON_MIN = -98
+LON_MAX = -88
 
-# AMERICA
-LAT_MIN = 47.0
-LAT_MAX = 50.0
-LON_MIN = -7.0
-LON_MAX = -4.0
+### Bretagne
+#LAT_MIN = 47.0
+#LAT_MAX = 50.0
+#LON_MIN = -7.0
+#LON_MAX = -4.0
+
 LAT_RANGE = LAT_MAX - LAT_MIN
 LON_RANGE = LON_MAX - LON_MIN
 SOG_MAX = 30.0  # knots
@@ -37,33 +43,61 @@ SOG_MAX = 30.0  # knots
 EPOCH = datetime(1970, 1, 1)
 LAT, LON, SOG, COG, HEADING, ROT, NAV_STT, TIMESTAMP, MMSI = range(9)
 
-# DATA PATH
-l_l_msg = []
-dataset_path = "/users/local/dnguyen/Datasets/AIS_datasets/mt314/aivdm/2017/"
-with open(os.path.join(dataset_path,"010203_position.csv"),"rb") as f:
-    csvReader = csv.reader(f)
-    csvReader.next() # skip the legend row
-    for row in csvReader:
-        utc_time = datetime.strptime(row[7], "%Y/%m/%d %H:%M:%S")
-        timestamp = (utc_time - EPOCH).total_seconds()
-        l_l_msg.append([float(row[1]),float(row[0]),
-                       float(row[3]),float(row[5]),
-                       int(row[4]),0,
-                       int(row[6]),int(timestamp),
-                       int(row[2])])
+# DATA PATH 
+l_l_msg = [] # list of AIS messages, each row is a message (list of AIS attributes)
+
+### Bretagne
+#dataset_path = "/users/local/dnguyen/Datasets/AIS_datasets/mt314/aivdm/2017/"
+#csv_filename = os.path.join(dataset_path,"010203_position.csv")
+#
+#with open(csv_filename,"rb") as f:
+#    print("Reading ", csv_filename, "...")
+#    csvReader = csv.reader(f)
+#    csvReader.next() # skip the legend row
+#    for row in csvReader:
+#        utc_time = datetime.strptime(row[7], "%Y/%m/%d %H:%M:%S")
+#        timestamp = (utc_time - EPOCH).total_seconds()
+#        l_l_msg.append([float(row[1]),float(row[0]),
+#                       float(row[3]),float(row[5]),
+#                       int(row[4]),0,
+#                       int(row[6]),int(timestamp),
+#                       int(row[2])])
+
+
+#n, bins, patches = plt.hist(m_msg[:,LAT],bins=44+np.arange(13)/2,cumulative=True)
+#np.count_nonzero(m_msg[:,LAT]>47)/float(len(m_msg))
+#np.count_nonzero(m_msg[:,LAT]<50)/float(len(m_msg))
+#
+#n, bins, patches = plt.hist(m_msg[:,LON],bins=-7+np.arange(13)/5,cumulative=True)
+#np.count_nonzero(m_msg[:,LON]>-7)/float(len(m_msg))
+#np.count_nonzero(m_msg[:,LON]<-4)/float(len(m_msg))
+#np.count_nonzero(m_msg[:,SOG]<0)/float(len(m_msg))
+#
+#np.count_nonzero(m_msg[:,SOG]>30)/float(len(m_msg))
     
-    
+## MarineC
+dataset_path = "/users/local/dnguyen/Datasets/AIS_datasets/MarineC/2014/" 
+for month in range(1,2):    
+    for zone in [14,15,16]:
+        csv_filename = dataset_path + "{0:02d}/Zone{1:02d}_2014_{0:02d}.csv".format(month,zone) 
+        with open(csv_filename, 'r') as f:
+            print("Reading ", csv_filename, "...")
+            csvReader = csv.reader(f)
+            csvReader.next() # skip the legend row
+            for row in csvReader :
+                lat = float(row[1])
+                lon = float(row[0])
+                if lat > LAT_MAX or lat < LAT_MIN or lon > LON_MAX or lon < LON_MIN:
+                    continue
+                utc_time = datetime.strptime(row[6], "%Y/%m/%d %H:%M:%S")
+                timestamp = (utc_time - EPOCH).total_seconds()
+                l_l_msg.append([lat, lon, 
+                             float(row[2]), float(row[3]),
+                             float(row[4]), int(row[5]), 
+                             int(row[7]), 
+                             int(timestamp), int(row[9])])
 m_msg = np.array(l_l_msg)        
-n, bins, patches = plt.hist(m_msg[:,LAT],bins=44+np.arange(13)/2,cumulative=True)
-np.count_nonzero(m_msg[:,LAT]>47)/float(len(m_msg))
-np.count_nonzero(m_msg[:,LAT]<50)/float(len(m_msg))
 
-n, bins, patches = plt.hist(m_msg[:,LON],bins=-7+np.arange(13)/5,cumulative=True)
-np.count_nonzero(m_msg[:,LON]>-7)/float(len(m_msg))
-np.count_nonzero(m_msg[:,LON]<-4)/float(len(m_msg))
-np.count_nonzero(m_msg[:,SOG]<0)/float(len(m_msg))
-
-np.count_nonzero(m_msg[:,SOG]>30)/float(len(m_msg))
 
 
 ## LAT LON
@@ -79,6 +113,7 @@ m_msg = m_msg[m_msg[:,SOG]>=0]
 m_msg = m_msg[m_msg[:,COG]<=360]
 # TIME
 m_msg = m_msg[m_msg[:,TIMESTAMP]>=0]
+timestamp_max = (datetime(2017, 01, 31, 23, 59, 59) - EPOCH).total_seconds()
 timestamp_max = (datetime(2017, 03, 31, 23, 59, 59) - EPOCH).total_seconds()
 m_msg = m_msg[m_msg[:,TIMESTAMP]<=timestamp_max]
 
@@ -92,12 +127,17 @@ for v_msg in m_msg:
 for key in Vs.keys():
     Vs[key] = np.array(sorted(Vs[key], key=lambda m_entry: m_entry[TIMESTAMP]))
     
-for key in Vs.keys():
-    tmp = Vs[key]
-    plt.plot(tmp[:,LON],tmp[:,LAT])
+#for key in Vs.keys():
+#    tmp = Vs[key]
+#    plt.plot(tmp[:,LON],tmp[:,LAT])
 
-print("Pickling...")        
-with open(os.path.join(dataset_path,"010203_position.pkl"),"wb") as f:
+print("Pickling...") 
+### Bretagne       
+#with open(os.path.join(dataset_path,"010203_position.pkl"),"wb") as f:
+#    pickle.dump(Vs,f)
+
+### MarineC
+with open(os.path.join(dataset_path,"01_position.pkl"),"wb") as f:
     pickle.dump(Vs,f)
 
             

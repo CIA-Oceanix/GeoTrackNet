@@ -1,6 +1,7 @@
 """
 Implementation of a simple and naive "a contrario" anomaly detectio model for 
-MultitaskAIS (TO DO: add arxiv link of the paper)
+MultitaskAIS 
+https://arxiv.org/abs/1806.03972
 
 For the "a contrario" model, please refer to:
 A. Desolneux, L. Moisan, and J.-M. Morel, From Gestalt Theory to Image Analysis, 
@@ -47,6 +48,7 @@ LON_RESO = LAT_RESO
 LAT_BIN = int(LAT_RANGE/LAT_RESO)
 LON_BIN = int(LON_RANGE/LON_RESO)
 CONTRARIO_EPS = 1e-9
+MISSING_DATA = True
 
 print("LAT_RESO",LAT_RESO,"EPSILON ",CONTRARIO_EPS)
 
@@ -91,8 +93,8 @@ plt.tight_layout()
 
 ## Loading the parameters of the distribution in each cell (calculated by the
 # tracks in the validation set) 
-save_dir = "/homes/vnguye04/Bureau/Sanssauvegarde/Codes/MultitaskAIS/"\
-            + "results/dataset8/log_density-dataset8_train.pkl-dataset8_valid.pkl-100/"
+save_dir = "/homes/vnguye04/Bureau/Sanssauvegarde/Codes/MultitaskAIS/results/"\
+            + "dataset8/log_density-dataset8_train.pkl-dataset8_valid.pkl-100-missing_data-"+str(MISSING_DATA)+"/"
 m_map_ll_mean = np.load(save_dir+"map_ll_mean-"+str(LAT_RESO)+"-"+str(LON_RESO) + ".npy")
 m_map_ll_std = np.load(save_dir+"map_ll_std-"+str(LAT_RESO)+"-"+str(LON_RESO) + ".npy")
 
@@ -100,7 +102,7 @@ m_map_ll_std = np.load(save_dir+"map_ll_std-"+str(LAT_RESO)+"-"+str(LON_RESO) + 
 ## Loading the log[p(x_t|x_{1..t-1},z_{1..t-1})] of points in AIS tracks in 
 # the test set
 save_dir = "/homes/vnguye04/Bureau/Sanssauvegarde/Codes/MultitaskAIS/results/dataset8/"
-save_filename = "outcomes-dataset8_train.pkl-dataset8_test.pkl-100.pkl"
+save_filename = "outcomes-dataset8_train.pkl-dataset8_test.pkl-100-missing_data-"+str(MISSING_DATA)+".pkl"
 
 with open(save_dir+save_filename,"rb") as f:
     l_dict = pickle.load(f)
@@ -154,7 +156,7 @@ for D in l_dict:
 #plt.close()
 
 
-# ==============================================================================
+# ==============================================================================-True
 """
 VISUALISING
 """
@@ -183,76 +185,79 @@ for D in l_dict_anomaly:
 d_n_anomalies = len(l_dict_anomaly)
 print("Number of abnormal tracks detected: ",len(l_dict_anomaly))
 
-if not os.path.exists(save_dir+"/contrario/"):
-    os.makedirs(save_dir+"/contrario/")
+if not os.path.exists(save_dir+"contrario/"):
+    os.makedirs(save_dir+"contrario/")
 
-save_pkl_filename = save_dir+"/contrario/"\
+save_pkl_filename = save_dir+"contrario/"\
                     +save_filename.replace("outcomes","contrario")\
                                         +"-resolution-"+str(LAT_RESO)\
                                         +"-epsilon-"+str(CONTRARIO_EPS)\
+                                        +"-missing_data-" + str(MISSING_DATA)\
                                         +"-"+str(d_n_anomalies)+".pkl"
 with open(save_pkl_filename,"wb") as f:
     pickle.dump(l_dict_anomaly,f)
 
-fig_name = save_dir+"/contrario/"\
+fig_name = save_dir+"contrario/"\
             +save_filename.replace("outcomes","contrario")\
                                         +"-resolution-"+str(LAT_RESO)\
                                         +"-epsilon-"+str(CONTRARIO_EPS)\
+                                        +"-missing_data-" + str(MISSING_DATA)\
                                         +"-"+str(d_n_anomalies)+".png"
 plt.savefig(fig_name,dpi = FIG_DPI)
 plt.close()
 
 
-#Vs = Vs_train
-#l_keys = Vs.keys()
-#N = len(Vs)
-#d_i_anomaly = 0
-#cmap_anomaly = plt.cm.get_cmap('autumn')
-#N_anomaly = len(l_dict_anomaly)
-#for D in l_dict_anomaly:
-#    plt.figure(figsize=(960*2/FIG_DPI, 960*2/FIG_DPI), dpi=FIG_DPI)  
-#    # Trajets in training set
-#    cmap = plt.cm.get_cmap('Blues')
-#    for d_i in range(N):
-#        key = l_keys[d_i]
-#        c = cmap(float(d_i)/(N-1))
-#        tmp = Vs[key]
-#        v_lat = tmp[:,0]*LAT_RANGE + LAT_MIN
-#        v_lon = tmp[:,1]*LON_RANGE + LON_MIN
-#        plt.plot(v_lon,v_lat,color=c,linewidth=0.8)
-#    plt.xlim([LON_MIN,LON_MAX])
-#    plt.ylim([LAT_MIN,LAT_MAX])        
-#    plt.xlabel("Longitude")
-#    plt.ylabel("Latitude") 
-#    plt.tight_layout()  
-#    
-#    # Coastlines
-#    for point in l_coastline_poly:
-#        poly = np.array(point)
-#        plt.plot(poly[:,0],poly[:,1],color="k",linewidth=0.8)
-#    
-#    # Abnormal track
-#    try:
-#        c = cmap_anomaly(float(d_i_anomaly)/(N_anomaly-1))
-#    except:
-#        c = 'r'
-#    d_i_anomaly += 1
-#    tmp = D["inp"]
-#    m_log_weights_np = D["log_weights"]
-#    tmp = tmp[12:]
-#    v_anomalies = D["anomaly_idx"]
-#    v_lat = (tmp[:,0]/300.0)*LAT_RANGE + LAT_MIN
-#    v_lon = (tmp[:,1]-300.0)/300.0*LON_RANGE + LON_MIN
+Vs = Vs_train
+l_keys = Vs.keys()
+N = len(Vs)
+d_i_anomaly = 0
+cmap_anomaly = plt.cm.get_cmap('autumn')
+N_anomaly = len(l_dict_anomaly)
+for D in l_dict_anomaly:
+    plt.figure(figsize=(960*2/FIG_DPI, 960*2/FIG_DPI), dpi=FIG_DPI)  
+    # Trajets in training set
+    cmap = plt.cm.get_cmap('Blues')
+    for d_i in range(N):
+        key = l_keys[d_i]
+        c = cmap(float(d_i)/(N-1))
+        tmp = Vs[key]
+        v_lat = tmp[:,0]*LAT_RANGE + LAT_MIN
+        v_lon = tmp[:,1]*LON_RANGE + LON_MIN
+        plt.plot(v_lon,v_lat,color=c,linewidth=0.8)
+    plt.xlim([LON_MIN,LON_MAX])
+    plt.ylim([LAT_MIN,LAT_MAX])        
+    plt.xlabel("Longitude")
+    plt.ylabel("Latitude") 
+    plt.tight_layout()  
+    
+    # Coastlines
+    for point in l_coastline_poly:
+        poly = np.array(point)
+        plt.plot(poly[:,0],poly[:,1],color="k",linewidth=0.8)
+    
+    # Abnormal track
+    try:
+        c = cmap_anomaly(float(d_i_anomaly)/(N_anomaly-1))
+    except:
+        c = 'r'
+    d_i_anomaly += 1
+    tmp = D["inp"]
+    m_log_weights_np = D["log_weights"]
+    tmp = tmp[12:]
+    v_anomalies = D["anomaly_idx"]
+    v_lat = (tmp[:,0]/300.0)*LAT_RANGE + LAT_MIN
+    v_lon = (tmp[:,1]-300.0)/300.0*LON_RANGE + LON_MIN
+    plt.plot(v_lon, v_lat, color=c,linewidth=1.5)
 #    plt.plot(v_lon, v_lat, color=c,linewidth=1.5,marker='o')
 #    plt.plot(v_lon[0],v_lat[0],color=c,linewidth=1.2,marker="x")
 #    for l_segment in contrario_utils.nonzero_segments(v_anomalies):
 #        plt.plot(v_lon[l_segment],v_lat[l_segment],color=c,linewidth=1.2,linestyle="--")
 #    for l_segment in contrario_utils.zero_segments(v_anomalies):
 #        plt.plot(v_lon[l_segment],v_lat[l_segment],color=c,linewidth=1.2,linestyle="-")   
-#    fig_name = save_dir+"/contrario/"\
-#            +save_filename.replace("outcomes","contrario")+\
-#                                        "-resolution-"+str(LAT_RESO)+\
-#                                        "-epsilon-"+str(CONTRARIO_EPS)+"-"+str(d_n_anomalies)\
-#                                        +"-"+str(d_i_anomaly)+"-2.png"
-#    plt.savefig(fig_name,dpi = FIG_DPI)
-#    plt.close()
+    fig_name = save_dir+"contrario/"\
+            +save_filename.replace("outcomes","contrario")+\
+                                        "-resolution-"+str(LAT_RESO)+\
+                                        "-epsilon-"+str(CONTRARIO_EPS)+"-"+str(d_n_anomalies)\
+                                        +"-"+str(d_i_anomaly)+".png"
+    plt.savefig(fig_name,dpi = FIG_DPI)
+    plt.close()

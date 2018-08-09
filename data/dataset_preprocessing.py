@@ -29,18 +29,18 @@ from pyproj import Geod
 geod = Geod(ellps='WGS84')
 #import utm
 
-# Golf of Mexico
-#LAT_MIN = 26.5
-#LAT_MAX = 30.0
-#LON_MIN = -97.5
-#LON_MAX = -87
+## Gulf of Mexico
+LAT_MIN = 26.5
+LAT_MAX = 30.0
+LON_MIN = -97.5
+LON_MAX = -87
 
 
 ## Bretagne
-LAT_MIN = 47.0
-LAT_MAX = 50.0
-LON_MIN = -7.0
-LON_MAX = -4.0
+#LAT_MIN = 47.0
+#LAT_MAX = 50.0
+#LON_MIN = -7.0
+#LON_MAX = -4.0
 
 LAT_RANGE = LAT_MAX - LAT_MIN
 LON_RANGE = LON_MAX - LON_MIN
@@ -50,14 +50,31 @@ EPOCH = datetime(1970, 1, 1)
 LAT, LON, SOG, COG, HEADING, ROT, NAV_STT, TIMESTAMP, MMSI = range(9)
 
 # DATA PATH
+#### Bretagne
+#dataset_path = "/users/local/dnguyen/Datasets/AIS_datasets/mt314/aivdm/2017/"
+#filename_list = [os.path.join(dataset_path,"010203_position.pkl")] 
+#dict_list = []
+#for filename in filename_list:
+#    with open(filename,"rb") as f:
+#        temp = pickle.load(f)
+#        dict_list.append(temp)
 
-dataset_path = "/users/local/dnguyen/Datasets/AIS_datasets/mt314/aivdm/2017/"
-filename_list = [os.path.join(dataset_path,"010203_position.pkl")] 
-dict_list = []
-for filename in filename_list:
+## MarineC
+data_path = "/users/local/dnguyen/Datasets/AIS_datasets/MarineC/2014/"
+dict_list = [] # List of data dictionary
+month = "01"
+zone_list = ['14','15','16']
+filename_list = []
+for zone in zone_list:
+    filename = data_path + month + "/Zone" + zone + "_2014_" + month + ".pkl"
+    filename_list.append(filename)
+    print("Loading ", filename, "...")
     with open(filename,"rb") as f:
         temp = pickle.load(f)
         dict_list.append(temp)
+
+
+
 
 ## Uncomment if you want to create shapefile
 #for Vi,zone in zip(dict_list, zone_list):
@@ -69,8 +86,10 @@ for filename in filename_list:
 ###############################################################################
 print("REMOVING ABNORMAL TIMESTAMPS AND ABNORMAL SPEEDS AND MERGING ZONES...")
 print("CHANGING BOUNDARY (LAT, LON)...")
-t_min = time.mktime(time.strptime("01/01/2017 00:00:00", "%d/%m/%Y %H:%M:%S"))
-t_max = time.mktime(time.strptime("31/03/2017 23:59:59", "%d/%m/%Y %H:%M:%S"))
+#t_min = time.mktime(time.strptime("01/01/2017 00:00:00", "%d/%m/%Y %H:%M:%S"))
+#t_max = time.mktime(time.strptime("31/03/2017 23:59:59", "%d/%m/%Y %H:%M:%S"))
+t_min = time.mktime(time.strptime("01/01/2014 00:00:00", "%d/%m/%Y %H:%M:%S"))
+t_max = time.mktime(time.strptime("31/01/2014 23:59:59", "%d/%m/%Y %H:%M:%S"))
 Vs = dict()
 for Vi,filename in zip(dict_list, filename_list):
     print(filename)
@@ -150,7 +169,7 @@ for mmsi in voyages.keys():
         voyages.pop(mmsi,None)
         error_count += 1
 tok = time.time()
-print("STEP 4: duration = ",(tok - tick)/60) # 0.33280659914 mins
+print("STEP 4: duration = ",(tok - tick)/60) # 139.685766101 mins
 
 ## STEP 5: Removing 'moored' or 'ar anchor' tracks
 ###############################################################################
@@ -222,50 +241,51 @@ for k in Data.keys():
     v[:,SOG] = v[:,SOG]/SPEED_MAX
     v[:,COG] = v[:,COG]/360.0
 
-with open("/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/mt314/dataset8/dataset8_test.pkl","wb") as f:
+with open("/users/local/dnguyen/Datasets/AIS_datasets/MarineC/MarineC_Jan2014/MarineC_Jan2014.pkl","wb") as f:
     pickle.dump(Data,f)
-    
-# Step 7bis: Density normalisation
-###############################################################################
-#with open("/users/local/dnguyen/Datasets/AIS_datasets/MarineC/2014/dataset7/dataset7_full.pkl","rb") as f:
-#    Vs = pickle.load(f)
 
-#Tiles = dict()
-#for d_i in range(10):
-#    for d_j in range(10):
-#        Tiles[str(d_i)+str(d_j)] = []   
-#for key in Vs.keys():
-#    m_V = Vs[key]
-#    lon_mean = np.mean(m_V[:,LON])
-#    lat_mean = np.mean(m_V[:,LAT])
-#    if lon_mean == 1:
-#        lon_mean = 0.99999
-#    if lat_mean == 1:
-#        lat_mean = 0.99999
-#    Tiles[str(int(lat_mean*10))+str((int(lon_mean*10)))].append(key)
-#
-#v_density = np.empty((100,))
-#for d_i in range(100):
-#    key = "{0:02d}".format(d_i)
-#    v_density[d_i] = len(Tiles[key])    
-#plt.bar(range(100),v_density)
-#plt.xlabel("Tile (lat+lon)")
-#plt.ylabel("Density (unnormalised)")
-#plt.title("Dataset2")
-#
-#d_density_max = 2500
-#for d_i in range(100):
-#    key_Tiles = "{0:02d}".format(d_i)
-#    if len(Tiles[key_Tiles]) > d_density_max:
-#        for key_Vs in Tiles[key_Tiles][d_density_max:]:
-#            Vs.pop(key_Vs,None)
+    
+## Step 7bis: Density normalisation
+##############################################################################
+with open("/users/local/dnguyen/Datasets/AIS_datasets/MarineC/MarineC_Jan2014/MarineC_Jan2014.pkl","rb") as f:
+    Vs = pickle.load(f)
+
+Tiles = dict()
+for d_i in range(10):
+    for d_j in range(10):
+        Tiles[str(d_i)+str(d_j)] = []   
+for key in Vs.keys():
+    m_V = Vs[key]
+    lon_mean = np.mean(m_V[:,LON])
+    lat_mean = np.mean(m_V[:,LAT])
+    if lon_mean == 1:
+        lon_mean = 0.99999
+    if lat_mean == 1:
+        lat_mean = 0.99999
+    Tiles[str(int(lat_mean*10))+str((int(lon_mean*10)))].append(key)
+
+v_density = np.empty((100,))
+for d_i in range(100):
+    key = "{0:02d}".format(d_i)
+    v_density[d_i] = len(Tiles[key])    
+plt.bar(range(100),v_density)
+plt.xlabel("Tile (lat+lon)")
+plt.ylabel("Density (unnormalised)")
+plt.title("Dataset2")
+
+d_density_max = 1000
+for d_i in range(100):
+    key_Tiles = "{0:02d}".format(d_i)
+    if len(Tiles[key_Tiles]) > d_density_max:
+        for key_Vs in Tiles[key_Tiles][d_density_max:]:
+            Vs.pop(key_Vs,None)
             
 
 # Step 7bis:Train-test splitting
 ###############################################################################
 print('Train-test splitting...')
 
-Vs = Data
+#Vs = Data
 v_all_idx = np.random.permutation(len(Vs))
 l_keys = Vs.keys()
 Vs_train = dict()
@@ -281,9 +301,9 @@ for d_i in v_all_idx[int(len(Vs)*0.9):]:
     key = l_keys[d_i]
     Vs_test[key] = Vs[key]
     
-with open("/users/local/dnguyen/Datasets/AIS_datasets/mt314/aivdm/2017/dataset8/dataset8_train.pkl","wb") as f:
+with open("/users/local/dnguyen/Datasets/AIS_datasets/MarineC/MarineC_Jan2014_Norm/MarineC_Jan2014_Norm_train.pkl","wb") as f:
     pickle.dump(Vs_train,f)
-with open("/users/local/dnguyen/Datasets/AIS_datasets/mt314/aivdm/2017/dataset8/dataset8_valid.pkl","wb") as f:
+with open("/users/local/dnguyen/Datasets/AIS_datasets/MarineC/MarineC_Jan2014_Norm/MarineC_Jan2014_Norm_valid.pkl","wb") as f:
     pickle.dump(Vs_valid,f)
-with open("/users/local/dnguyen/Datasets/AIS_datasets/mt314/aivdm/2017/dataset8/dataset8_test.pkl","wb") as f:
+with open("/users/local/dnguyen/Datasets/AIS_datasets/MarineC/MarineC_Jan2014_Norm/MarineC_Jan2014_Norm_test.pkl","wb") as f:
     pickle.dump(Vs_test,f)

@@ -28,27 +28,38 @@ import tensorflow as tf
 import numpy as np
 import pickle
 
-import runners2 as runners
+import runners
 
-LAT_MIN = 47.0
-LAT_MAX = 50.0
-LON_MIN = -7.0
-LON_MAX = -4.0
+
+### Bretagne
+#LAT_MIN = 47.0
+#LAT_MAX = 50.0
+#LON_MIN = -7.0
+#LON_MAX = -4.0
+
+
+## Gulf of Mexico
+LAT_MIN = 26.5
+LAT_MAX = 30.0
+LON_MIN = -97.5
+LON_MAX = -87
+
+
 LAT_RANGE = LAT_MAX - LAT_MIN
 LON_RANGE = LON_MAX - LON_MIN
 SPEED_MAX = 30.0  # knots
 FIG_DPI = 300
 
 # Shared flags.
-tf.app.flags.DEFINE_string("mode", "log_density",
+tf.app.flags.DEFINE_string("mode", "traj_speed",
                            "The mode of the binary. "
                            "'save_outcomes','ll','log_density','visualisation'"
-                           "'traj_reconstruction'.")
+                           "'traj_reconstruction' or 'traj_speed'.")
 
 tf.app.flags.DEFINE_string("bound", "elbo",
                            "The bound to optimize. Can be 'elbo', or 'fivo'.")
 
-tf.app.flags.DEFINE_integer("latent_size", 100,
+tf.app.flags.DEFINE_integer("latent_size", 400,
                             "The size of the latent state of the model.")
 
 tf.app.flags.DEFINE_string("log_dir", "./chkpt",
@@ -61,13 +72,13 @@ tf.app.flags.DEFINE_integer("min_duration", 4,
 tf.app.flags.DEFINE_integer("num_samples", 16,
                            "The number of samples (or particles) for multisample "
                            "algorithms.")
-tf.app.flags.DEFINE_float("ll_thresh", -10.73,
+tf.app.flags.DEFINE_float("ll_thresh", -17.47,
                           "Log likelihood for the anomaly detection.")
 
 # Resolution flags.
-tf.app.flags.DEFINE_integer("lat_bins", 300,
+tf.app.flags.DEFINE_integer("lat_bins", 350,
                             "Number of bins of the lat one-hot vector")
-tf.app.flags.DEFINE_integer("lon_bins", 300,
+tf.app.flags.DEFINE_integer("lon_bins", 1050,
                             "Number of bins of the lon one-hot vector")
 tf.app.flags.DEFINE_integer("sog_bins", 30,
                             "Number of bins of the sog one-hot vector")
@@ -80,14 +91,17 @@ tf.app.flags.DEFINE_float("anomaly_lon_reso", 0.1,
                           "Lon resolution for anomaly detection.")
 
 # Dataset flags
-tf.app.flags.DEFINE_string("dataset", "Brittany",
+tf.app.flags.DEFINE_string("dataset", "MarineC",
                            "Dataset. Can be 'Brittany' or 'MarineC'.")
-tf.app.flags.DEFINE_string("trainingset_name", "dataset8/dataset8_train.pkl",
+tf.app.flags.DEFINE_string("trainingset_name", "MarineC_Jan2014_norm/MarineC_Jan2014_norm_train.pkl",
                            "Path to load the trainingset from.")
-tf.app.flags.DEFINE_string("testset_name", "dataset8/dataset8_valid.pkl",
+tf.app.flags.DEFINE_string("testset_name", "MarineC_Jan2014_norm/MarineC_Jan2014_norm_test.pkl",
                            "Path to load the testset from.")  
-tf.app.flags.DEFINE_string("split", "test",
+tf.app.flags.DEFINE_string("split", "train",
                            "Split to evaluate the model on. Can be 'train', 'valid', or 'test'.")  
+tf.app.flags.DEFINE_boolean("missing_data", True,
+                           "If true, a part of input track will be deleted.")  
+
 
 tf.app.flags.DEFINE_string("model", "vrnn",
                            "Model choice. Currently only 'vrnn' is supported.")
@@ -123,16 +137,29 @@ config = FLAGS
 config.data_dim  = config.lat_bins + config.lon_bins\
                  + config.sog_bins + config.cog_bins # error with data_dimension
 
+
+### SC-PC-086    
+#if config.dataset == "Brittany":
+#    config.dataset_path = "/users/local/dnguyen/Datasets/AIS_datasets/mt314/"
+#elif config.dataset == "MarineC":
+#    config.dataset_path = "/users/local/dnguyen/Datasets/AIS_datasets/MarineC/"
+#else:
+#    raise ValueError("Unkown dataset (must be 'Brittany' or 'MarineC'.")
+
+### Other PCs  
 if config.dataset == "Brittany":
     config.dataset_path = "/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/mt314/"
 elif config.dataset == "MarineC":
     config.dataset_path = "/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/MarineC/"
-
+else:
+    raise ValueError("Unkown dataset (must be 'Brittany' or 'MarineC'.")
+    
+    
 # TESTSET_PATH
 if config.testset_name == "":
     config.testset_name = config.trainingset_name.replace("_train","_test")
-config.trainingset_path = "/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/mt314/" + config.trainingset_name
-config.testset_path = "/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/mt314/" + config.testset_name
+config.trainingset_path = config.dataset_path + config.trainingset_name
+config.testset_path = config.dataset_path + config.testset_name
 # lazy reason
 config.dataset_path = config.testset_path
 
@@ -161,7 +188,7 @@ LAT_BIN = int(LAT_RANGE/LAT_RESO)
 LON_BIN = int(LON_RANGE/LON_RESO)
 
 """
-run_eval()
+run_eval() 
 #*************************************#
 """
 tf.Graph().as_default()
@@ -172,14 +199,13 @@ inputs, targets, mmsis, lengths, model = runners.create_dataset_and_model(config
                                                            repeat=False)
 
 if config.mode == "traj_reconstruction":
-    missing_data = True
-else:
-    missing_data = False
+    config.missing_data = True
+#else:
+#    config.missing_data = False
 
 track_sample, track_true, log_weights, ll_per_t, ll_acc,_,_,_\
                                     = runners.create_eval_graph(inputs, targets,
-                                                           lengths, model, config,
-                                                           missing_data = missing_data)
+                                                           lengths, model, config)
 saver = tf.train.Saver()
 sess = tf.train.SingularMonitoredSession()
 import matplotlib.pyplot as plt
@@ -194,8 +220,12 @@ outcomes_save_name = "results/"\
             + "outcomes-"\
             + os.path.basename(config.trainingset_name) + "-"\
             + os.path.basename(config.testset_name) + "-"\
-            + str(config.latent_size) + ".pkl"
-
+            + str(config.latent_size)\
+            + "-missing_data-" + str(config.missing_data)\
+            + ".pkl"
+if not os.path.exists(os.path.dirname(outcomes_save_name)):
+    os.makedirs(os.path.dirname(outcomes_save_name))
+    
 if config.mode == "save_outcomes":
     """ SAVE_OUTCOMES
     Calculate and save the log[p(x_t|x_{1..t-1},x_{1..t-1})] of each track in
@@ -215,8 +245,6 @@ if config.mode == "save_outcomes":
         except:
             D["samples"] = np.nonzero(sample_np[:,:,:])
         l_dict.append(D)
-    if not os.path.exists(os.path.dirname(outcomes_save_name)):
-        os.makedirs(os.path.dirname(outcomes_save_name))
     with open(outcomes_save_name,"wb") as f:
         pickle.dump(l_dict,f)            
 
@@ -258,6 +286,7 @@ elif config.mode == "ll":
             + os.path.basename(config.testset_name)\
             + "-latent_size-" + str(config.latent_size)\
             + "-ll_thresh" + str(d_thresh)\
+            + "-missing_data-" + str(config.missing_data)\
             + ".png"
     plt.savefig(fig_name,dpi = FIG_DPI)
     plt.close()
@@ -286,7 +315,7 @@ elif config.mode == "log_density":
         log_weights_np = D["log_weights"]
         for d_timestep in range(2*6,len(tmp)):
             row = int(tmp[d_timestep,0]*0.01/LAT_RESO)
-            col = int((tmp[d_timestep,1]-300)*0.01/LON_RESO)
+            col = int((tmp[d_timestep,1]-config.lat_bins)*0.01/LON_RESO)
             Map_ll[str(row)+","+str(col)].append(np.mean(log_weights_np[d_timestep,:,:]))
             
     def remove_gaussian_outlier(v_data,quantile=1.64):
@@ -310,14 +339,15 @@ elif config.mode == "log_density":
                 + "log_density-"\
                 + os.path.basename(config.trainingset_name) + "-"\
                 + os.path.basename(config.testset_name) + "-"\
-                + str(config.latent_size) + "/"
+                + str(config.latent_size) + "-"\
+                + "missing_data-" + str(config.missing_data) + "/"
     if not os.path.exists(save_dir):
         os.makedirs(save_dir)
     np.save(save_dir+"map_density-"+str(LAT_RESO)+"-"+str(LON_RESO),m_map_density)
     np.save(save_dir+"map_ll_mean-"+str(LAT_RESO)+"-"+str(LON_RESO),m_map_ll_mean)
     np.save(save_dir+"map_ll_std-"+str(LAT_RESO)+"-"+str(LON_RESO),m_map_ll_std)
     
-    with open(os.path.join(save_dir,"map_ll"+str(LAT_RESO)+"-"+str(LON_RESO)+".pkl"),"wb") as f:
+    with open(os.path.join(save_dir,"map_ll-"+str(LAT_RESO)+"-"+str(LON_RESO)+".pkl"),"wb") as f:
         pickle.dump(Map_ll,f)
 
 elif config.mode == "visualisation":
@@ -329,64 +359,70 @@ elif config.mode == "visualisation":
     """
     # Plot trajectories in the training set
     with open(config.trainingset_path,"rb") as f:
-        Vs = pickle.load(f)
+        Vs_train = pickle.load(f)
     with open(config.testset_path,"rb") as f:
        Vs_test = pickle.load(f)
     
-#    for key in Vs_test.keys():
-#        tmp = Vs_test[key]
+#    plt.figure(figsize=(960*2/FIG_DPI, 960*2/FIG_DPI), dpi=FIG_DPI)  
+#    cmap = plt.cm.get_cmap('Blues')
+#    l_keys = Vs_train.keys()
+#    N = len(Vs_train)
+#    for d_i in range(N):
+#        key = l_keys[d_i]
+#        c = cmap(float(d_i)/(N-1))
+#        tmp = Vs_train[key]
 #        v_lat = tmp[:,0]*LAT_RANGE + LAT_MIN
 #        v_lon = tmp[:,1]*LON_RANGE + LON_MIN
-#        plt.plot(v_lon,v_lat)
+#        plt.plot(v_lon,v_lat,color=c,linewidth=0.3)
+#    plt.xlabel("Longitude")
+#    plt.ylabel("Latitude")
     
-    plt.figure(figsize=(960*2/FIG_DPI, 960*2/FIG_DPI), dpi=FIG_DPI)  
-    cmap = plt.cm.get_cmap('Blues')
-    l_keys = Vs.keys()
-    N = len(Vs)
+    plt.figure(figsize=(1440*2/FIG_DPI, 480*2/FIG_DPI), dpi=FIG_DPI)  
+#    cmap = plt.cm.get_cmap('Blues')
+    l_keys = Vs_train.keys()
+    N = len(Vs_train)
     for d_i in range(N):
         key = l_keys[d_i]
-        c = cmap(float(d_i)/(N-1))
-        tmp = Vs[key]
+#        c = cmap(float(d_i)/(N-1))
+        tmp = Vs_train[key]
         v_lat = tmp[:,0]*LAT_RANGE + LAT_MIN
         v_lon = tmp[:,1]*LON_RANGE + LON_MIN
-        plt.plot(v_lon,v_lat,color=c,linewidth=0.3)
+#        plt.plot(v_lon,v_lat,color=c,linewidth=0.3)
+        plt.plot(v_lon,v_lat,color='b',linewidth=0.3)
     plt.xlabel("Longitude")
     plt.ylabel("Latitude")
     
-    config.ll_thresh
     # Load the outcomes of the embedding layer
     with open(outcomes_save_name,"rb") as f:
         l_dict = pickle.load(f)
 
     v_ll = np.empty((0,))
     v_mmsi = np.empty((0,))    
-    for D in l_dict:
-        tar = D["inp"]
-        log_weights_np = D["log_weights"]
-        ll_t = np.mean(log_weights_np)
-        if len(tar) < config.min_duration:
-            continue
-        tmp = tar
-        v_lat = (tmp[:,0]/300.)*LAT_RANGE + LAT_MIN
-        v_lon = (tmp[:,1]-300)/300.*LON_RANGE + LON_MIN
-        v_ll = np.concatenate((v_ll,[ll_t]))
-        ll_stable = np.array([np.mean(log_weights_np[2*6,:,:])])
-        if config.mode == "superposition_stable":
-            ll_track = ll_stable
-        else:
-            ll_track = ll_t
-        if ll_track >= config.ll_thresh:
-            plt.plot(v_lon,v_lat,color='g',linewidth=0.3)
+#    for D in l_dict:
+#        m_tar = D["inp"]
+#        log_weights_np = D["log_weights"]
+#        ll_t = np.mean(log_weights_np)
+#        if len(m_tar) < config.min_duration:
+#            continue
+#        v_lat = (m_tar[:,0]/float(config.lat_bins))*LAT_RANGE + LAT_MIN
+#        v_lon = (m_tar[:,1]-float(config.lat_bins))/config.lon_bins*LON_RANGE + LON_MIN
+#        v_ll = np.concatenate((v_ll,[ll_t]))
+#        ll_stable = np.array([np.mean(log_weights_np[2*6,:,:])])
+#        if config.mode == "superposition_stable":
+#            ll_track = ll_stable
+#        else:
+#            ll_track = ll_t
+#        if ll_track >= config.ll_thresh:
+#            plt.plot(v_lon,v_lat,color='g',linewidth=0.3)
 
     for D in l_dict:
-        tar = D["inp"]
+        m_tar = D["inp"]
         log_weights_np = D["log_weights"]
         ll_t = np.mean(log_weights_np)
-        if len(tar) < config.min_duration:
+        if len(m_tar) < config.min_duration:
             continue
-        tmp = tar
-        v_lat = (tmp[:,0]/300.)*LAT_RANGE + LAT_MIN
-        v_lon = (tmp[:,1]-300)/300.*LON_RANGE + LON_MIN
+        v_lat = (m_tar[:,0]/float(config.lat_bins))*LAT_RANGE + LAT_MIN
+        v_lon = (m_tar[:,1]-float(config.lat_bins))/config.lon_bins*LON_RANGE + LON_MIN
         v_ll = np.concatenate((v_ll,[ll_t]))
         ll_stable = np.array([np.mean(log_weights_np[2*6,:,:])])
         if config.mode == "superposition_stable":
@@ -394,7 +430,7 @@ elif config.mode == "visualisation":
         else:
             ll_track = ll_t
         if ll_track < config.ll_thresh:
-            plt.plot(v_lon,v_lat,color='r',linewidth=0.5)
+            plt.plot(v_lon,v_lat,color='r',linewidth=0.8)
 
     plt.xlim([LON_MIN,LON_MAX])
     plt.ylim([LAT_MIN,LAT_MAX])        
@@ -409,7 +445,8 @@ elif config.mode == "visualisation":
             + os.path.basename(config.trainingset_name) + "-"\
             + os.path.basename(config.testset_name)\
             + "-latent_size-" + str(config.latent_size)\
-            + "-ll_thresh" + str(config.ll_thresh)\
+            + "-ll_thresh" + str(config.ll_thresh) + "-"\
+            + "missing_data-" + str(config.missing_data)\
             + ".png"
     plt.savefig(fig_name,dpi = FIG_DPI)
     plt.close()
@@ -423,7 +460,7 @@ elif config.mode == "traj_reconstruction":
                 + "traj_reconstruction-"\
                 + os.path.basename(config.trainingset_name) + "-"\
                 + os.path.basename(config.testset_name) + "-"\
-                + str(config.latent_size) + "/"
+                + "-latent_size-" + str(config.latent_size)
     if not os.path.exists(save_dir):
         os.makedirs(save_dir)
 
@@ -443,16 +480,16 @@ elif config.mode == "traj_reconstruction":
             plt.plot(sparse_tar[:,1],sparse_tar[:,0],'bo')
             plt.plot(sparse_tar[-18:-6,1],sparse_tar[-18:-6,0],'ro')
             plt.plot(sparse_tar[0,1],sparse_tar[0,0],'go')
-            plt.ylim([0,300])
-            plt.xlim([300,600])
+            plt.ylim([0,config.lat_bins])
+            plt.xlim([config.lat_bins,config.lat_bins+config.lon_bins])
             # Zoom-in
             plt.subplot(2,1,2)
             plt.plot(sparse_tar[:,1],sparse_tar[:,0],'bo')
             plt.plot(sparse_tar[-18:-6,1],sparse_tar[-18:-6,0],'ro')
             plt.plot(sparse_tar[0,1],sparse_tar[0,0],'go')
             ## Reconstructed positions
-            logit_lat = np.argmax(dense_sample[:,d_i_sample,0:300], axis = 1)
-            logit_lon = np.argmax(dense_sample[:,d_i_sample,300:600], axis = 1) + 300
+            logit_lat = np.argmax(dense_sample[:,d_i_sample,0:config.lat_bins], axis = 1)
+            logit_lon = np.argmax(dense_sample[:,d_i_sample,config.lat_bins:config.lat_bins+config.lon_bins], axis = 1) + config.lat_bins
             plt.plot(logit_lon[1:],logit_lat[1:],'b')
             plt.plot(logit_lon[-17:-5],logit_lat[-17:-5],'r')
             plt.xlim([np.min(sparse_tar[:,1]) - 5, np.max(sparse_tar[:,1]) + 5])
@@ -462,157 +499,60 @@ elif config.mode == "traj_reconstruction":
             plt.savefig(os.path.join(save_dir,fig_name))
             plt.close()
 
+elif config.mode == "traj_speed":
+    ## SAVE ABNORMAL TRAJECTORY AND SPEED
+    ###########################################################################
+    save_dirname = "results/"\
+                    + config.trainingset_path.split("/")[-2] + "/"\
+                    + "traj_speed-"\
+                    + os.path.basename(config.trainingset_name) + "-"\
+                    + os.path.basename(config.testset_name) + "-"\
+                    + str(config.latent_size) + "-"\
+                    + str(-config.ll_thresh) + "/"
+    if not os.path.exists(save_dirname):
+        os.makedirs(save_dirname)
+    v_ll = np.empty((0,))
+    m_abnormals = []
+    
+    with open(outcomes_save_name,"rb") as f:
+        l_dict = pickle.load(f) 
+    d_i = -1
+    for D in l_dict:
+        d_i += 1
+        mmsi = D["mmsi"]
+        m_tar = D["inp"]
+        log_weights_np = D["log_weights"]
+        ll_t = np.mean(log_weights_np)
+        if len(m_tar) < config.min_duration:
+            continue
+        v_lat = (m_tar[:,0]/float(config.lat_bins))*LAT_RANGE + LAT_MIN
+        v_lon = (m_tar[:,1]-float(config.lat_bins))/config.lon_bins*LON_RANGE + LON_MIN
+        
+        if (ll_t < config.ll_thresh):
+#            plt.figure(figsize=(960*2.5/FIG_DPI, 640*2.5/FIG_DPI), dpi=FIG_DPI)
+            plt.figure(figsize=(960*2.5/FIG_DPI, 800*2.5/FIG_DPI), dpi=FIG_DPI)
+            plt.subplot(2,1,1)
+            plt.plot(v_lon,v_lat,'r')
+#            v_ll = np.concatenate((v_ll,[ll_t]))
+#            m_abnormals.append(m_tar[:,2]-(config.lat_bins+config.lon_bins))
+            print("Log likelihood: ",ll_t)
+            plt.xlim([LON_MIN,LON_MAX])
+            plt.ylim([LAT_MIN,LAT_MAX])        
+            plt.xlabel("Longitude")
+            plt.ylabel("Latitude")
+            plt.title("Abnormal track")
+            plt.tight_layout()
+            
+            plt.subplot(2,1,2)
+            v_x_axis = np.arange(len(m_tar))/6
+            plt.plot(v_x_axis,m_tar[:,2]-(config.lat_bins+config.lon_bins),'ro')
+            plt.ylim([0,30])
+            plt.xlim([0,len(m_tar)/6])
+            plt.ylabel("Speed over ground")
+            plt.xlabel("Time (hour)")
+            plt.tight_layout()
+            fig_name = save_dirname + str(d_i)+ '_'+ str(int(mmsi))+'_'+str(ll_t)+'.png'
+            plt.savefig(fig_name,dpi = FIG_DPI)
+            plt.close()
 
 
-#
-#elif config.mode == "traj_speed":
-#    ## SAVE ABNORMAL TRAJECTORY AND SPEED
-#    ###########################################################################
-#    save_dirname = "results/"\
-#                    + config.trainingset_path.split("/")[-2] + "/"\
-#                    + "anomalies-"\
-#                    + os.path.basename(config.trainingset_name) + "-"\
-#                    + os.path.basename(config.testset_name) + "-"\
-#                    + str(config.latent_size) + "-"\
-#                    + str(-config.ll_thresh) + "/"
-#    if not os.path.exists(save_dirname):
-#        os.makedirs(save_dirname)
-#    v_ll = np.empty((0,))
-#    m_abnormals = []
-#    d_i = 0
-#    
-#    while (d_i < dataset_size):
-#        d_i += 1
-#        print(d_i)
-#        inp, tar, mmsi, midi_sample, midi_true, ll_t =\
-#                 sess.run([inputs, targets, mmsis, track_sample, track_true, ll_per_t])
-#        if len(inp) < config.min_duration:
-#            continue
-#        tmp = np.nonzero(np.squeeze(tar)[:,:1400])[1].reshape(-1,2)
-#        v_lat = (tmp[:,0]/350.)*LAT_RANGE + LAT_MIN
-#        v_lon = (tmp[:,1]-350)/1050.*LON_RANGE + LON_MIN
-#    #    v_ll = np.concatenate((v_ll,ll_t))
-#        if (ll_t < config.ll_thresh):
-#            plt.figure(figsize=(960*2/FIG_DPI, 640*2/FIG_DPI), dpi=FIG_DPI)   
-#            plt.subplot(2,1,1)
-#            plt.plot(v_lon,v_lat,'r')
-#            v_ll = np.concatenate((v_ll,ll_t))
-#            m_abnormals.append(np.nonzero(np.squeeze(tar))[-1].reshape(-1,4))
-#            print("Log likelihood: ",ll_t)
-#            plt.xlim([LON_MIN,LON_MAX])
-#            plt.ylim([LAT_MIN,LAT_MAX])        
-#            plt.xlabel("Longitude")
-#            plt.ylabel("Latitude")
-#            plt.title("Abnormal tracks")
-#            plt.tight_layout()
-#            
-#            plt.subplot(2,1,2)
-#            plt.plot((m_abnormals[-1][:,2]-1400),'o')
-#            plt.ylim([0,30])
-#            plt.ylabel("Speed over ground")
-#            plt.tight_layout()
-#            fig_name = save_dirname + str(d_i)+ '_'+ str(int(mmsi))+'_'+str(ll_t)+'.png'
-#            plt.savefig(fig_name,dpi = FIG_DPI)
-#            plt.close()
-#
-
-#    
-#    
-#elif config.mode == "log_density":
-#    ## 	SUPERPOSITION OF ANOMALY DETECTION
-#    ###########################################################################
-#    m_density_map = np.zeros(shape=(350,1050))
-#    m_ll_acc_map = np.zeros(shape=(350,1050))
-#    v_ll = np.empty((0,))
-#    v_mmsi = np.empty((0,))
-#    
-#    for d_i in range(dataset_size):
-#        print(d_i)
-#        inp, tar, mmsi, midi_sample, midi_true, ll_t =\
-#                 sess.run([inputs, targets, mmsis, track_sample, track_true, ll_per_t])
-#        if len(inp) < config.min_duration:
-#            continue
-#        tmp = np.nonzero(np.squeeze(tar)[:,:1400])[1].reshape(-1,2)
-#        row = int(np.mean(tmp[:,0]))
-#        col = int(np.mean(tmp[:,1]))-350
-#        m_density_map[row,col] += 1
-#        m_ll_acc_map[row,col] += ll_t
-#    m_log_mean_map = np.divide(m_ll_acc_map, 
-#                               m_density_map, 
-#                               out=np.zeros_like(m_ll_acc_map), 
-#                               where=m_density_map!=0)
-#    save_dir = "results/"\
-#                + config.trainingset_path.split("/")[-2] + "/"\
-#                + "log_density-"\
-#                + os.path.basename(config.trainingset_name) + "-"\
-#                + os.path.basename(config.testset_name) + "-"\
-#                + str(config.latent_size) + "/"
-#    if not os.path.exists(save_dir):
-#        os.makedirs(save_dir)
-#    np.save(save_dir+"density_map",m_density_map)
-#    np.save(save_dir+"ll_acc_map",m_ll_acc_map)
-#    np.save(save_dir+"log_mean_map",m_log_mean_map)
-#    
-#elif config.mode == "superposition_density":
-#    ## 	SUPERPOSITION OF ANOMALY DETECTION
-#    ###########################################################################
-#    save_dir = "results/"\
-#            + config.trainingset_path.split("/")[-2] + "/"\
-#            + "log_density-"\
-#            + os.path.basename(config.trainingset_name) + "-"\
-#            + str(config.latent_size) + "/"
-#    m_log_mean_map = np.load(save_dir+"log_mean_map.npy")
-#
-#    with open(config.trainingset_path.replace("_test","_train"),"rb") as f:
-#        Vs = pickle.load(f)
-#
-#    plt.figure(figsize=(1920*2/FIG_DPI, 640*2/FIG_DPI), dpi=FIG_DPI)  
-#    #cmap = plt.cm.get_cmap('YlGnBu')
-#    cmap = plt.cm.get_cmap('Blues')
-#    l_keys = Vs.keys()
-#    N = len(Vs)
-#    for d_i in range(N):
-#        key = l_keys[d_i]
-#        c = cmap(float(d_i)/(N-1))
-#        tmp = Vs[key]
-#        v_lat = tmp[:,0]*LAT_RANGE + LAT_MIN
-#        v_lon = tmp[:,1]*LON_RANGE + LON_MIN
-#        plt.plot(v_lon,v_lat,color=c,linewidth=0.3)
-#        
-#    v_ll = np.empty((0,))
-#    v_mmsi = np.empty((0,))
-#    
-#    for d_i in range(dataset_size):
-#        print(d_i)
-#        inp, tar, mmsi, midi_sample, midi_true, ll_t =\
-#                 sess.run([inputs, targets, mmsis, track_sample, track_true, ll_per_t])
-#        if len(inp) < config.min_duration:
-#            continue
-#        tmp = np.nonzero(np.squeeze(tar)[:,:1400])[1].reshape(-1,2)
-#        row = int(np.mean(tmp[:,0]))
-#        col = int(np.mean(tmp[:,1]))-350
-#        v_lat = (tmp[:,0]/350.)*LAT_RANGE + LAT_MIN
-#        v_lon = (tmp[:,1]-350)/1050.*LON_RANGE + LON_MIN
-#        v_ll = np.concatenate((v_ll,ll_t))
-#        if ll_t < (m_log_mean_map[row,col]+config.minus_log):
-#            plt.plot(v_lon,v_lat,color='r',linewidth=0.8)
-#            v_ll = np.concatenate((v_ll,ll_t))
-#            v_mmsi = np.concatenate((v_mmsi,mmsi))
-#        else:
-#            plt.plot(v_lon,v_lat,color='y',linewidth=0.8)
-#    plt.xlim([LON_MIN,LON_MAX])
-#    plt.ylim([LAT_MIN,LAT_MAX])        
-#    plt.xlabel("Longitude")
-#    plt.ylabel("Latitude")
-#    plt.title("Abnormal tracks in the test set (red)")
-#    plt.tight_layout()  
-#    fig_name = "results/"\
-#            + config.trainingset_path.split("/")[-2] + "/" \
-#            + config.bound + "-"\
-#            + os.path.basename(config.trainingset_name) + "-"\
-#            + os.path.basename(config.testset_name)\
-#            + "-latent_size-" + str(config.latent_size)\
-#            + "-density_mode" + str(config.minus_log)\
-#            + ".png"
-#    plt.savefig(fig_name,dpi = FIG_DPI)
-#    plt.close()

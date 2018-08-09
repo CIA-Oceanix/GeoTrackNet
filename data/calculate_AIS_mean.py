@@ -17,9 +17,33 @@ import pickle
 import os
 import sys
 sys.path.append("./data/")
-dataset_path = "/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/mt314/dataset8/dataset8_train.pkl"
+dataset_path = "/users/local/dnguyen/Datasets/AIS_datasets/MarineC/MarineC_Jan2014_norm/MarineC_Jan2014_norm_train.pkl"
 import tensorflow as tf
-from datasets import sparse_AIS_to_dense
+
+
+#lat_bins = 300; lon_bins = 300; sog_bins = 30; cog_bins = 72
+LAT_BINS = 350; LON_BINS = 1050; SOG_BINS = 30; COG_BINS = 72
+
+
+def sparse_AIS_to_dense(msgs_,num_timesteps, mmsis):
+    def create_dense_vect(msg,lat_bins = 300, lon_bins = 300, sog_bins = 30 ,cog_bins = 72): 
+        lat, lon, sog, cog = msg[0], msg[1], msg[2], msg[3]
+        data_dim = lat_bins + lon_bins + sog_bins + cog_bins
+        dense_vect = np.zeros(data_dim)
+        dense_vect[int(lat*lat_bins)] = 1.0
+        dense_vect[int(lon*lon_bins) + lat_bins] = 1.0
+        dense_vect[int(sog*sog_bins) + lat_bins + lon_bins] = 1.0
+        dense_vect[int(cog*cog_bins) + lat_bins + lon_bins + sog_bins] = 1.0       
+        return dense_vect
+    dense_msgs = []
+    for msg in msgs_:
+        dense_msgs.append(create_dense_vect(msg,
+                                            lat_bins = LAT_BINS,
+                                            lon_bins = LON_BINS,
+                                            sog_bins = SOG_BINS ,
+                                            cog_bins = COG_BINS))
+    dense_msgs = np.array(dense_msgs)
+    return dense_msgs, num_timesteps, mmsis
 
 dirname = os.path.dirname(dataset_path)
 
@@ -28,10 +52,8 @@ LAT, LON, SOG, COG, HEADING, ROT, NAV_STT, TIMESTAMP, MMSI = range(9)
 with tf.gfile.Open(dataset_path, "r") as f:
     Vs = pickle.load(f)
 
-#latlon_bins = 500;sog_bins = 10;cog_bins = 36
-#data_dim = 2*latlon_bins + sog_bins + cog_bins
-lat_bins = 300; lon_bins = 300; sog_bins = 30; cog_bins = 72
-data_dim = lat_bins + lon_bins + sog_bins + cog_bins
+
+data_dim = LAT_BINS + LON_BINS + SOG_BINS + COG_BINS
 
 mean_all = np.zeros((data_dim,))
 sum_all = np.zeros((data_dim,))
