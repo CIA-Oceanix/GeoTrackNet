@@ -26,7 +26,9 @@ from __future__ import print_function
 import os
 import tensorflow as tf
 import numpy as np
+import matplotlib.pyplot as plt
 import pickle
+from tqdm import tqdm
 
 import runners
 
@@ -191,27 +193,29 @@ LON_BIN = int(LON_RANGE/LON_RESO)
 run_eval() 
 #*************************************#
 """
-tf.Graph().as_default()
-global_step = tf.train.get_or_create_global_step()
-inputs, targets, mmsis, lengths, model = runners.create_dataset_and_model(config, 
-                                                           config.split,
-                                                           shuffle=False,
-                                                           repeat=False)
+if config.mode in ["save_outcomes","traj_reconstruction"]:
+    tf.Graph().as_default()
+    global_step = tf.train.get_or_create_global_step()
+    inputs, targets, mmsis, lengths, model = runners.create_dataset_and_model(config, 
+                                                               config.split,
+                                                               shuffle=False,
+                                                               repeat=False)
 
-if config.mode == "traj_reconstruction":
-    config.missing_data = True
-#else:
-#    config.missing_data = False
+    if config.mode == "traj_reconstruction":
+        config.missing_data = True
+    #else:
+    #    config.missing_data = False
 
-track_sample, track_true, log_weights, ll_per_t, ll_acc,_,_,_\
-                                    = runners.create_eval_graph(inputs, targets,
-                                                           lengths, model, config)
-saver = tf.train.Saver()
-sess = tf.train.SingularMonitoredSession()
-import matplotlib.pyplot as plt
+    track_sample, track_true, log_weights, ll_per_t, ll_acc,_,_,_\
+                                        = runners.create_eval_graph(inputs, targets,
+                                                               lengths, model, config)
+    saver = tf.train.Saver()
+    sess = tf.train.SingularMonitoredSession()
+    runners.wait_for_checkpoint(saver, sess, config.logdir) 
+    step = sess.run(global_step)
 
-runners.wait_for_checkpoint(saver, sess, config.logdir) 
-step = sess.run(global_step)
+#runners.wait_for_checkpoint(saver, sess, config.logdir) 
+#step = sess.run(global_step)
 #print(np.sum([np.prod(v.get_shape().as_list()) for v in tf.trainable_variables()]))
 
 
@@ -232,9 +236,8 @@ if config.mode == "save_outcomes":
     the test set.
     """
     l_dict = []
-    for d_i in range(dataset_size):
+    for d_i in tqdm(range(dataset_size)):
         D = dict()
-        print(d_i)
         inp, tar, mmsi, log_weights_np, sample_np, true_np, ll_t =\
                  sess.run([inputs, targets, mmsis, log_weights, track_sample, track_true, ll_per_t])
         D["inp"] = np.nonzero(tar[:,0,:])[1].reshape(-1,4)
@@ -260,9 +263,7 @@ elif config.mode == "ll":
     v_ll_stable = np.empty((0,))
     
     count = 0
-    for D in l_dict:
-        print(count)
-        count+=1
+    for D in tqdm(l_dict):
         log_weights_np = D["log_weights"]
         ll_t = np.mean(log_weights_np)
         v_ll = np.concatenate((v_ll,[ll_t]))
@@ -310,7 +311,8 @@ elif config.mode == "log_density":
     with open(outcomes_save_name,"rb") as f:
         l_dict = pickle.load(f)
     
-    for D in l_dict:
+    print("Calculatint ll map...")
+    for D in tqdm(l_dict):
         tmp = D["inp"]
         log_weights_np = D["log_weights"]
         for d_timestep in range(2*6,len(tmp)):
@@ -362,26 +364,14 @@ elif config.mode == "visualisation":
         Vs_train = pickle.load(f)
     with open(config.testset_path,"rb") as f:
        Vs_test = pickle.load(f)
-    
-#    plt.figure(figsize=(960*2/FIG_DPI, 960*2/FIG_DPI), dpi=FIG_DPI)  
-#    cmap = plt.cm.get_cmap('Blues')
-#    l_keys = Vs_train.keys()
-#    N = len(Vs_train)
-#    for d_i in range(N):
-#        key = l_keys[d_i]
-#        c = cmap(float(d_i)/(N-1))
-#        tmp = Vs_train[key]
-#        v_lat = tmp[:,0]*LAT_RANGE + LAT_MIN
-#        v_lon = tmp[:,1]*LON_RANGE + LON_MIN
-#        plt.plot(v_lon,v_lat,color=c,linewidth=0.3)
-#    plt.xlabel("Longitude")
-#    plt.ylabel("Latitude")
-    
+
+
+    print("Plotting tracks in the training set...")
     plt.figure(figsize=(1440*2/FIG_DPI, 480*2/FIG_DPI), dpi=FIG_DPI)  
 #    cmap = plt.cm.get_cmap('Blues')
     l_keys = Vs_train.keys()
     N = len(Vs_train)
-    for d_i in range(N):
+    for d_i in tqdm(range(N)):
         key = l_keys[d_i]
 #        c = cmap(float(d_i)/(N-1))
         tmp = Vs_train[key]
@@ -398,7 +388,8 @@ elif config.mode == "visualisation":
 
     v_ll = np.empty((0,))
     v_mmsi = np.empty((0,))    
-#    for D in l_dict:
+#    print("Plotting tracks in the test set...")
+#    for D in tqdm(l_dict):
 #        m_tar = D["inp"]
 #        log_weights_np = D["log_weights"]
 #        ll_t = np.mean(log_weights_np)
@@ -415,7 +406,8 @@ elif config.mode == "visualisation":
 #        if ll_track >= config.ll_thresh:
 #            plt.plot(v_lon,v_lat,color='g',linewidth=0.3)
 
-    for D in l_dict:
+    print("Detecting abnormal tracks in the test set...")
+    for D in tqdm(l_dict):
         m_tar = D["inp"]
         log_weights_np = D["log_weights"]
         ll_t = np.mean(log_weights_np)
@@ -454,7 +446,7 @@ elif config.mode == "traj_reconstruction":
     """ TRAJECTORY RECONSTRUCTION
     We delete a segment of 2 hours in each tracks (in the test set), then 
     reconstruct this part by the information embedded in the Embedding block.
-    """    
+    """
     save_dir = "results/"\
                 + config.trainingset_path.split("/")[-2] + "/"\
                 + "traj_reconstruction-"\
@@ -464,8 +456,8 @@ elif config.mode == "traj_reconstruction":
     if not os.path.exists(save_dir):
         os.makedirs(save_dir)
 
-    for d_i in range(dataset_size):
-        print(d_i)
+    print("Reconstructing AIS tracks...")
+    for d_i in tqdm(range(dataset_size)):
         tar, mmsi, dense_sample, ll_t, ll_tracks\
                             = sess.run([targets, mmsis, track_sample, ll_per_t, ll_acc])
         if len(tar) < config.min_duration:
@@ -519,7 +511,9 @@ elif config.mode == "traj_speed":
     with open(outcomes_save_name,"rb") as f:
         l_dict = pickle.load(f) 
     d_i = -1
-    for D in l_dict:
+    
+    print("Detecting abnormal tracks...")
+    for D in tqdm(l_dict):
         d_i += 1
         mmsi = D["mmsi"]
         m_tar = D["inp"]
