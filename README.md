@@ -9,10 +9,9 @@ https://github.com/tensorflow/models/tree/master/research/fivo
 The elements of the code are organized as follows:
 
 ```
-multitaskAIS.py                   # script to train the Embedding layer
+multitaskAIS.py                   # script to run the model (except the Contrario detection)
 runners.py                        # graph construction code for training and evaluation
 bounds.py                         # code for computing each bound
-eval_multitaskAIS.py              # script to run task-specific layers (except the Contrario detection)
 contrario.py                      # script to run the Contrario detection block
 contrario_utils.py
 distribution_utils.py
@@ -71,7 +70,7 @@ After the Embedding layer is trained, we can run task-specific blocks.
 #### save_outcomes
 To avoid re-caculating the $log[p(x_t|x_{1..t-1},x_{1..t-1})]$ for each tasks, we calculate them once and save as .pkl file. 
 ```
-python eval_multitaskAIS.py \
+python multitaskAIS.py \
   --mode=save_outcomes \
   --logdir=./chkpt \
   --trainingset_name=dataset8/dataset8_train.pkl \
@@ -86,7 +85,7 @@ Similarly for the test set (```testset_name=dataset8/dataset8_valid.pkl```).
 #### log_density
 *log_density* calculates the distribution of $log[p(x_t|x_{1..t-1},x_{1..t-1})]$ in each small cells of the ROI.
 ```
-python eval_multitaskAIS.py \
+python multitaskAIS.py \
   --mode=save_outcomes \
   --logdir=./chkpt \
   --trainingset_name=dataset8/dataset8_train.pkl \
@@ -105,7 +104,7 @@ python contrario.py \
 #### traj_reconstruction
 *traj_reconstruction* performs the trajectory reconstruction.
 ```
-python eval_multitaskAIS.py \
+python multitaskAIS.py \
   --mode=traj_reconstruction \
   --logdir=./chkpt \
   --trainingset_name=dataset8/dataset8_train.pkl \
