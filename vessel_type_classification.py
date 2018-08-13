@@ -30,40 +30,6 @@ LABELS = [
     "Tug"
 ]
 
-"""
-with open("/users/local/dnguyen/Datasets/AIS_datasets/MarineC/2014/01/vessel_type_dataset0_test_1day.pkl","rb") as f:
-    l_data = pickle.load(f)
-    
-l_data_rnn_state_4class = []
-
-X_data = []
-Y_data = []
-for D in l_data:
-    X_data.append(D['rnn_state'][:,1,:]) #(144, 400)
-    Y_data.append(D['vessel_type'])
-X_data = np.array(X_data)
-Y_data = np.array(Y_data)
-
-# Only classifying Cargo (3), Passenger (2), Tanker (4) and Tug (1)
-X_data = X_data[Y_data != 0]
-Y_data = Y_data[Y_data != 0] 
-
-Y_data[Y_data == 3] = 0
-Y_data[Y_data == 1] = 3
-Y_data[Y_data == 2] = 1
-Y_data[Y_data == 4] = 2  
-
-l_data_rnn_state_4class = []
-for d_i in range(len(Y_data)):
-    tmp = dict()
-    tmp['rnn_state'] = X_data[d_i]
-    tmp['vessel_type'] = Y_data[d_i]
-    l_data_rnn_state_4class.append(tmp)
-    
-with open("/users/local/dnguyen/Datasets/AIS_datasets/MarineC/2014/01/vessel_type_dataset0_test_1day_rnn_state_4class.pkl","wb") as f:
-    pickle.dump(l_data_rnn_state_4class,f)
-"""
-    
 with open("/users/local/dnguyen/Datasets/AIS_datasets/MarineC/MarineC_Jan2014_norm/MarineC_Jan2014_norm_train_rnn_state.pkl","rb") as f:
     l_data_train = pickle.load(f)
 
@@ -277,19 +243,11 @@ print("FINAL RESULT: " + \
       "Batch Loss = {}".format(final_loss) + \
       ", Accuracy = {}".format(accuracy))
       
-      
-      
-      
+
 ### VISUALISATION
 ################################################################################
 import matplotlib
 import matplotlib.pyplot as plt
-font = {
-    'family' : 'Bitstream Vera Sans',
-    'weight' : 'bold',
-    'size'   : 18
-}
-matplotlib.rc('font', **font)
 
 width = 12
 height = 12
@@ -331,40 +289,5 @@ normalised_confusion_matrix = np.array(confusion_matrix, dtype=np.float32)/np.su
 print("")
 print("Confusion matrix (normalised to % of total test data):")
 print(normalised_confusion_matrix)
-print("Note: training and testing data is not equally distributed amongst classes, ")
-print("so it is normal that more than a 6th of the data is correctly classifier in the last category.")
-
-# Plot Results: 
-width = 12
-height = 12
-plt.figure(figsize=(width, height))
-plt.imshow(
-    normalised_confusion_matrix, 
-    interpolation='nearest', 
-    cmap=plt.cm.rainbow
-)
-plt.title("Confusion matrix \n(normalised to % of total test data)")
-plt.colorbar()
-tick_marks = np.arange(N_CLASSES)
-plt.xticks(tick_marks, LABELS, rotation=90)
-plt.yticks(tick_marks, LABELS)
-plt.tight_layout()
-plt.ylabel('True label')
-plt.xlabel('Predicted label')
-plt.show()
-
-# No weight
-#[[   4   33    2    5    3]
-# [   0 1644    6   88   25]
-# [   0   13  230   38    2]
-# [   0   99   30  436  111]
-# [   0   53    1   99  202]]
-
-
-#[[211  14  22  10]
-# [ 22 110   0   0]
-# [ 53   4  92  11]
-# [ 50   5   9 887]]
-
 
 
