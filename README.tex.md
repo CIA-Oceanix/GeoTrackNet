@@ -1,6 +1,6 @@
 # MultitaskAIS
 
-TensorFlow implementation of the model proposed in "Multi-task Learning for Maritime Traffic Surveillance from AIS Data Streams" (https://arxiv.org/abs/1806.03972).
+TensorFlow implementation of the model proposed in "A Multi-Task Deep Learning Architecture for Maritime Surveillance Using AIS Data Streams" (https://arxiv.org/abs/1806.03972).
 
 All the codes related to the Embedding block are adapted from the source code of Filtering Variational Objectives:
 https://github.com/tensorflow/models/tree/master/research/fivo
