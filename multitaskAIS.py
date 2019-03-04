@@ -47,9 +47,11 @@ LON_BIN = int(LON_RANGE/LON_RESO)
 ###############################################################################
 if config.mode == "train":
     print(config.dataset_path)
-    fh = logging.FileHandler(config.logdir + config.logdir_name + '.log')
+    fh = logging.FileHandler(os.path.join(config.logdir,config.log_filename+".log"))
     tf.logging.set_verbosity(tf.logging.INFO)
-    tf.logging._logger.addHandler(fh)
+    # get TF logger
+    logger = logging.getLogger('tensorflow')
+    logger.addHandler(fh)
     runners.run_train(config)
 
 ## RUN EVAL

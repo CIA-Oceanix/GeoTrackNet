@@ -48,7 +48,7 @@ LON_RESO = LAT_RESO
 LAT_BIN = int(LAT_RANGE/LAT_RESO)
 LON_BIN = int(LON_RANGE/LON_RESO)
 CONTRARIO_EPS = 1e-9
-MISSING_DATA = True
+MISSING_DATA = False
 
 print("LAT_RESO",LAT_RESO,"EPSILON ",CONTRARIO_EPS)
 
@@ -239,7 +239,7 @@ for D in l_dict_anomaly:
     try:
         c = cmap_anomaly(float(d_i_anomaly)/(N_anomaly-1))
     except:
-        c = 'r'on or check with
+        c = 'r'
     d_i_anomaly += 1
     tmp = D["inp"]
     m_log_weights_np = D["log_weights"]

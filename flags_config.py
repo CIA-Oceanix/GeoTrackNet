@@ -22,18 +22,18 @@ import tensorflow as tf
 import pickle
 
 ### Bretagne
-#LAT_MIN = 47.0
-#LAT_MAX = 50.0
-#LON_MIN = -7.0
-#LON_MAX = -4.0
+LAT_MIN = 47.0
+LAT_MAX = 50.0
+LON_MIN = -7.0
+LON_MAX = -4.0
 
 
 ## Gulf of Mexico
-LAT_MIN = 26.5
-LAT_MAX = 30.0
-LON_MIN = -97.5
-LON_MAX = -87
-SPEED_MAX = 30.0  # knots
+#LAT_MIN = 26.5
+#LAT_MAX = 30.0
+#LON_MIN = -97.5
+#LON_MAX = -87
+#SPEED_MAX = 30.0  # knots
 FIG_DPI = 300
 
 
@@ -47,7 +47,7 @@ tf.app.flags.DEFINE_string("mode", "traj_speed",
 tf.app.flags.DEFINE_string("bound", "elbo",
                            "The bound to optimize. Can be 'elbo', or 'fivo'.")
 
-tf.app.flags.DEFINE_integer("latent_size", 400,
+tf.app.flags.DEFINE_integer("latent_size", 100,
                             "The size of the latent state of the model.")
 
 tf.app.flags.DEFINE_string("log_dir", "./chkpt",
@@ -64,9 +64,9 @@ tf.app.flags.DEFINE_float("ll_thresh", -17.47,
                           "Log likelihood for the anomaly detection.")
 
 # Resolution flags.
-tf.app.flags.DEFINE_integer("lat_bins", 350,
+tf.app.flags.DEFINE_integer("lat_bins", 300,
                             "Number of bins of the lat one-hot vector")
-tf.app.flags.DEFINE_integer("lon_bins", 1050,
+tf.app.flags.DEFINE_integer("lon_bins", 300,
                             "Number of bins of the lon one-hot vector")
 tf.app.flags.DEFINE_integer("sog_bins", 30,
                             "Number of bins of the sog one-hot vector")
@@ -79,15 +79,15 @@ tf.app.flags.DEFINE_float("anomaly_lon_reso", 0.1,
                           "Lon resolution for anomaly detection.")
 
 # Dataset flags
-tf.app.flags.DEFINE_string("dataset", "MarineC",
+tf.app.flags.DEFINE_string("dataset", "Brittany",
                            "Dataset. Can be 'Brittany' or 'MarineC'.")
-tf.app.flags.DEFINE_string("trainingset_name", "MarineC_Jan2014_norm/MarineC_Jan2014_norm_train.pkl",
+tf.app.flags.DEFINE_string("trainingset_name", "dataset8/dataset8_train.pkl",
                            "Path to load the trainingset from.")
-tf.app.flags.DEFINE_string("testset_name", "MarineC_Jan2014_norm/MarineC_Jan2014_norm_test.pkl",
+tf.app.flags.DEFINE_string("testset_name", "dataset8/dataset8_test.pkl",
                            "Path to load the testset from.")  
 tf.app.flags.DEFINE_string("split", "train",
                            "Split to evaluate the model on. Can be 'train', 'valid', or 'test'.")  
-tf.app.flags.DEFINE_boolean("missing_data", True,
+tf.app.flags.DEFINE_boolean("missing_data", False,
                            "If true, a part of input track will be deleted.")  
 
 
@@ -118,6 +118,16 @@ tf.app.flags.DEFINE_integer("ps_tasks", 0,
                             "Number of tasks in the ps job. If 0 no ps job is used.")
 tf.app.flags.DEFINE_boolean("stagger_workers", True,
                             "If true, bring one worker online every 1000 steps.")
+
+# Fix tf >=1.8.0 flags bug
+tf.app.flags.DEFINE_integer("data_dim", 0, "Data dimension")
+tf.app.flags.DEFINE_string('log_filename', '', 'Log filename')
+tf.app.flags.DEFINE_string('logdir_name', '', 'Log dir name')
+tf.app.flags.DEFINE_string('logdir', '', 'Log directory')
+tf.app.flags.DEFINE_string('dataset_path', '', 'Dataset path')
+tf.app.flags.DEFINE_string('trainingset_path', '', 'Training set path')
+tf.app.flags.DEFINE_string('testset_path', '', 'Test set path')
+
 
 
 FLAGS = tf.app.flags.FLAGS
@@ -165,5 +175,8 @@ config.logdir_name = "/" + config.bound + "-"\
              + "-batch_size-50"
 config.logdir = config.log_dir + config.logdir_name
 if not os.path.exists(config.logdir):
-    raise ValueError(config.logdir + " doesnt exist")
+    if config.mode == "train":
+        os.makedirs(config.logdir)
+    else:
+        raise ValueError(config.logdir + " doesnt exist")
 
