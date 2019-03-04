@@ -68,7 +68,7 @@ python multitaskAIS.py \
 After the Embedding layer is trained, we can run task-specific blocks.
 
 #### save_outcomes
-To avoid re-caculating the <img src="/tex/a2f89e4ad54362f5c067ab4838f1ee5a.svg?invert_in_darkmode&sanitize=true" align=middle width=171.60993795pt height=24.65753399999998pt/> for each tasks, we calculate them once and save as .pkl file. 
+To avoid re-caculating the <img src="/tex/a2f89e4ad54362f5c067ab4838f1ee5a.svg?invert_in_darkmode&sanitize=true" align=middle width=171.60993795pt height=24.65753399999998pt/> for each task, we calculate them once and save as a .pkl file. 
 ```
 python multitaskAIS.py \
   --mode=save_outcomes \
@@ -86,7 +86,7 @@ Similarly for the test set (```testset_name=dataset8/dataset8_valid.pkl```).
 *log_density* calculates the distribution of <img src="/tex/a2f89e4ad54362f5c067ab4838f1ee5a.svg?invert_in_darkmode&sanitize=true" align=middle width=171.60993795pt height=24.65753399999998pt/> in each small cells of the ROI.
 ```
 python multitaskAIS.py \
-  --mode=save_outcomes \
+  --mode=log_density \
   --logdir=./chkpt \
   --trainingset_name=dataset8/dataset8_train.pkl \
   --testset_name=dataset8/dataset8_valid.pkl \
