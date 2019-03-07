@@ -5,6 +5,7 @@ TensorFlow implementation of the model proposed in "A Multi-Task Deep Learning A
 All the codes related to the Embedding block are adapted from the source code of Filtering Variational Objectives:
 https://github.com/tensorflow/models/tree/master/research/fivo
 
+
 #### Directory Structure
 The elements of the code are organized as follows:
 
@@ -30,6 +31,8 @@ chkpt
 results
 └── ...                           # directory to save outcomes
 ```
+
+Requirements: see requirements.yml
 
 ### Datasets:
 
