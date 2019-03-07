@@ -1,0 +1,211 @@
+# Name                    Version                   Build  Channel
+_nb_ext_conf              0.3.0                    py27_0  
+_tflow_190_select         0.0.1                       gpu  
+absl-py                   0.4.1                    pypi_0    pypi
+alabaster                 0.7.10                   py27_0  
+anaconda-client           1.6.0                    py27_0  
+astor                     0.6.2                    pypi_0    pypi
+astroid                   1.4.9                    py27_0  
+audioread                 2.1.6                    pypi_0    pypi
+babel                     2.4.0                    py27_0  
+backports                 1.0                      py27_0  
+backports-weakref         1.0.post1                pypi_0    pypi
+backports.weakref         1.0rc1                   py27_0  
+backports_abc             0.5                      py27_0  
+bleach                    1.5.0                    pypi_0    pypi
+boost                     1.61.0                   py27_0  
+ca-certificates           2018.03.07                    0  
+cairo                     1.14.8                        0  
+chardet                   3.0.4                    py27_0  
+clyent                    1.2.2                    py27_0  
+configparser              3.5.0                    py27_0  
+cudatoolkit               9.0                  h13b8566_0  
+cudnn                     7.1.2                 cuda9.0_0  
+curl                      7.49.0                        1  
+cycler                    0.10.0                   py27_0  
+dbus                      1.10.10                       0  
+decorator                 4.0.10                   py27_1  
+dill                      0.2.7.1                  pypi_0    pypi
+dm-sonnet                 1.17                     pypi_0    pypi
+docutils                  0.13.1                   py27_0  
+entrypoints               0.2.2                    py27_0  
+enum34                    1.1.6                    pypi_0    pypi
+expat                     2.1.0                         0  
+fontconfig                2.12.1                        3  
+freetype                  2.5.5                         1  
+fuel                      0.2.0                    py27_0  
+funcsigs                  1.0.2                    pypi_0    pypi
+functools32               3.2.3.2                  py27_0  
+futures                   3.2.0                    pypi_0    pypi
+gast                      0.2.0                    pypi_0    pypi
+gdal                      2.1.0                    py27_0  
+geos                      3.5.0                         0  
+geotiff                   1.4.1                         0  
+get_terminal_size         1.0.0                    py27_0  
+glib                      2.50.2                        1  
+graphviz                  2.38.0                        2  
+grpcio                    1.14.1                   pypi_0    pypi
+gst-plugins-base          1.8.0                         0  
+gstreamer                 1.8.0                         0  
+h5py                      2.7.0               np111py27_0  
+harfbuzz                  0.9.39                        2  
+hdf4                      4.2.12                        0  
+hdf5                      1.8.17                        2  
+html5lib                  0.9999999                pypi_0    pypi
+icu                       54.1                          0  
+imageio                   2.3.0                    py27_0  
+imagesize                 0.7.1                    py27_0  
+ipykernel                 4.5.2                    py27_0  
+ipython                   5.1.0                    py27_0  
+ipython_genutils          0.1.0                    py27_0  
+ipywidgets                5.2.2                    py27_0  
+isort                     4.2.15                   py27_0  
+jbig                      2.1                           0  
+jedi                      0.10.2                   py27_2  
+jinja2                    2.8.1                    py27_0  
+joblib                    0.12.2                   pypi_0    pypi
+jpeg                      8d                            2  
+jsonschema                2.5.1                    py27_0  
+jupyter                   1.0.0                    py27_3  
+jupyter_client            4.4.0                    py27_0  
+jupyter_console           5.0.0                    py27_0  
+jupyter_core              4.2.1                    py27_0  
+kealib                    1.4.6                         0  
+keras-applications        1.0.4                    py27_0  
+keras-base                2.2.2                    py27_0  
+keras-preprocessing       1.0.2                    py27_0  
+krb5                      1.13.2                        0  
+lazy-object-proxy         1.3.1                    py27_0  
+libais                    0.17                     pypi_0    pypi
+libffi                    3.2.1                         1  
+libgcc                    5.2.0                         0  
+libgcc-ng                 7.2.0                hdf63c60_3  
+libgdal                   2.1.0                         0  
+libgfortran               3.0.0                         1  
+libgfortran-ng            7.2.0                hdf63c60_3  
+libgpuarray               0.6.9                         0  
+libiconv                  1.14                          0  
+libnetcdf                 4.4.1                         0  
+libopenblas               0.2.20               h9ac9557_4  
+libpng                    1.6.27                        0  
+libprotobuf               3.4.0                         0  
+librosa                   0.6.2                    pypi_0    pypi
+libsodium                 1.0.10                        0  
+libstdcxx-ng              7.2.0                hdf63c60_3  
+libtiff                   4.0.6                         2  
+libtool                   2.4.2                         0  
+libxcb                    1.12                          1  
+libxml2                   2.9.4                         0  
+llvmlite                  0.24.0                   pypi_0    pypi
+mako                      1.0.6                    py27_0  
+markdown                  2.6.11                   pypi_0    pypi
+markupsafe                0.23                     py27_2  
+matplotlib                1.5.3               np111py27_1  
+mistune                   0.7.3                    py27_0  
+mkl                       2017.0.1                      0  
+mkl-service               1.1.2                    py27_3  
+mock                      2.0.0                    pypi_0    pypi
+nb_anacondacloud          1.2.0                    py27_0  
+nb_conda                  2.0.0                    py27_0  
+nb_conda_kernels          2.0.0                    py27_0  
+nbconvert                 4.2.0                    py27_0  
+nbformat                  4.2.0                    py27_0  
+nbpresent                 3.0.2                    py27_0  
+netcdf4                   1.2.4               np111py27_0  
+networkx                  1.8.1                    pypi_0    pypi
+nomkl                     1.0                           0  
+nose                      1.3.7                    py27_1  
+notebook                  4.3.1                    py27_0  
+numba                     0.39.0                   pypi_0    pypi
+numexpr                   2.6.4           py27_nomklh19cb0ea_0  [nomkl]
+numpy                     1.14.1                   pypi_0    pypi
+numpy-base                1.14.3           py27h0ea5e3f_1  
+numpydoc                  0.6.0                    py27_0  
+olefile                   0.44                     py27_0  
+openblas                  0.2.19                        0  
+opencv                    3.1.0               np111py27_1  
+openssl                   1.0.2l                        0    conda-forge
+pango                     1.40.3                        1  
+path.py                   9.0.1                    py27_0  
+pathlib2                  2.2.1                    py27_0  
+pbr                       3.1.1                    pypi_0    pypi
+pcre                      8.39                          1  
+pep8                      1.7.0                    py27_0  
+pexpect                   4.0.1                    py27_0  
+picklable-itertools       0.1.1                    py27_0  
+pickleshare               0.7.4                    py27_0  
+pillow                    3.4.2                    py27_0  
+pip                       9.0.1                    py27_1  
+pixman                    0.34.0                        0  
+progressbar2              3.18.1                   py27_0  
+proj4                     4.9.2                         0  
+prompt_toolkit            1.0.9                    py27_0  
+protobuf                  3.5.2                    pypi_0    pypi
+psutil                    5.2.2                    py27_0  
+ptyprocess                0.5.1                    py27_0  
+py                        1.4.34                   py27_0  
+pycairo                   1.10.0                   py27_0  
+pydot                     1.0.28                   py27_0  
+pyflakes                  1.5.0                    py27_0  
+pygments                  2.1.3                    py27_0  
+pygpu                     0.6.9                    py27_0  
+pylint                    1.6.4                    py27_1  
+pyparsing                 1.5.6                    py27_0  
+pyproj                    1.9.5.1                  py27_0  
+pyqt                      5.6.0                    py27_1  
+pytables                  3.3.0               np111py27_0  
+pytest                    3.2.1                    py27_0  
+pytest-runner             2.11.1                   py27_0  
+python                    2.7.13                        0  
+python-dateutil           2.6.0                    py27_0  
+python-utils              2.2.0                    py27_0  
+pytz                      2016.10                  py27_0  
+pywavelets                0.5.2               np111py27_0  
+pyyaml                    3.12                     py27_0  
+pyzmq                     16.0.2                   py27_0  
+qt                        5.6.2                         2  
+qtawesome                 0.4.4                    py27_0  
+qtconsole                 4.2.1                    py27_1  
+qtpy                      1.2.1                    py27_0  
+readline                  6.2                           2  
+requests                  2.12.4                   py27_0  
+resampy                   0.2.1                    pypi_0    pypi
+rope                      0.9.4                    py27_1  
+scandir                   1.5                      py27_0  
+scikit-image              0.13.0              np111py27_0  
+scikit-learn              0.19.1          py27_nomklh6479e79_0  [nomkl]
+scipy                     1.0.0           py27_nomklhc4f40eb_0  [nomkl]
+setuptools                38.5.2                   pypi_0    pypi
+simplegeneric             0.8.1                    py27_1  
+singledispatch            3.4.0.3                  py27_0  
+sip                       4.18                     py27_0  
+six                       1.11.0                   pypi_0    pypi
+snowballstemmer           1.2.1                    py27_0  
+sphinx                    1.6.2                    pypi_0    pypi
+sphinxcontrib             1.0                      py27_0  
+sphinxcontrib-websupport  1.0.1                    py27_0  
+spyder                    3.1.4                    py27_0  
+sqlite                    3.13.0                        0  
+ssl_match_hostname        3.4.0.2                  py27_1  
+system                    5.8                           2  
+tensorboard               1.8.0                    pypi_0    pypi
+tensorflow-gpu            1.8.0                    pypi_0    pypi
+tensorflow-tensorboard    0.4.0                    pypi_0    pypi
+termcolor                 1.1.0                    pypi_0    pypi
+terminado                 0.6                      py27_0  
+theano                    0.9.0                    py27_0  
+tk                        8.5.18                        0  
+tornado                   4.4.2                    py27_0  
+tqdm                      4.24.0                   py27_0  
+traitlets                 4.3.1                    py27_0  
+typing                    3.6.1                    py27_0  
+wcwidth                   0.1.7                    py27_0  
+werkzeug                  0.14.1                   pypi_0    pypi
+wheel                     0.30.0                   pypi_0    pypi
+widgetsnbextension        1.2.6                    py27_0  
+wrapt                     1.10.10                  py27_0  
+xerces-c                  3.1.4                         0  
+xz                        5.2.2                         1  
+yaml                      0.1.6                         0  
+zeromq                    4.1.5                         0  
+zlib                      1.2.8                         3  
