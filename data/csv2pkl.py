@@ -25,10 +25,10 @@ from io import StringIO
 #import utm
 
 ## Gulf of Mexico
-LAT_MIN = 27
+LAT_MIN = 26.5
 LAT_MAX = 30.0
-LON_MIN = -98
-LON_MAX = -88
+LON_MIN = -97.5
+LON_MAX = -87
 
 ### Bretagne
 #LAT_MIN = 47.0
