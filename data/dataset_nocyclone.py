@@ -10,7 +10,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pickle
 
-LAT, LON, SOG, COG, HEADING, ROT, NAV_STT, TIMESTAMP, MMSI = range(9)
+LAT, LON, SOG, COG, HEADING, ROT, NAV_STT, TIMESTAMP, MMSI = list(range(9))
 
 ## Training set no cyclone
 ###############################################################################
@@ -19,13 +19,13 @@ with open("/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/MarineC/dataset5/datas
     Vs_train = pickle.load(f)
 
 Vs = Vs_train
-for key in Vs.keys():
+for key in list(Vs.keys()):
     tmp = Vs[key]
     plt.plot(tmp[:,1],tmp[:,0])
 plt.xlim([0,1])
 plt.ylim([0,1])
 
-for key in Vs.keys():
+for key in list(Vs.keys()):
     tmp = Vs[key]
     lat_max = np.max(tmp[:,LAT])
     lon_max = np.max(tmp[:,LON])
@@ -44,20 +44,20 @@ with open("/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/MarineC/MarineC_Jan201
     Vs_test = pickle.load(f)
 
 Vs = Vs_test
-for key in Vs.keys():
+for key in list(Vs.keys()):
     tmp = Vs[key]
     lat_max = np.max(tmp[:,LAT])
     lon_max = np.max(tmp[:,LON])
     lat_min = np.min(tmp[:,LAT])
     lon_min = np.min(tmp[:,LON])
     if (lat_max < 0.24) and (lat_min > 0.155) and (lon_max<0.53) and (lon_min>0.485):
-        print("key: ", key, "mmsi: ", tmp[0,MMSI])
+        print(("key: ", key, "mmsi: ", tmp[0,MMSI]))
         Vs[key][:,LON] += 3.8/10.5
         Vs[key][:,LAT] += 0.5/3.5
     else:
         Vs.pop(key,None)
 
-for key in Vs.keys():
+for key in list(Vs.keys()):
     tmp = Vs[key]
     plt.plot(tmp[:,1],tmp[:,0])
 plt.xlim([0,1])
@@ -76,14 +76,14 @@ with open("/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/MarineC/MarineC_Jan201
     Vs_test = pickle.load(f)
 
 Vs = Vs_test
-for key in Vs.keys():
+for key in list(Vs.keys()):
     tmp = Vs[key]
     lat_max = np.max(tmp[:,LAT])
     lon_max = np.max(tmp[:,LON])
     lat_min = np.min(tmp[:,LAT])
     lon_min = np.min(tmp[:,LON])
     if (lat_max < 0.24) and (lat_min > 0.155) and (lon_max<0.53) and (lon_min>0.485):
-        print("key: ", key, "mmsi: ", tmp[0,MMSI])
+        print(("key: ", key, "mmsi: ", tmp[0,MMSI]))
     else:
         Vs.pop(key,None)
 
@@ -128,7 +128,7 @@ Vs = Vs_test
 d_i = 0
 N = len(Vs)
 l_v_true = []
-for key in Vs.keys():
+for key in list(Vs.keys()):
     tmp = Vs[key]
     c = cmap(float(d_i)/(N-1))
     d_i+=1
@@ -154,7 +154,7 @@ for e in range(-5,6):
 #    Vs_divergence[e][:,LON] += 0.5 # divergences 2 only
     
     
-for key in Vs_divergence.keys():
+for key in list(Vs_divergence.keys()):
     tmp = Vs_divergence[key]
     plt.plot(tmp[:,1],tmp[:,0],linewidth=0.8)
 plt.xlim([0,1])

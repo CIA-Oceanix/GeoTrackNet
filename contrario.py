@@ -61,21 +61,26 @@ LOADING SAVED DATA
 ## Loading coastline polygon. 
 # For visualisation purpose, delete this part if you do not have coastline 
 # shapfile
+"""
 coastline_filename = "/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/"\
                      + "coastlines-split-4326/streetmap_coastline_Bretagne.pkl"
 with open(coastline_filename, 'r') as f: 
     l_coastline_poly = pickle.load(f)
+"""
 
 ## Loading AIS tracks in the training set. 
-with open("/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/mt314/dataset8/"\
-           + "dataset8_train.pkl","rb") as f:
-    Vs_train = pickle.load(f)
+try:
+    with open("./data/dataset8/dataset8_train.pkl","rb") as f:
+        Vs_train = pickle.load(f)
+except:
+    with open("./data/dataset8/dataset8_train.pkl","rb") as f:
+        Vs_train = pickle.load(f, encoding='latin1')
 
 ## Plotting AIS tracks inthe training set
 Vs = Vs_train
 plt.figure(figsize=(960*2/FIG_DPI, 960*2/FIG_DPI), dpi=FIG_DPI)  
 cmap = plt.cm.get_cmap('Blues')
-l_keys = Vs.keys()
+l_keys = list(Vs.keys())
 N = len(Vs)
 for d_i in range(N):
     key = l_keys[d_i]
@@ -93,20 +98,22 @@ plt.tight_layout()
 
 ## Loading the parameters of the distribution in each cell (calculated by the
 # tracks in the validation set) 
-save_dir = "/homes/vnguye04/Bureau/Sanssauvegarde/Codes/MultitaskAIS/results/"\
-            + "dataset8/log_density-dataset8_train.pkl-dataset8_valid.pkl-100-missing_data-"+str(MISSING_DATA)+"/"
+save_dir = "./results/dataset8/log_density-dataset8_train.pkl-dataset8_valid.pkl-100-missing_data-"+str(MISSING_DATA)+"/"
 m_map_ll_mean = np.load(save_dir+"map_ll_mean-"+str(LAT_RESO)+"-"+str(LON_RESO) + ".npy")
 m_map_ll_std = np.load(save_dir+"map_ll_std-"+str(LAT_RESO)+"-"+str(LON_RESO) + ".npy")
 
 
 ## Loading the log[p(x_t|x_{1..t-1},z_{1..t-1})] of points in AIS tracks in 
 # the test set
-save_dir = "/homes/vnguye04/Bureau/Sanssauvegarde/Codes/MultitaskAIS/results/dataset8/"
+save_dir = "./results/dataset8/"
 save_filename = "outcomes-dataset8_train.pkl-dataset8_test.pkl-100-missing_data-"+str(MISSING_DATA)+".pkl"
 
-with open(save_dir+save_filename,"rb") as f:
-    l_dict = pickle.load(f)
-
+try:
+    with open(save_dir+save_filename,"rb") as f:
+        l_dict = pickle.load(f)
+except:
+    with open(save_dir+save_filename,"rb") as f:
+        l_dict = pickle.load(f, encoding='latin1')
 
 
 # ==============================================================================
@@ -162,9 +169,11 @@ VISUALISING
 """
 
 ## Coastlines
+"""
 for point in l_coastline_poly:
     poly = np.array(point)
     plt.plot(poly[:,0],poly[:,1],color="k",linewidth=0.8)
+"""
 cmap_anomaly = plt.cm.get_cmap('autumn')
 N_anomaly = len(l_dict_anomaly)
 d_i = 0
@@ -208,7 +217,7 @@ plt.close()
 
 
 Vs = Vs_train
-l_keys = Vs.keys()
+l_keys = list(Vs.keys())
 N = len(Vs)
 d_i_anomaly = 0
 cmap_anomaly = plt.cm.get_cmap('autumn')

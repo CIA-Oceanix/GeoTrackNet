@@ -27,19 +27,21 @@ LAT_MAX = 50.0
 LON_MIN = -7.0
 LON_MAX = -4.0
 
-
 ## Gulf of Mexico
-#LAT_MIN = 26.5
-#LAT_MAX = 30.0
-#LON_MIN = -97.5
-#LON_MAX = -87
-#SPEED_MAX = 30.0  # knots
+"""
+LAT_MIN = 26.5
+LAT_MAX = 30.0
+LON_MIN = -97.5
+LON_MAX = -87
+"""
+
+SPEED_MAX = 30.0  # knots
 FIG_DPI = 300
 
 
 
 # Shared flags.
-tf.app.flags.DEFINE_string("mode", "traj_speed",
+tf.app.flags.DEFINE_string("mode", "train",
                            "The mode of the binary. Must be 'train'"
                            "'save_outcomes','ll','log_density','visualisation'"
                            "'traj_reconstruction' or 'traj_speed'.")
@@ -146,9 +148,9 @@ config.data_dim  = config.lat_bins + config.lon_bins\
 
 ### Other PCs  
 if config.dataset == "Brittany":
-    config.dataset_path = "/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/mt314/"
+    config.dataset_path = "./data/"
 elif config.dataset == "MarineC":
-    config.dataset_path = "/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/MarineC/"
+    config.dataset_path = "./data/"
 else:
     raise ValueError("Unkown dataset (must be 'Brittany' or 'MarineC'.")
    

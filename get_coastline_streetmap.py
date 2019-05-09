@@ -31,7 +31,7 @@ layer = coastline_shp.GetLayer()
 coastline_poly = []
 count = 0
 for i in range(0,layer.GetFeatureCount()):
-    print count
+    print(count)
     count += 1
     InFeature = layer.GetNextFeature()
     try:

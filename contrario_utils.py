@@ -14,6 +14,7 @@ from __future__ import print_function
 
 import numpy as np
 import operator as op
+from functools import reduce
 
 MAX_SEQUENCE_LENGTH = 4*6 #4 hours x 6 (time steps = 10 mins)
 N_EVENT = 0 # number of event
@@ -25,8 +26,8 @@ for ns in range(1,MAX_SEQUENCE_LENGTH+1):
 def nCr(n, r):
     """Function calculates the number of combinations (n choose r)"""
     r = min(r, n-r)
-    numer = reduce(op.mul, xrange(n, n-r, -1), 1)
-    denom = reduce(op.mul, xrange(1, r+1), 1)
+    numer = reduce(op.mul, range(n, n-r, -1), 1)
+    denom = reduce(op.mul, range(1, r+1), 1)
     return numer//denom
 
 def nonzero_segments(x_):

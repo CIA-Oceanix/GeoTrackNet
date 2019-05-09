@@ -82,20 +82,20 @@ print("Loading vessel type list...")
 for zone in tqdm(l_zone):
     with open(dataset_vessel_path.format(zone), "rb") as f:
         reader = csv.reader(f)
-        v_labels = reader.next()
+        v_labels = next(reader)
         for row in reader:
             try:
                 mmsi_ = int(row[0])
                 type_ = int(row[4])
                 v_vessel_types.append([mmsi_, type_])
-                if  mmsi_ not in VesselTypes.keys():
+                if  mmsi_ not in list(VesselTypes.keys()):
                     VesselTypes[mmsi_] = [type_]
                 elif type_ not in VesselTypes[mmsi_]:
                     VesselTypes[mmsi_].append(type_)
             except:
                 continue
 v_vessel_types = np.array(v_vessel_types).astype(np.int)
-for mmsi_ in VesselTypes.keys():
+for mmsi_ in list(VesselTypes.keys()):
     VesselTypes[mmsi_] = np.sort(VesselTypes[mmsi_])
 
 np.count_nonzero(np.logical_and(v_vessel_types[:,1] >= 80, v_vessel_types[:,1] <= 89))
@@ -110,7 +110,7 @@ def sublist(lst1, lst2):
 
 l_vessel_type_dataset = []
 print("Calculating hiddens regimes...")
-for d_i in tqdm(range(dataset_size)):
+for d_i in tqdm(list(range(dataset_size))):
     mmsi, rnn_state_np, rnn_latent_np, rnn_out_np, ll_acc_np = \
             sess.run([mmsis, rnn_state_tf, rnn_latent_tf, rnn_out_tf, ll_acc])
     d_i_max_ll = np.argmax(ll_acc_np) # indice of the sample with max likelihood
@@ -119,11 +119,11 @@ for d_i in tqdm(range(dataset_size)):
         continue
     try:
         tmp = dict()
-        if sublist(VesselTypes[mmsi_], range(70,80)): # cargo
+        if sublist(VesselTypes[mmsi_], list(range(70,80))): # cargo
             tmp['vessel_type'] = 0
         elif sublist(VesselTypes[mmsi_], range(60,70)): # passenger
             tmp['vessel_type'] = 1
-        elif sublist(VesselTypes[mmsi_], range(80,90)): # tanker
+        elif sublist(VesselTypes[mmsi_], list(range(80,90))): # tanker
             tmp['vessel_type'] = 2
         elif sublist(VesselTypes[mmsi_], [31,32,52]): # tug
             tmp['vessel_type'] = 3

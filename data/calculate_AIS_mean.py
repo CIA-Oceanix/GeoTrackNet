@@ -45,11 +45,14 @@ def sparse_AIS_to_dense(msgs_,num_timesteps, mmsis):
 
 dirname = os.path.dirname(dataset_path)
 
-LAT, LON, SOG, COG, HEADING, ROT, NAV_STT, TIMESTAMP, MMSI = range(9)
+LAT, LON, SOG, COG, HEADING, ROT, NAV_STT, TIMESTAMP, MMSI = list(range(9))
 
-with tf.gfile.Open(dataset_path, "r") as f:
-    Vs = pickle.load(f)
-
+try:
+    with tf.gfile.Open(dataset_path, "rb") as f:
+        Vs = pickle.load(f)
+except:
+    with tf.gfile.Open(dataset_path, "rb") as f:
+        Vs = pickle.load(f, encoding = "latin1")
 
 data_dim = LAT_BINS + LON_BINS + SOG_BINS + COG_BINS
 
@@ -61,7 +64,7 @@ current_mean = np.zeros((0,data_dim))
 current_ais_msg = 0
 
 count = 0
-for mmsi in Vs.keys():
+for mmsi in list(Vs.keys()):
     count += 1
     print(count)
     tmp = Vs[mmsi][:,[LAT,LON,SOG,COG]]

@@ -19,7 +19,7 @@ geod = Geod(ellps='WGS84')
 AVG_EARTH_RADIUS = 6378.137  # in km
 SPEED_MAX = 30 # knot
 
-LAT, LON, SOG, COG, HEADING, ROT, NAV_STT, TIMESTAMP, MMSI = range(9)
+LAT, LON, SOG, COG, HEADING, ROT, NAV_STT, TIMESTAMP, MMSI = list(range(9))
 
 def trackOutlier(A):
     """
@@ -140,7 +140,7 @@ def createShapefile(shp_fname, Vs):
     shp.field('HEADING', 'N', 10,5)
     shp.field('ROT', 'N', 5)
     shp.field('NAV_STT', 'N', 2)
-    for mmsi in Vs.keys():
+    for mmsi in list(Vs.keys()):
         for p in Vs[mmsi]:
             shp.point(p[LON],p[LAT])
             shp.record(p[MMSI],
