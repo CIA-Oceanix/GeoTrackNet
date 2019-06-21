@@ -128,4 +128,4 @@ We would like to thank MarineCadastre, CLS and Erwan Guegueniat, Tensorflow team
 ### Contact
 
 This code is a raw version of MultitaskAIS. We are sorry for not providing a clean version of the code, it is being optimized.
-For any questions/issues, please contact Duong NGUYEN via van.nguyen1@imt-atlantique.fr
+For questions and issues please open an issue.
