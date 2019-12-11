@@ -39,7 +39,7 @@ See requirements.yml
 
 The MarineC dataset is provided by MarineCadastre.gov, Bureau of Ocean Energy Management, and National Oceanic and Atmospheric Administration, (marinecadastre.gov), and availble at (https://marinecadastre.gov/ais/)
 
-The Brittany dataset is provided by CLS-Collecte Localisation Satellites (https://www.cls.fr/en/) and Erwan Guegueniat, comprises AIS messages captured by a coastal receiving station in Ushant, from 07/2011 to 07/2019. We provide here a set of processed AIS messages (data/ct_2017010203_10_20.zip) on which readers can re-produce the results in the paper GeoTrackNet. This set comprises dynamic information of AIS tracks (LAT, LON, SOG, COG, HEADING, ROT, NAV_STT, TIMESTAMP, MMSI) of cargo and tanker vessels from 01/2017 to 03/2017, downsampled to a resolution of 5 minutes. For the full Brittany dataset, please contact CLS (G. Hajduch, ghajduch@groupcls.com).  
+The Brittany dataset is provided by CLS-Collecte Localisation Satellites (https://www.cls.fr/en/) and Erwan Guegueniat, comprises AIS messages captured by a coastal receiving station in Ushant, from 07/2011 to 07/2019. We provide here a set of processed AIS messages (data/ct_2017010203_10_20.zip) on which readers can re-produce the results in the paper GeoTrackNet. This set comprises dynamic information of AIS tracks (LAT, LON, SOG, COG, HEADING, ROT, NAV_STT, TIMESTAMP, MMSI) of cargo and tanker vessels from 01/2017 to 03/2017, downsampled to a resolution of 5 minutes. For the full Brittany dataset, please contact CLS (G. Hajduch, ghajduch@groupcls.com).
 
 #### Preprocess the Data
 
