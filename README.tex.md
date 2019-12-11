@@ -125,8 +125,9 @@ python multitaskAIS.py \
 
 ### Acknowledgement
 
-We would like to thank MarineCadastre, CLS and Erwan Guegueniat, Kurt Schwehr, Tensorflow team, QGIS and OpenStreetmap for the data and the open-source codes.
+We are thankful to thank MarineCadastre, CLS and Erwan Guegueniat, Kurt Schwehr, Tensorflow team, QGIS and OpenStreetmap for the data and the open-source codes.
 
+We would also like to thank Jetze Schuurmans for helping convert the code from Python2 to Python3.
 
 ### Contact
 For any questions, please open an issue.
