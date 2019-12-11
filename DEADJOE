@@ -22,3 +22,39 @@ Processing '/etc/joe/editorrc'...
 Processing '/etc/joe/ftyperc'...
 Finished processing /etc/joe/ftyperc
 Finished processing /etc/joe/editorrc
+
+*** These modified files were found in JOE when it aborted on Wed Dec 11 14:39:29 2019
+*** JOE was aborted because the terminal closed
+
+*** Fichier '/sanssauvegarde/homes/vnguye04/Codes/MultitaskAIS/.git/MERGE_MSG'
+Readme
+
+Merge branch 'master' of https://github.com/dnguyengithub/MultitaskAIS
+
+# Veuillez entrer un message de validation pour expliquer en quoi cette fusion est
+# nécessaire, surtout si cela fusionne une branche amont mise à jour dans une branche de sujet.
+#
+# Les lignes commençant par '#' seront ignorées, et un message vide
+# abandonne la validation.
+
+*** Fichier '(Sans nom)'
+xxx
+
+*** Fichier '(Sans nom)'
+/users/local/dnguyen/polluNet/.git/COMMIT_EDITMSG
+/sanssauvegarde/homes/vnguye04/Codes/Grunt/.git/MERGE_MSG
+/sanssauvegarde/homes/vnguye04/Codes/Grunt/.git/MERGE_MSG
+/sanssauvegarde/homes/vnguye04/Codes/Grunt/.git/MERGE_MSG
+/sanssauvegarde/homes/vnguye04/Codes/Grunt/.git/MERGE_MSG
+/sanssauvegarde/homes/vnguye04/Codes/Grunt/.git/MERGE_MSG
+/sanssauvegarde/homes/vnguye04/Codes/AudioNovelty/.git/MERGE_MSG
+/sanssauvegarde/homes/vnguye04/Codes/MultitaskAIS/.git/MERGE_MSG
+* Build Log *
+/sanssauvegarde/homes/vnguye04/Codes/MultitaskAIS/.git/MERGE_MSG
+/sanssauvegarde/homes/vnguye04/Codes/MultitaskAIS/.git/MERGE_MSG
+
+*** Fichier '* Startup Log *'
+Processing '/etc/joe/editorrc'...
+Processing '/etc/joe/ftyperc'...
+Finished processing /etc/joe/ftyperc
+Finished processing /etc/joe/editorrc
