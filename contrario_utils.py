@@ -1,10 +1,29 @@
-#!/usr/bin/env python2
-# -*- coding: utf-8 -*-
+# coding: utf-8
+
+# MIT License
+# 
+# Copyright (c) 2018 Duong Nguyen
+# 
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+# ==============================================================================
+
 """
-Created on Wed Feb 28 16:42:00 2018
-
-@author: vnguye04
-
 A set of utils for the a contrario anomaly detection.
 """
 
@@ -21,7 +40,7 @@ N_EVENT = 0 # number of event
 for ns in range(1,MAX_SEQUENCE_LENGTH+1):
     n_ci = MAX_SEQUENCE_LENGTH-ns+1
     N_EVENT += n_ci
-
+print(N_EVENT)
 
 def nCr(n, r):
     """Function calculates the number of combinations (n choose r)"""
@@ -44,8 +63,8 @@ def nonzero_segments(x_):
     if len(run) != 0:
         result.append(run)
         run = []
-    return result 
-    
+    return result
+
 def zero_segments(x_):
     """Return list of consecutive zeros from x_"""
     run = []
@@ -61,7 +80,7 @@ def zero_segments(x_):
         result.append(run)
         run = []
     return result
-    
+
 def NFA(ns,k):
     """Number of False Alarms"""
     B = 0
@@ -78,14 +97,15 @@ def contrario_detection(v_A_,epsilon=0.0091):
         epsilon: threshold
     OUTPUT:
         v_anomalies: abnormal segment indicator vector
-        
+
     """
     v_anomalies = np.zeros(len(v_A_))
-    for d_ns in range(MAX_SEQUENCE_LENGTH,0,-1):
-        for d_ci in range(MAX_SEQUENCE_LENGTH+1-d_ns):
+    max_seq_len = min(MAX_SEQUENCE_LENGTH, len(v_A_))
+    for d_ns in range(max_seq_len,0,-1):
+        for d_ci in range(max_seq_len+1-d_ns):
             v_xi = v_A_[d_ci:d_ci+d_ns]
             d_k_xi = int(np.count_nonzero(v_xi))
             if NFA(d_ns,d_k_xi)<epsilon:
                 v_anomalies[d_ci:d_ci+d_ns] = 1
     return v_anomalies
-    
+

@@ -1,29 +1,40 @@
-# Copyright 2017 The TensorFlow Authors All Rights Reserved.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-# =============================================================================
+# coding: utf-8
 
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
+# MIT License
+# 
+# Copyright (c) 2018 Duong Nguyen
+# 
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+# ==============================================================================
+
+"""
+Flag configuration.
+Adapted from the original script of FIVO.
+"""
 
 import os
 import tensorflow as tf
 import pickle
 
 ### Bretagne
-LAT_MIN = 47.0
-LAT_MAX = 50.0
+LAT_MIN = 47.5
+LAT_MAX = 49.5
 LON_MIN = -7.0
 LON_MAX = -4.0
 
@@ -55,7 +66,7 @@ tf.app.flags.DEFINE_integer("latent_size", 100,
 tf.app.flags.DEFINE_string("log_dir", "./chkpt",
                            "The directory to keep checkpoints and summaries in.")
 
-tf.app.flags.DEFINE_integer("batch_size", 1,
+tf.app.flags.DEFINE_integer("batch_size", 50,
                             "Batch size.")
 tf.app.flags.DEFINE_integer("min_duration", 4,
                             "Min duration (hour) of a vessel track")
@@ -66,7 +77,7 @@ tf.app.flags.DEFINE_float("ll_thresh", -17.47,
                           "Log likelihood for the anomaly detection.")
 
 # Resolution flags.
-tf.app.flags.DEFINE_integer("lat_bins", 300,
+tf.app.flags.DEFINE_integer("lat_bins", 200,
                             "Number of bins of the lat one-hot vector")
 tf.app.flags.DEFINE_integer("lon_bins", 300,
                             "Number of bins of the lon one-hot vector")
@@ -83,14 +94,14 @@ tf.app.flags.DEFINE_float("anomaly_lon_reso", 0.1,
 # Dataset flags
 tf.app.flags.DEFINE_string("dataset", "Brittany",
                            "Dataset. Can be 'Brittany' or 'MarineC'.")
-tf.app.flags.DEFINE_string("trainingset_name", "dataset8/dataset8_train.pkl",
+tf.app.flags.DEFINE_string("trainingset_name", "ct_2017010203_10_20/ct_2017010203_10_20_train.pkl",
                            "Path to load the trainingset from.")
-tf.app.flags.DEFINE_string("testset_name", "dataset8/dataset8_test.pkl",
-                           "Path to load the testset from.")  
+tf.app.flags.DEFINE_string("testset_name", "ct_2017010203_10_20/ct_2017010203_10_20_test.pkl",
+                           "Path to load the testset from.")
 tf.app.flags.DEFINE_string("split", "train",
-                           "Split to evaluate the model on. Can be 'train', 'valid', or 'test'.")  
+                           "Split to evaluate the model on. Can be 'train', 'valid', or 'test'.")
 tf.app.flags.DEFINE_boolean("missing_data", False,
-                           "If true, a part of input track will be deleted.")  
+                           "If true, a part of input track will be deleted.")
 
 
 tf.app.flags.DEFINE_string("model", "vrnn",
@@ -106,7 +117,7 @@ tf.app.flags.DEFINE_boolean("normalize_by_seq_len", True,
                             "per sequence.")
 tf.app.flags.DEFINE_float("learning_rate", 0.0003,
                           "The learning rate for ADAM.")
-tf.app.flags.DEFINE_integer("max_steps", int(1e9),
+tf.app.flags.DEFINE_integer("max_steps", int(80000),
                             "The number of gradient update steps to train for.")
 tf.app.flags.DEFINE_integer("summarize_every", 100,
                             "The number of steps between summaries.")
@@ -138,7 +149,7 @@ config.data_dim  = config.lat_bins + config.lon_bins\
                  + config.sog_bins + config.cog_bins # error with data_dimension
 
 
-### SC-PC-086    
+### SC-PC-086
 #if config.dataset == "Brittany":
 #    config.dataset_path = "/users/local/dnguyen/Datasets/AIS_datasets/mt314/"
 #elif config.dataset == "MarineC":
@@ -146,14 +157,14 @@ config.data_dim  = config.lat_bins + config.lon_bins\
 #else:
 #    raise ValueError("Unkown dataset (must be 'Brittany' or 'MarineC'.")
 
-### Other PCs  
+### Other PCs
 if config.dataset == "Brittany":
     config.dataset_path = "./data/"
 elif config.dataset == "MarineC":
     config.dataset_path = "./data/"
 else:
     raise ValueError("Unkown dataset (must be 'Brittany' or 'MarineC'.")
-   
+
 # TESTSET_PATH
 if config.mode == "train":
     config.testset_name = config.trainingset_name
@@ -182,3 +193,5 @@ if not os.path.exists(config.logdir):
     else:
         raise ValueError(config.logdir + " doesnt exist")
 
+if config.log_filename == "":
+    config.log_filename = os.path.basename(config.logdir)

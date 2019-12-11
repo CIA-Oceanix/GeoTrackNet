@@ -37,7 +37,7 @@ def create_eval_graph(inputs, targets, lengths, model, config):
     num_samples = config.num_samples
     max_seq_len = tf.reduce_max(lengths)
     init_states = model.zero_state(batch_size * num_samples, tf.float32)
-    
+
     seq_mask = tf.transpose(
             tf.sequence_mask(lengths, maxlen=max_seq_len, dtype=tf.float32),
             perm=[1, 0])
@@ -46,14 +46,14 @@ def create_eval_graph(inputs, targets, lengths, model, config):
         inputs_ta, mask_ta = nested.tas_for_tensors([inputs_tmp, seq_mask], max_seq_len)
     else:
         inputs_ta, mask_ta = nested.tas_for_tensors([(inputs,targets), seq_mask], max_seq_len)
-    
+
     t0 = tf.constant(0, tf.int32)
     init_states = model.zero_state(batch_size * num_samples, tf.float32)
-    
+
     ta_names = ['log_weights_t','sampleds','trues','rnn_states','rnn_latents', 'rnn_outs']
     tas = [tf.TensorArray(tf.float32, max_seq_len, name='%s_ta' % n)
              for n in ta_names]
-    
+
     log_weights_acc = tf.zeros([num_samples, batch_size], dtype=tf.float32)
     log_p_hat_acc = tf.zeros([batch_size], dtype=tf.float32)
     kl_acc = tf.zeros([num_samples * batch_size], dtype=tf.float32)
@@ -61,20 +61,20 @@ def create_eval_graph(inputs, targets, lengths, model, config):
         accs = (log_weights_acc, kl_acc)
     elif config.bound == "fivo":
         accs = (log_weights_acc, log_p_hat_acc, kl_acc)
-    
+
     target_sampled0 = tf.zeros(shape = [batch_size*num_samples, config.data_dim],
                                dtype = tf.float32)
     target_true0 = tf.zeros(shape = [batch_size*num_samples, config.data_dim],
                                dtype = tf.float32)
     init_targets = (target_sampled0, target_true0)
-    
-    
+
+
     def while_predicate(t, *unused_args):
         return t < max_seq_len
-    
+
     resampling_criterion=bounds.ess_criterion
-    
-    
+
+
     def while_step(t, rnn_state, tas, accs, while_samples):
         """Implements one timestep of IWAE computation."""
         if config.bound == "elbo":
@@ -82,12 +82,12 @@ def create_eval_graph(inputs, targets, lengths, model, config):
         elif config.bound == "fivo":
             log_weights_acc, log_p_hat_acc, kl_acc = accs
         cur_inputs, cur_mask = nested.read_tas([inputs_ta, mask_ta], t)
-    
+
         if config.missing_data:
             cur_inputs = tf.cond(tf.logical_and(t < max_seq_len - 6,t >= max_seq_len - 18),
-                                 lambda: while_samples, 
+                                 lambda: while_samples,
                                  lambda: cur_inputs)
-    
+
         # Run the cell for one step.
         log_q_z, log_p_z, log_p_x_given_z, kl, new_state, new_rnn_out, dists_return\
                                                         = model(cur_inputs,
@@ -95,7 +95,7 @@ def create_eval_graph(inputs, targets, lengths, model, config):
                                                                 cur_mask,
                                                                 return_value = "probs"
                                                                 )
-                                                        
+
         new_sample0 = dists.sample_from_probs(dists_return,
                                               config.lat_bins,
                                               config.lon_bins,
@@ -103,13 +103,13 @@ def create_eval_graph(inputs, targets, lengths, model, config):
                                               config.cog_bins)
         new_sample0 = tf.cast(new_sample0, tf.float32)
         new_sample_ = (new_sample0, tf.zeros_like(new_sample0, dtype = tf.float32))
-                                                                
+
         # Compute the incremental weight and use it to update the current
         # accumulated weight
         kl_acc += kl * cur_mask
         log_alpha = (log_p_x_given_z + log_p_z - log_q_z) * cur_mask
         log_alpha = tf.reshape(log_alpha, [config.num_samples, batch_size])
-        log_weights_acc += log_alpha 
+        log_weights_acc += log_alpha
         # Calculate the effective sample size.
         ess_num = 2 * tf.reduce_logsumexp(log_weights_acc, axis=0)
         ess_denom = tf.reduce_logsumexp(2 * log_weights_acc, axis=0)
@@ -143,13 +143,13 @@ def create_eval_graph(inputs, targets, lengths, model, config):
                                 noresample_inds)
             new_state = nested.gather_tensors(new_state, ancestor_inds)
             new_sample_ = nested.gather_tensors(new_sample_, ancestor_inds)
-        
+
         # Update the  Tensorarrays and accumulators.
         ta_updates = [log_alpha, new_sample_[0], new_sample_[1],
                                   new_state[0], new_state[1], new_rnn_out]
     #    ta_updates = [log_weights_acc, log_ess]
         new_tas = [ta.write(t, x) for ta, x in zip(tas, ta_updates)]
-        
+
         if config.bound == "fivo":
             # For the particle filters that resampled, update log_p_hat and
             # reset weights to zero.
@@ -162,18 +162,18 @@ def create_eval_graph(inputs, targets, lengths, model, config):
         elif config.bound == "elbo":
             new_accs = (log_weights_acc, kl_acc)
         return t + 1, new_state, new_tas, new_accs, new_sample_
-    
+
     _, _, tas, accs, new_sample = tf.while_loop(while_predicate,
                                     while_step,
                                     loop_vars=(t0, init_states, tas, accs, init_targets),
                                     parallel_iterations=parallel_iterations,
                                     swap_memory=swap_memory)
-    
-    
+
+
     #log_weights, log_ess = [x.stack() for x in tas]
     log_weights, track_sample, track_true, \
-            rnn_state_tf, rnn_latent_tf, rnn_out_tf = [x.stack() for x in tas] 
-    
+            rnn_state_tf, rnn_latent_tf, rnn_out_tf = [x.stack() for x in tas]
+
     #log_weights, log_ess, resampled = [x.stack() for x in tas]
     if config.bound == "fivo":
         final_log_weights, log_p_hat, kl = accs
@@ -186,7 +186,7 @@ def create_eval_graph(inputs, targets, lengths, model, config):
         log_p_hat = (tf.reduce_logsumexp(final_log_weights, axis=0) -
                                      tf.log(tf.to_float(num_samples)))
         kl = tf.reduce_mean(tf.reshape(kl, [num_samples, batch_size]), axis=0)
-    
+
     ll_per_seq = log_p_hat
     ll_per_t = ll_per_seq / tf.to_float(lengths)
     #        ll_per_t = tf.reduce_mean(ll_per_seq / tf.to_float(lengths))
@@ -195,8 +195,8 @@ def create_eval_graph(inputs, targets, lengths, model, config):
             final_log_weights/tf.to_float(lengths), rnn_state_tf, rnn_latent_tf, rnn_out_tf
 
 def create_dataset_and_model(config, split, shuffle, repeat):
-    
-    inputs, targets, lengths, mmsis, mean = datasets.create_AIS_dataset(config.dataset_path, 
+
+    inputs, targets, lengths, mmsis, mean = datasets.create_AIS_dataset(config.trainingset_path,
                                                           config.split,
                                                           config.batch_size,
                                                           config.data_dim,
@@ -259,7 +259,7 @@ def run_train(config):
             return "Step %d, %s: %f" % (
                         log_dict["step"], bound_label, log_dict["bound_value"])
         logging_hook = tf.train.LoggingTensorHook(
-                                {"step": step, 
+                                {"step": step,
                                  "bound_value": bound_value},
                                 every_n_iter=config.summarize_every,
                                 formatter=summary_formatter)
@@ -273,20 +273,20 @@ def run_train(config):
             loss: A float Tensor that when differentiated yields the gradients
                 to apply to the model. Should be optimized via gradient descent.
         """
-        inputs, targets, mmsis, lengths, model = create_dataset_and_model(config, 
+        inputs, targets, mmsis, lengths, model = create_dataset_and_model(config,
                                                                config.split,
-                                                               shuffle=True, 
+                                                               shuffle=True,
                                                                repeat=True)
         # Compute lower bounds on the log likelihood.
         if config.bound == "elbo":
-            ll_per_seq, _, _, _ = bounds.elbo(model, 
+            ll_per_seq, _, _, _ = bounds.elbo(model,
                                               (inputs, targets),
                                               lengths,
                                               num_samples=1)
         elif config.bound == "fivo":
-            ll_per_seq, _, _, _, _ = bounds.fivo(model, 
-                                                 (inputs, targets), 
-                                                 lengths, 
+            ll_per_seq, _, _, _, _ = bounds.fivo(model,
+                                                 (inputs, targets),
+                                                 lengths,
                                                  num_samples=config.num_samples,
                                                  resampling_criterion=bounds.ess_criterion)
         # Compute loss scaled by number of timesteps.
@@ -300,7 +300,7 @@ def run_train(config):
             return ll_per_t, -ll_per_t
         else:
             return ll_per_seq, -ll_per_seq
- 
+
     def create_graph():
         """Creates the training graph."""
         global_step = tf.train.get_or_create_global_step()
@@ -348,9 +348,9 @@ def run_eval(config):
                                                                    shuffle=False,
                                                                    repeat=False)
         # Compute lower bounds on the log likelihood.
-        elbo_ll_per_seq, _, _, _, _ = bounds.fivo(model, 
-                                                 (inputs, targets), 
-                                                 lengths, 
+        elbo_ll_per_seq, _, _, _, _ = bounds.fivo(model,
+                                                 (inputs, targets),
+                                                 lengths,
                                                  num_samples=config.num_samples,
                                                  resampling_criterion=bounds.ess_criterion)
         elbo_ll = tf.reduce_sum(elbo_ll_per_seq)

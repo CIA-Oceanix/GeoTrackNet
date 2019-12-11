@@ -88,7 +88,8 @@ def elbo(cell,
                                     loop_vars=(t0, init_states, tas, accs),
                                     parallel_iterations=parallel_iterations,
                                     swap_memory=swap_memory)
-
+    
+    ## Here log_weights is acc log_weights
     log_weights, log_ess = [x.stack() for x in tas]
     final_log_weights, kl = accs
     log_p_hat = (tf.reduce_logsumexp(final_log_weights, axis=0) -
