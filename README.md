@@ -1,6 +1,6 @@
 # MultitaskAIS
 
-TensorFlow implementation of the model proposed in "A Multi-Task Deep Learning Architecture for Maritime Surveillance Using AIS Data Streams" (https://ieeexplore.ieee.org/abstract/document/8631498) and "GeoTrackNet—A Maritime Anomaly Detector using Probabilistic Neural Network Representation of AIS Tracks and A Contrario Detection" (https://arxiv.org/abs/1912.00682)
+TensorFlow implementation of the model proposed in "A Multi-Task Deep Learning Architecture for Maritime Surveillance Using AIS Data Streams" (https://ieeexplore.ieee.org/abstract/document/8631498) and "GeoTrackNet—A Maritime Anomaly Detector using Probabilistic Neural Network Representation of AIS Tracks and A Contrario Detection" (https://arxiv.org/abs/1912.00682).
 
 All the codes related to the Embedding block are adapted from the source code of Filtering Variational Objectives:
 https://github.com/tensorflow/models/tree/master/research/fivo
@@ -49,7 +49,7 @@ Converting to csv:
 
 `csv2pkl.py` then loads the data from csv files, selects AIS messages in the pre-defined ROI then saves them as pickle format.
 
-Preprocessing steps: the data are processed as described in the paper by `dataset_preprocessing.py`
+Preprocessing steps: the data are processed as described in the paper by `dataset_preprocessing.py`.
 
 ### Training the Embedding layer
 
@@ -65,6 +65,8 @@ python multitaskAIS.py \
   --num_samples=16 \
   --learning_rate=0.0003 \
 ```
+
+A model trained on the dataset comprising AIS messages of cargo and tanker vessels, from January 01 to March 10, 2017 can be found at `chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-50.zip`.
 
 ### Running task-specific submodels
 
