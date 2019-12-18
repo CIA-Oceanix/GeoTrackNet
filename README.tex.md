@@ -105,7 +105,7 @@ python multitaskAIS.py \
 #### contrario detection
 *contrario_kde.py* performs the a contrario detection and plots the results.
 ```
-python contrario.py \
+python contrario_kde.py \
 ``` 
 #### traj_reconstruction
 *traj_reconstruction* performs the trajectory reconstruction.
