@@ -56,6 +56,9 @@ LATENT_SIZE = 100
 CONTRARIO_EPS = 1e-6
 MISSING_DATA = False
 
+ONEHOT_LON_BINS = 300
+ONEHOT_LAT_BINS = 200
+
 
 trainingset_name ="ct_2017010203_10_20"
 testset_name ="ct_2017010203_10_20"
