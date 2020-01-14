@@ -34,7 +34,7 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 import pickle
 import glob
 from scipy import stats
-from tqdm import tqdm_notebook as tqdm
+from tqdm import tqdm
 import contrario_utils
 
 ## PARAMS
