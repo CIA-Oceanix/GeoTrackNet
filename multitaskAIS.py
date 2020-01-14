@@ -87,7 +87,7 @@ else:
     dataset_size = len(Vs_test)
 
 
-if config.mode in ["save_outcomes","traj_reconstruction"]:
+if config.mode in ["save_outcomes","traj_reconstruction","log_density"]:
     tf.Graph().as_default()
     global_step = tf.train.get_or_create_global_step()
     inputs, targets, mmsis, lengths, model = runners.create_dataset_and_model(config,
