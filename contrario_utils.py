@@ -40,7 +40,6 @@ N_EVENT = 0 # number of event
 for ns in range(1,MAX_SEQUENCE_LENGTH+1):
     n_ci = MAX_SEQUENCE_LENGTH-ns+1
     N_EVENT += n_ci
-print(N_EVENT)
 
 def nCr(n, r):
     """Function calculates the number of combinations (n choose r)"""

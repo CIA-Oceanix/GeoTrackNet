@@ -59,6 +59,7 @@ MISSING_DATA = False
 ONEHOT_LON_BINS = 300
 ONEHOT_LAT_BINS = 200
 
+print("EPSILON ",CONTRARIO_EPS)
 
 trainingset_name ="ct_2017010203_10_20"
 testset_name ="ct_2017010203_10_20"

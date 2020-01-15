@@ -61,8 +61,8 @@ def create_AIS_dataset(dataset_path,
     lat_bins_ = lat_bins; lon_bins_ = lon_bins
     sog_bins_ = sog_bins; cog_bins_ = cog_bins
     def sparse_AIS_to_dense(msgs_,num_timesteps, mmsis):
-#        lat_bins = 300; lon_bins = 300; sog_bins = 30; cog_bins = 72
-        def create_dense_vect(msg,lat_bins = 300, lon_bins = 300, sog_bins = 30 ,cog_bins = 72):
+#        lat_bins = 200; lon_bins = 300; sog_bins = 30; cog_bins = 72
+        def create_dense_vect(msg,lat_bins = 200, lon_bins = 300, sog_bins = 30 ,cog_bins = 72):
             lat, lon, sog, cog = msg[0], msg[1], msg[2], msg[3]
             data_dim = lat_bins + lon_bins + sog_bins + cog_bins
             dense_vect = np.zeros(data_dim)

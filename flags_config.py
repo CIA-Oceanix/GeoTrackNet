@@ -52,7 +52,7 @@ FIG_DPI = 300
 
 
 # Shared flags.
-tf.app.flags.DEFINE_string("mode", "train",
+tf.app.flags.DEFINE_string("mode", "save_outcomes",
                            "The mode of the binary. Must be 'train'"
                            "'save_outcomes','ll','log_density','visualisation'"
                            "'traj_reconstruction' or 'traj_speed'.")

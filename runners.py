@@ -196,7 +196,7 @@ def create_eval_graph(inputs, targets, lengths, model, config):
 
 def create_dataset_and_model(config, split, shuffle, repeat):
 
-    inputs, targets, lengths, mmsis, mean = datasets.create_AIS_dataset(config.trainingset_path,
+    inputs, targets, lengths, mmsis, mean = datasets.create_AIS_dataset(config.testset_path,
                                                           config.split,
                                                           config.batch_size,
                                                           config.data_dim,
