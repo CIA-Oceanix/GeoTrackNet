@@ -50,6 +50,7 @@ import pickle
 from tqdm import tqdm
 import logging
 import scipy.special
+import math
 
 import runners
 from flags_config import config, LAT_MIN, LAT_MAX, LON_MIN, LON_MAX
@@ -129,7 +130,7 @@ if config.mode == "save_outcomes":
     Calculate and save log[p(x_t|h_t)] of each track in the test set.
     """
     l_dict = []
-    for d_i in tqdm(list(range(int(dataset_size/config.batch_size)))):
+    for d_i in tqdm(list(range(math.ceil(dataset_size/config.batch_size)))):
         inp, tar, seq_len, mmsi, log_weights_np, true_np, ll_t =\
                  sess.run([inputs, targets, lengths, mmsis, log_weights, track_true, ll_per_t])
         for d_idx_inbatch in range(inp.shape[1]):
@@ -441,7 +442,7 @@ elif config.mode == "visualisation":
             + "missing_data-" + str(config.missing_data)\
             + "n_anomalies-"+str(n_anomalies)\
             + ".png"
-    plt.savefig(fig_name,dpi = FIG_DPI)
+    plt.savefig(fig_name,dpi = FIG_DPI)à tous,
     plt.close()
 elif config.mode == "traj_reconstruction":
     """ TRAJECTORY RECONSTRUCTION
