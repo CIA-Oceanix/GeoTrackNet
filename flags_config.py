@@ -91,6 +91,10 @@ tf.app.flags.DEFINE_float("anomaly_lat_reso", 0.1,
 tf.app.flags.DEFINE_float("anomaly_lon_reso", 0.1,
                           "Lon resolution for anomaly detection.")
 
+
+tf.app.flags.DEFINE_float("interval_max", 2*3600,
+                          "Maximum interval between two successive AIS messages (in second).")
+
 # Dataset flags
 tf.app.flags.DEFINE_string("dataset", "Brittany",
                            "Dataset. Can be 'Brittany' or 'MarineC'.")
@@ -122,6 +126,13 @@ tf.app.flags.DEFINE_integer("max_steps", int(80000),
 tf.app.flags.DEFINE_integer("summarize_every", 100,
                             "The number of steps between summaries.")
 
+# A contrario detection flags.
+tf.app.flags.DEFINE_float("contrario_eps", 1e-10,
+                          "A contrario eps.")
+tf.app.flags.DEFINE_boolean("print_log", False,
+                            "If true, print the current state of the program to screen.")
+
+
 # Distributed training flags.
 tf.app.flags.DEFINE_string("master", "",
                            "The BNS name of the TensorFlow master to use.")
@@ -134,7 +145,6 @@ tf.app.flags.DEFINE_boolean("stagger_workers", True,
 
 # Fix tf >=1.8.0 flags bug
 tf.app.flags.DEFINE_string('f', '', 'kernel')
-
 tf.app.flags.DEFINE_integer("data_dim", 0, "Data dimension")
 tf.app.flags.DEFINE_string('log_filename', '', 'Log filename')
 tf.app.flags.DEFINE_string('logdir_name', '', 'Log dir name')

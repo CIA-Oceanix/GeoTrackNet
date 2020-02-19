@@ -1,9 +1,6 @@
-name: PYTHON3GPU
+name: PY3GPU
 channels:
-  - pytorch
-  - anaconda
   - hcc
-  - conda-forge
   - defaults
 dependencies:
   - _libgcc_mutex=0.1=main
@@ -15,37 +12,26 @@ dependencies:
   - astroid=2.1.0=py36_0
   - babel=2.6.0=py36_0
   - backcall=0.1.0=py36_0
-  - basemap=1.2.1=py36hd759880_1
-  - basemap-data-hires=1.2.1=0
   - blas=1.0=mkl
   - bleach=3.1.0=py36_0
-  - boost=1.67.0=py36_4
-  - bzip2=1.0.8=h7b6447c_0
   - c-ares=1.15.0=h7b6447c_1
-  - ca-certificates=2019.10.16=0
-  - certifi=2019.9.11=py36_0
+  - ca-certificates=2019.11.27=0
+  - certifi=2019.11.28=py36_0
   - cffi=1.11.5=py36he75722e_1
   - chardet=3.0.4=py36_1
   - cloudpickle=0.7.0=py_0
-  - contextlib2=0.6.0=py_0
+  - contextlib2=0.5.5=py36_0
   - cryptography=2.5=py36h1ba5d50_0
-  - cudatoolkit=9.0=h13b8566_0
-  - cudnn=7.3.1=cuda9.0_0
-  - cupti=9.0.176=0
   - cycler=0.10.0=py36_0
-  - cython=0.29.13=py36he6710b0_0
-  - cytoolz=0.10.0=py36h7b6447c_0
-  - dask-core=2.3.0=py_0
   - dbus=1.13.6=h746ee38_0
   - decorator=4.3.2=py36_0
-  - dm-sonnet-gpu=1.27=py36he515ea2_0
+  - dm-sonnet=1.27=py36h320368a_0
   - docutils=0.14=py36_0
   - entrypoints=0.3=py36_0
   - expat=2.2.6=he6710b0_0
   - fontconfig=2.13.0=h9420a91_0
   - freetype=2.9.1=h8a8886c_1
   - gast=0.2.2=py36_0
-  - geos=3.7.2=he1b5a44_1
   - glib=2.56.2=hd408876_0
   - gmp=6.1.2=h6c8ec71_1
   - grpcio=1.16.1=py36hf8bcb03_1
@@ -53,10 +39,8 @@ dependencies:
   - gstreamer=1.14.0=hb453b48_1
   - h5py=2.9.0=py36h7918eee_0
   - hdf5=1.10.4=hb1b8bf9_0
-  - hickle=3.4.5=py_0
   - icu=58.2=h9c2bf20_1
   - idna=2.8=py36_0
-  - imageio=2.5.0=py36_0
   - imagesize=1.1.0=py36_0
   - intel-openmp=2019.1=144
   - ipykernel=5.1.0=py36h39e3cac_0
@@ -73,14 +57,13 @@ dependencies:
   - jupyter_client=5.2.4=py36_0
   - jupyter_console=6.0.0=py36_0
   - jupyter_core=4.4.0=py36_0
+  - keras=2.2.4=0
   - keras-applications=1.0.6=py36_0
   - keras-base=2.2.4=py36_0
-  - keras-gpu=2.2.4=0
   - keras-preprocessing=1.0.5=py36_0
-  - keyring=18.0.0=py36_0
+  - keyring=17.1.1=py36_0
   - kiwisolver=1.0.1=py36hf484d3e_0
   - lazy-object-proxy=1.3.1=py36h14c3975_2
-  - libboost=1.67.0=h46d08c1_4
   - libedit=3.1.20181209=hc058e9b_0
   - libffi=3.2.1=hd88cf55_4
   - libgcc-ng=8.2.0=hdf63c60_1
@@ -89,16 +72,12 @@ dependencies:
   - libprotobuf=3.6.1=hd408876_0
   - libsodium=1.0.16=h1bed415_0
   - libstdcxx-ng=8.2.0=hdf63c60_1
-  - libtiff=4.0.10=h2733197_2
   - libuuid=1.0.3=h1bed415_2
   - libxcb=1.13=h1bed415_1
   - libxml2=2.9.9=he19cac6_0
-  - libxslt=1.1.33=h7d1a2b0_0
-  - lxml=4.4.1=py36hefd8a0e_0
   - markdown=3.0.1=py36_0
   - markupsafe=1.1.0=py36h7b6447c_0
   - matplotlib=3.0.2=py36h5429711_0
-  - matplotlib-base=3.1.1=py36hfd891ef_0
   - mccabe=0.6.1=py36_1
   - mistune=0.8.4=py36h7b6447c_0
   - mkl=2019.1=144
@@ -107,32 +86,26 @@ dependencies:
   - nbconvert=5.3.1=py36_0
   - nbformat=4.4.0=py36_0
   - ncurses=6.1=he6710b0_1
-  - networkx=2.3=py_0
-  - ninja=1.8.2=py36h6bb024c_1
   - notebook=5.7.4=py36_0
   - numpy=1.15.4=py36h7e9f1db_0
   - numpy-base=1.15.4=py36hde5b4d6_0
   - numpydoc=0.8.0=py36_0
-  - olefile=0.46=py36_0
   - openssl=1.1.1d=h7b6447c_3
   - packaging=19.0=py36_0
   - pandas=0.24.2=py36he6710b0_0
   - pandoc=2.2.3.2=0
   - pandocfilters=1.4.2=py36_1
   - parso=0.3.2=py36_0
-  - patsy=0.5.1=py36_0
   - pcre=8.42=h439df22_0
   - pexpect=4.6.0=py36_0
   - pickleshare=0.7.5=py36_0
-  - pillow=5.4.1=py36h34e0f95_0
   - pip=19.0.1=py36_0
-  - proj4=5.2.0=he1b5a44_1005
+  - proj=6.2.1=haa6030c_0
   - prometheus_client=0.5.0=py36_0
   - prompt_toolkit=2.0.8=py_0
   - protobuf=3.6.1=py36he6710b0_0
   - psutil=5.5.0=py36h7b6447c_0
   - ptyprocess=0.6.0=py36_0
-  - py-boost=1.67.0=py36h04863e7_4
   - pycodestyle=2.5.0=py36_0
   - pycparser=2.19=py36_0
   - pyflakes=2.1.0=py36_0
@@ -140,14 +113,12 @@ dependencies:
   - pylint=2.2.2=py36_0
   - pyopenssl=19.0.0=py36_0
   - pyparsing=2.3.1=py36_0
-  - pyproj=1.9.6=py36h516909a_1002
+  - pyproj=2.4.1=py36h2ea87da_0
   - pyqt=5.9.2=py36h05f1152_2
   - pysocks=1.6.8=py36_0
   - python=3.6.8=h0371630_0
   - python-dateutil=2.7.5=py36_0
-  - pytorch=1.0.1=py3.6_cuda9.0.176_cudnn7.4.2_2
   - pytz=2018.9=py36_0
-  - pywavelets=1.0.3=py36hdd07704_1
   - pyyaml=3.13=py36h14c3975_0
   - pyzmq=17.1.2=py36he6710b0_2
   - qt=5.9.7=h5867ecd_1
@@ -157,10 +128,8 @@ dependencies:
   - readline=7.0=h7b6447c_5
   - requests=2.21.0=py36_0
   - rope=0.11.0=py36_0
-  - scikit-image=0.15.0=py36he6710b0_0
   - scikit-learn=0.20.2=py36hd81dba3_0
   - scipy=1.2.0=py36h7c811a0_0
-  - seaborn=0.9.0=py36_0
   - secretstorage=3.1.0=py36_0
   - semantic_version=2.6.0=py36_0
   - send2trash=1.5.0=py36_0
@@ -171,10 +140,9 @@ dependencies:
   - sphinx=1.8.4=py36_0
   - sphinxcontrib=1.0=py36_1
   - sphinxcontrib-websupport=1.1.0=py36_1
-  - spyder=3.3.3=py36_0
+  - spyder=3.3.2=py36_0
   - spyder-kernels=0.4.2=py36_0
-  - sqlite=3.26.0=h7b6447c_0
-  - statsmodels=0.10.1=py36hdd07704_0
+  - sqlite=3.30.1=h7b6447c_0
   - tensorboard=1.12.2=py36he6710b0_0
   - tensorflow=1.12.0=gpu_py36he68c306_0
   - tensorflow-base=1.12.0=gpu_py36h8e0ae2d_0
@@ -183,11 +151,9 @@ dependencies:
   - termcolor=1.1.0=py36_1
   - terminado=0.8.1=py36_1
   - testpath=0.4.2=py36_0
-  - tk=8.6.9=hed695b0_1002
-  - toolz=0.10.0=py_0
-  - torchvision=0.2.1=py_2
+  - tk=8.6.8=hbc83047_0
   - tornado=5.1.1=py36h7b6447c_0
-  - tqdm=4.31.1=py_0
+  - tqdm=4.29.1=py_0
   - traitlets=4.3.2=py36_0
   - typed-ast=1.1.0=py36h14c3975_0
   - urllib3=1.24.1=py36_0
@@ -199,42 +165,6 @@ dependencies:
   - wrapt=1.11.1=py36h7b6447c_0
   - wurlitzer=1.0.2=py36_0
   - xz=5.2.4=h14c3975_4
-  - yaml=0.1.7=h96e3832_1
+  - yaml=0.1.7=had09818_2
   - zeromq=4.3.1=he6710b0_3
   - zlib=1.2.11=h7b6447c_3
-  - zstd=1.3.7=h0b5b093_0
-  - pip:
-    - atomicwrites==1.3.0
-    - attrs==19.3.0
-    - audioread==2.1.8
-    - colorama==0.4.1
-    - datetime-glob==1.0.7
-    - gpflow==1.5.0
-    - imageio-ffmpeg==0.3.0
-    - importlib-metadata==0.23
-    - joblib==0.13.2
-    - ketos==1.1.0
-    - lexery==1.1.0
-    - libais==0.17
-    - librosa==0.7.0
-    - llvmlite==0.29.0
-    - mock==3.0.5
-    - more-itertools==7.2.0
-    - multipledispatch==0.6.0
-    - numba==0.45.1
-    - numexpr==2.7.0
-    - pint==0.9
-    - pluggy==0.13.0
-    - py==1.8.0
-    - pyshp==1.2.12
-    - pytest==5.2.1
-    - pywt==1.0.6
-    - resampy==0.2.2
-    - sdeint==0.2.1
-    - soundfile==0.10.2
-    - tables==3.5.2
-    - tabulate==0.8.5
-    - utm==0.5.0
-    - zipp==0.6.0
-prefix: /homes/vnguye04/Bureau/Sanssauvegarde/miniconda3/envs/PYTHON3GPU
-
