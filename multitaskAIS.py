@@ -442,7 +442,7 @@ elif config.mode == "visualisation":
             + "missing_data-" + str(config.missing_data)\
             + "n_anomalies-"+str(n_anomalies)\
             + ".png"
-    plt.savefig(fig_name,dpi = FIG_DPI)à tous,
+    plt.savefig(fig_name,dpi = FIG_DPI)
     plt.close()
 elif config.mode == "traj_reconstruction":
     """ TRAJECTORY RECONSTRUCTION
