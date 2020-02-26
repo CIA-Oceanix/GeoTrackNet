@@ -178,19 +178,6 @@ m_msg_test  = m_msg_test[m_msg_test[:,TIMESTAMP]<=t_test_max]
 # Each AIS track is formatted by a dictionary.
 print("Convert to dicts of vessel's tracks...")
 
-## All AIS messages
-#Vs = dict()
-#for v_msg in m_msg:
-#    mmsi = int(v_msg[MMSI])
-#    if not (mmsi in list(Vs.keys())):
-#        Vs[mmsi] = np.empty((0,9))
-#    Vs[mmsi] = np.concatenate((Vs[mmsi], np.expand_dims(v_msg,0)), axis = 0)
-#for key in list(Vs.keys()):
-#    Vs[key] = np.array(sorted(Vs[key], key=lambda m_entry: m_entry[TIMESTAMP]))
-
-#with open(os.path.join(dataset_path,pkl_filename),"wb") as f:
-#    pickle.dump(Vs,f)
-
 # Training set
 Vs_train = dict()
 for v_msg in m_msg_train:
@@ -199,7 +186,10 @@ for v_msg in m_msg_train:
         Vs_train[mmsi] = np.empty((0,9))
     Vs_train[mmsi] = np.concatenate((Vs_train[mmsi], np.expand_dims(v_msg,0)), axis = 0)
 for key in list(Vs_train.keys()):
-    Vs_train[key] = np.array(sorted(Vs_train[key], key=lambda m_entry: m_entry[TIMESTAMP]))
+    if CARGO_TANKER_ONLY and (not key in l_cargo_tanker):
+        del Vs_train[key]
+    else:
+        Vs_train[key] = np.array(sorted(Vs_train[key], key=lambda m_entry: m_entry[TIMESTAMP]))
 
 # Validation set
 Vs_valid = dict()
@@ -209,7 +199,10 @@ for v_msg in m_msg_valid:
         Vs_valid[mmsi] = np.empty((0,9))
     Vs_valid[mmsi] = np.concatenate((Vs_valid[mmsi], np.expand_dims(v_msg,0)), axis = 0)
 for key in list(Vs_valid.keys()):
-    Vs_valid[key] = np.array(sorted(Vs_valid[key], key=lambda m_entry: m_entry[TIMESTAMP]))
+    if CARGO_TANKER_ONLY and (not key in l_cargo_tanker):
+        del Vs_valid[key]
+    else:
+        Vs_valid[key] = np.array(sorted(Vs_valid[key], key=lambda m_entry: m_entry[TIMESTAMP]))
 
 # Test set
 Vs_test = dict()
@@ -219,7 +212,10 @@ for v_msg in m_msg_test:
         Vs_test[mmsi] = np.empty((0,9))
     Vs_test[mmsi] = np.concatenate((Vs_test[mmsi], np.expand_dims(v_msg,0)), axis = 0)
 for key in list(Vs_test.keys()):
-    Vs_test[key] = np.array(sorted(Vs_test[key], key=lambda m_entry: m_entry[TIMESTAMP]))
+    if CARGO_TANKER_ONLY and (not key in l_cargo_tanker):
+        del Vs_test[key]
+    else:
+        Vs_test[key] = np.array(sorted(Vs_test[key], key=lambda m_entry: m_entry[TIMESTAMP]))
 
 
 ## PICKLING
