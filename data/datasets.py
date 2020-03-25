@@ -48,7 +48,7 @@ DEFAULT_PARALLELISM = 12
 # In[]
 
 def create_AIS_dataset(dataset_path,
-                       split,
+                       mean_path,
                        batch_size,
                        data_dim,
                        lat_bins,
@@ -58,11 +58,10 @@ def create_AIS_dataset(dataset_path,
                        num_parallel_calls=DEFAULT_PARALLELISM,
                        shuffle=True,
                        repeat=True):
-    lat_bins_ = lat_bins; lon_bins_ = lon_bins
-    sog_bins_ = sog_bins; cog_bins_ = cog_bins
-    def sparse_AIS_to_dense(msgs_,num_timesteps, mmsis):
+    total_bins = lat_bins+lon_bins+sog_bins+cog_bins
+    def sparse_AIS_to_dense(msgs_,num_timesteps, mmsis, time_start, time_end):
 #        lat_bins = 200; lon_bins = 300; sog_bins = 30; cog_bins = 72
-        def create_dense_vect(msg,lat_bins = 200, lon_bins = 300, sog_bins = 30 ,cog_bins = 72):
+        def create_dense_vect(msg,lat_bins = 300, lon_bins = 300, sog_bins = 30 ,cog_bins = 72):
             lat, lon, sog, cog = msg[0], msg[1], msg[2], msg[3]
             data_dim = lat_bins + lon_bins + sog_bins + cog_bins
             dense_vect = np.zeros(data_dim)
@@ -71,61 +70,56 @@ def create_AIS_dataset(dataset_path,
             dense_vect[int(sog*sog_bins) + lat_bins + lon_bins] = 1.0
             dense_vect[int(cog*cog_bins) + lat_bins + lon_bins + sog_bins] = 1.0
             return dense_vect
-    #    msgs_[msgs_ == 1] = 0.99999
+        msgs_[msgs_ == 1] = 0.99999
         dense_msgs = []
         for msg in msgs_:
+            # lat_bins, lon_bins, sog_bins, cog_bins are from "create_AIS_dataset" scope 
             dense_msgs.append(create_dense_vect(msg,
-                                                lat_bins = lat_bins_,
-                                                lon_bins = lon_bins_,
-                                                sog_bins = sog_bins_,
-                                                cog_bins = cog_bins_))
+                                                lat_bins = lat_bins,
+                                                lon_bins = lon_bins,
+                                                sog_bins = sog_bins,
+                                                cog_bins = cog_bins))
         dense_msgs = np.array(dense_msgs)
-        return dense_msgs, num_timesteps, mmsis
+        return dense_msgs, num_timesteps, mmsis, time_start, time_end
 
 
     # Load the data from disk.
-    try:
-        with tf.gfile.Open(dataset_path, "rb") as f:
-            raw_data = pickle.load(f)
-    except:
-        with tf.gfile.Open(dataset_path, "rb") as f:
-            raw_data = pickle.load(f, encoding='latin1')
+    with tf.gfile.Open(dataset_path, "rb") as f:
+        raw_data = pickle.load(f)
 
     num_examples = len(raw_data)
     dirname = os.path.dirname(dataset_path)
 
-    try:
-        with open(dirname + "/mean.pkl","rb") as f:
-            mean = pickle.load(f)
-    except:
-        with open(dirname + "/mean.pkl","rb") as f:
-            mean = pickle.load(f, encoding='latin1')
+    with open(mean_path,"rb") as f:
+        mean = pickle.load(f)
 
     def aistrack_generator():
         for k in list(raw_data.keys()):
             tmp = raw_data[k][::2,[LAT,LON,SOG,COG]] # 10 min
             tmp[tmp == 1] = 0.99999
-            yield tmp, len(tmp), raw_data[k][0,MMSI]
+            yield tmp, len(tmp), raw_data[k][0,MMSI], raw_data[k][0,TIMESTAMP], raw_data[k][-1,TIMESTAMP]
 
     dataset = tf.data.Dataset.from_generator(
-                                  aistrack_generator,
-                                  output_types=(tf.float64, tf.int64, tf.int64))
-
+                              aistrack_generator,
+                              output_types=(tf.float64, tf.int64, tf.int64, tf.float32, tf.float32))
+            
     if repeat: dataset = dataset.repeat()
-    if shuffle: dataset = dataset.shuffle(num_examples)
-
+    if shuffle: dataset = dataset.shuffle(num_examples)             
+              
     dataset = dataset.map(
-            lambda msg_, num_timesteps, mmsis: tuple(tf.py_func(sparse_AIS_to_dense,
-                                                   [msg_, num_timesteps, mmsis],
-                                                   [tf.float64, tf.int64, tf.int64])),
+            lambda msg_, num_timesteps, mmsis, time_start, time_end: tuple(tf.py_func(sparse_AIS_to_dense,
+                                                   [msg_, num_timesteps, mmsis, time_start, time_end],
+                                                   [tf.float64, tf.int64, tf.int64, tf.float32, tf.float32])),
                                                 num_parallel_calls=num_parallel_calls)
+              
 
     # Batch sequences togther, padding them to a common length in time.
     dataset = dataset.padded_batch(batch_size,
-                                 padded_shapes=([None, data_dim], [], []))
+                                   padded_shapes=([None, total_bins ], [], [], [], [])
+                                  )
 
 
-    def process_AIS_batch(data, lengths, mmsis):
+    def process_AIS_batch(data, lengths, mmsis, time_start, time_end):
         """Create mean-centered and time-major next-step prediction Tensors."""
         data = tf.to_float(tf.transpose(data, perm=[1, 0, 2]))
         lengths = tf.to_int32(lengths)
@@ -141,13 +135,15 @@ def create_AIS_dataset(dataset_path,
         # Mask out unused timesteps.
         inputs *= tf.expand_dims(tf.transpose(
             tf.sequence_mask(lengths, dtype=inputs.dtype)), 2)
-        return inputs, targets, lengths, mmsis
+        return inputs, targets, lengths, mmsis, time_start, time_end
 
     dataset = dataset.map(process_AIS_batch,
                           num_parallel_calls=num_parallel_calls)
+
+
 #    dataset = dataset.prefetch(num_examples)
     dataset = dataset.prefetch(50)
     itr = dataset.make_one_shot_iterator()
-    inputs, targets, lengths, mmsis = itr.get_next()
-    return inputs, targets, lengths, mmsis, tf.constant(mean, dtype=tf.float32)
+    inputs, targets, lengths, mmsis, time_starts, time_ends = itr.get_next()
+    return inputs, targets, mmsis, time_starts, time_ends, lengths, tf.constant(mean, dtype=tf.float32)
 

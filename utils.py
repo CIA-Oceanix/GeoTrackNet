@@ -30,6 +30,11 @@ Utils for MultitaskAIS.
 
 
 import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.axes_grid1 import make_axes_locatable
+import os
+from scipy import interpolate
+import scipy.ndimage as ndimage
 from math import radians, cos, sin, asin, sqrt
 import sys
 sys.path.append('..')
@@ -42,6 +47,7 @@ geod = Geod(ellps='WGS84')
 
 AVG_EARTH_RADIUS = 6378.137  # in km
 SPEED_MAX = 30 # knot
+FIG_DPI = 150
 
 LAT, LON, SOG, COG, HEADING, ROT, NAV_STT, TIMESTAMP, MMSI = list(range(9))
 
@@ -99,7 +105,8 @@ def trackOutlier(A):
                 b[j] -= A[r,j]
     return o.astype(bool)
     
-
+#===============================================================================
+#===============================================================================
 def detectOutlier(track, speed_max = SPEED_MAX):
     """
     removeOutlier() removes anomalus AIS messages from AIS track.
@@ -142,7 +149,8 @@ def detectOutlier(track, speed_max = SPEED_MAX):
     return o_report, o_calcul
     
 
-    
+#===============================================================================
+#===============================================================================   
 # Creating shape file
 def createShapefile(shp_fname, Vs):
     """
@@ -179,7 +187,8 @@ def createShapefile(shp_fname, Vs):
                        p[NAV_STT])
     shp.save(shp_fname)
     
-
+#===============================================================================
+#===============================================================================
 def interpolate(t, track):
     """
     Interpolating the AIS message of vessel at a specific "t".
@@ -229,6 +238,150 @@ def interpolate(t, track):
     else:
         return None
 
+#===============================================================================
+#===============================================================================
+def remove_gaussian_outlier(v_data,quantile=1.64):
+    """
+    Remove outliers
+    INPUT:
+        v_data      : a 1-D array
+        quantile    : 
+    OUTPUT:
+        v_filtered  : filtered array
+    """
+    d_mean = np.mean(v_data)
+    d_std = np.std(v_data)
+    idx_normal = np.where(np.abs(v_data-d_mean)<=quantile*d_std)[0] #90%
+    return v_data[idx_normal]    
+    
+#===============================================================================
+#===============================================================================
+def gaussian_filter_with_nan(U,sigma):
+    """
+    Apply Gaussian filter when the data contain NaN
+    INPUT:
+        U           : a 2-D array (matrix)
+        sigma       : std for the Gaussian kernel
+    OUTPUT:
+        Z           : filtered matrix
+    """
+    V=U.copy()
+    V[np.isnan(U)]=0
+    VV= ndimage.gaussian_filter(V,sigma=sigma)
 
+    W=0*U.copy()+1
+    W[np.isnan(U)]=0
+    WW= ndimage.gaussian_filter(W,sigma=sigma)
+    Z=VV/WW
+    return(Z)
+
+#===============================================================================
+#===============================================================================
+def show_logprob_map(m_map_logprob_mean, m_map_logprob_std, save_dir, 
+                     logprob_mean_min = -10.0, logprob_std_max = 5.0,
+                     d_scale = 10, inter_method = "hanning",
+                     fig_w = 960, fig_h = 960,
+                    ):
+    """
+    Show the map of the mean and the std of the logprob in each cell.
+    INPUT:
+        m_map_logprob_mean   : a 2-D array (matrix)
+        m_map_logprob_std    : a 2-D array (matrix)
+        save_dir             : directory to save the images
+    """    
+    # Truncate
+    m_map_logprob_mean[m_map_logprob_mean<logprob_mean_min] = logprob_mean_min
+    m_map_logprob_std[m_map_logprob_std>logprob_std_max] = logprob_std_max
     
+    # Improve the resolution
+    n_rows, n_cols = m_map_logprob_mean.shape
+    m_mean = np.zeros((n_rows*d_scale,n_cols*d_scale))
+    m_std = np.zeros((n_rows*d_scale,n_cols*d_scale))
+    for i_row in range(m_map_logprob_mean.shape[0]):
+        for i_col in range(m_map_logprob_mean.shape[1]):
+            m_mean[d_scale*i_row:d_scale*(i_row+1),d_scale*i_col:d_scale*(i_col+1)] = m_map_logprob_mean[i_row,i_col]
+            m_std[d_scale*i_row:d_scale*(i_row+1),d_scale*i_col:d_scale*(i_col+1)] = m_map_logprob_std[i_row,i_col]
+
+    # Gaussian filter (with NaN)
+    m_nan_idx = np.isnan(m_mean)
+    m_mean = gaussian_filter_with_nan(m_mean, sigma=4.0)
+    m_mean[m_nan_idx] = np.nan
+    m_std = gaussian_filter_with_nan(m_std, sigma=4.0)
+    m_nan_idx = np.isnan(m_std)
+    m_std[m_nan_idx] = np.nan
+
+    plt.figure(figsize=(fig_w/FIG_DPI, fig_h/FIG_DPI), dpi=FIG_DPI)
+    # plt.subplot(1,2,1)
+    im = plt.imshow(np.flipud(m_mean),interpolation=inter_method)
+    ax = plt.gca()
+    ax.get_xaxis().set_visible(False)
+    ax.get_yaxis().set_visible(False)
+    divider = make_axes_locatable(ax)
+    cax = divider.append_axes("right", size="5%", pad=0.05)
+    plt.colorbar(im, cax=cax)
+    plt.tight_layout()
+    plt.savefig(os.path.join(save_dir,"logprob_mean_map.png"))
+    plt.close()
+
+    plt.figure(figsize=(fig_w/FIG_DPI, fig_h/FIG_DPI), dpi=FIG_DPI)
+    # plt.subplot(1,2,2)
+    im = plt.imshow(np.flipud(m_std),interpolation=inter_method)
+    ax = plt.gca()
+    ax.get_xaxis().set_visible(False)
+    ax.get_yaxis().set_visible(False)
+    divider = make_axes_locatable(ax)
+    cax = divider.append_axes("right", size="5%", pad=0.05)
+    plt.colorbar(im, cax=cax)
+    plt.tight_layout()
+    plt.savefig(os.path.join(save_dir,"logprob_std_map.png"))
+    plt.close()
     
+#===============================================================================
+#===============================================================================
+def plot_abnormal_tracks(Vs_background,l_dict_anomaly,
+                         filepath,
+                         lat_min,lat_max,lon_min,lon_max,
+                         onehot_lat_bins,onehot_lon_bins,
+                         background_cmap = "Blues",
+                         anomaly_cmap = "autumn",
+                         fig_w = 960, fig_h = 960,
+                         fig_dpi = 150,
+                        ):
+    plt.figure(figsize=(fig_w/FIG_DPI, fig_h/FIG_DPI), dpi=FIG_DPI)
+    lat_range = lat_max - lat_min
+    lon_range = lon_max - lon_min
+    ## Plot background
+    cmap = plt.cm.get_cmap(background_cmap)
+    l_keys = list(Vs_background.keys())
+    N = len(Vs_background)
+    for d_i in range(N):
+        key = l_keys[d_i]
+        c = cmap(float(d_i)/(N-1))
+        tmp = Vs_background[key]
+        v_lat = tmp[:,0]*lat_range + lat_min
+        v_lon = tmp[:,1]*lon_range + lon_min
+        plt.plot(v_lon,v_lat,color=c,linewidth=0.8)
+    plt.xlim([lon_min,lon_max])
+    plt.ylim([lat_min,lat_max])
+    plt.xlabel("Longitude")
+    plt.ylabel("Latitude")
+    plt.tight_layout() 
+    
+    ## Plot abnormal tracks
+    cmap_anomaly = plt.cm.get_cmap(anomaly_cmap)
+    N_anomaly = len(l_dict_anomaly)
+    d_i = 0
+    for D in l_dict_anomaly:
+        try:
+            c = cmap_anomaly(float(d_i)/(N_anomaly-1))
+        except:
+            c = 'r'
+        d_i += 1
+        tmp = D["seq"]
+        m_log_weights_np = D["log_weights"]
+        tmp = tmp[12:]
+        v_lat = (tmp[:,0]/float(onehot_lat_bins))*lat_range + lat_min
+        v_lon = ((tmp[:,1]-onehot_lat_bins)/float(onehot_lon_bins))*lon_range + lon_min
+        plt.plot(v_lon,v_lat,color=c,linewidth=1.2) 
+    
+    plt.savefig(filepath,dpi = fig_dpi)  

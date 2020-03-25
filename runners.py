@@ -97,10 +97,10 @@ def create_eval_graph(inputs, targets, lengths, model, config):
                                                                 )
 
         new_sample0 = dists.sample_from_probs(dists_return,
-                                              config.lat_bins,
-                                              config.lon_bins,
-                                              config.sog_bins,
-                                              config.cog_bins)
+                                              config.onehot_lat_bins,
+                                              config.onehot_lon_bins,
+                                              config.onehot_sog_bins,
+                                              config.onehot_cog_bins)
         new_sample0 = tf.cast(new_sample0, tf.float32)
         new_sample_ = (new_sample0, tf.zeros_like(new_sample0, dtype = tf.float32))
 
@@ -194,16 +194,16 @@ def create_eval_graph(inputs, targets, lengths, model, config):
     return track_sample, track_true, log_weights, ll_per_t, \
             final_log_weights/tf.to_float(lengths), rnn_state_tf, rnn_latent_tf, rnn_out_tf
 
-def create_dataset_and_model(config, split, shuffle, repeat):
+def create_dataset_and_model(config, shuffle, repeat):
 
-    inputs, targets, lengths, mmsis, mean = datasets.create_AIS_dataset(config.testset_path,
-                                                          config.split,
+    inputs, targets, mmsis, time_starts, time_ends, lengths, mean = datasets.create_AIS_dataset(config.testset_path,
+                                                          os.path.join(os.path.dirname(config.trainingset_path),"mean.pkl"),
                                                           config.batch_size,
                                                           config.data_dim,
-                                                          config.lat_bins,
-                                                          config.lon_bins,
-                                                          config.sog_bins,
-                                                          config.cog_bins,
+                                                          config.onehot_lat_bins,
+                                                          config.onehot_lon_bins,
+                                                          config.onehot_sog_bins,
+                                                          config.onehot_cog_bins,
                                                           shuffle=shuffle,
                                                           repeat=repeat)
     # Convert the mean of the training set to logit space so it can be used to
@@ -215,7 +215,7 @@ def create_dataset_and_model(config, split, shuffle, repeat):
                              generative_distribution_class,
                              generative_bias_init=generative_bias_init,
                              raw_sigma_bias=0.5)
-    return inputs, targets, mmsis, lengths, model
+    return inputs, targets, mmsis, time_starts, time_ends, lengths, model
 
 
 def restore_checkpoint_if_exists(saver, sess, logdir):
@@ -273,8 +273,7 @@ def run_train(config):
             loss: A float Tensor that when differentiated yields the gradients
                 to apply to the model. Should be optimized via gradient descent.
         """
-        inputs, targets, mmsis, lengths, model = create_dataset_and_model(config,
-                                                               config.split,
+        inputs, targets, mmsis, time_starts, time_ends, lengths, model = create_dataset_and_model(config,
                                                                shuffle=True,
                                                                repeat=True)
         # Compute lower bounds on the log likelihood.
@@ -337,78 +336,3 @@ def run_train(config):
                     else:
                         _, cur_step = sess.run([train_op, global_step])
 #                         _, cur_step = sess.run([train_op, global_step])
-
-
-
-def run_eval(config):
-    def create_graph():
-        global_step = tf.train.get_or_create_global_step()
-        inputs, targets, lengths, model = create_dataset_and_model(config,
-                                                                   split=config.split,
-                                                                   shuffle=False,
-                                                                   repeat=False)
-        # Compute lower bounds on the log likelihood.
-        elbo_ll_per_seq, _, _, _, _ = bounds.fivo(model,
-                                                 (inputs, targets),
-                                                 lengths,
-                                                 num_samples=config.num_samples,
-                                                 resampling_criterion=bounds.ess_criterion)
-        elbo_ll = tf.reduce_sum(elbo_ll_per_seq)
-
-        batch_size = tf.shape(lengths)[0]
-        total_batch_length = tf.reduce_sum(lengths)
-        return ((elbo_ll), total_batch_length, batch_size,
-            global_step)
-
-    def average_bounds_over_dataset(lower_bounds, total_batch_length, batch_size,
-                                  sess):
-
-        total_ll = np.zeros(3, dtype=np.float64)
-        total_n_elems = 0.0
-        total_length = 0.0
-        while True:
-            try:
-                outs = sess.run([lower_bounds, batch_size, total_batch_length])
-            except tf.errors.OutOfRangeError:
-                break
-            total_ll += outs[0]
-            total_n_elems += outs[1]
-            total_length += outs[2]
-        ll_per_t = total_ll / total_length
-        ll_per_seq = total_ll / total_n_elems
-        return ll_per_t, ll_per_seq
-
-    def summarize_lls(lls_per_t, lls_per_seq, summary_writer, step):
-
-        def scalar_summary(name, value):
-            value = tf.Summary.Value(tag=name, simple_value=value)
-            return tf.Summary(value=[value])
-
-        for i, bound in enumerate(["elbo"]):
-            per_t_summary = scalar_summary("%s/%s_ll_per_t" % (config.split, bound),
-                                     lls_per_t[i])
-            per_seq_summary = scalar_summary("%s/%s_ll_per_seq" %
-                                       (config.split, bound),
-                                       lls_per_seq[i])
-            summary_writer.add_summary(per_t_summary, global_step=step)
-            summary_writer.add_summary(per_seq_summary, global_step=step)
-            summary_writer.flush()
-
-    with tf.Graph().as_default():
-        if config.random_seed: tf.set_random_seed(config.random_seed)
-        lower_bounds, total_batch_length, batch_size, global_step = create_graph()
-        summary_dir = config.logdir + "/" + config.split
-        summary_writer = tf.summary.FileWriter(
-                summary_dir, flush_secs=15, max_queue=100)
-        saver = tf.train.Saver()
-        with tf.train.SingularMonitoredSession() as sess:
-            wait_for_checkpoint(saver, sess, config.logdir)
-            step = sess.run(global_step)
-            tf.logging.info("Model restored from step %d, evaluating." % step)
-            ll_per_t, ll_per_seq = average_bounds_over_dataset(
-                    lower_bounds, total_batch_length, batch_size, sess)
-            summarize_lls(ll_per_t, ll_per_seq, summary_writer, step)
-            tf.logging.info("%s elbo ll/t: %f",
-                      config.split, ll_per_t[0])
-            tf.logging.info("%s elbo ll/seq: %f",
-                            config.split, ll_per_seq[0])

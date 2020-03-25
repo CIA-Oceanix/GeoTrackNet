@@ -64,8 +64,7 @@ print("EPSILON ",CONTRARIO_EPS)
 trainingset_name ="ct_2017010203_10_20"
 testset_name ="ct_2017010203_10_20"
 
-# These files contain the list of fishing vessels.
-l_fishing_filename = ["./data/2017010203_fishing.npy", "./data/2017070809_fishing.npy"]
+
 
 # trained step
 step = 80002
@@ -82,15 +81,7 @@ save_dir = "./results/"+trainingset_name+"/log_density-"+trainingset_name+"_trai
 ## Loading coastline polygon.
 # For visualisation purpose, delete this part if you do not have the coastline
 # shapfile
-coastline_filename = "/homes/vnguye04/Bureau/Sanssauvegarde/Datasets/"\
-                     + "coastlines-split-4326/streetmap_coastline_Bretagne.pkl"
 
-try:
-    with open(coastline_filename, 'rb') as f:
-        l_coastline_poly = pickle.load(f)
-except:
-    with open(coastline_filename, 'rb') as f:
-        l_coastline_poly = pickle.load(f, encoding='latin1')
 try:
     with open("./data/"+trainingset_name+"/"+trainingset_name+"_train.pkl","rb") as f:
         Vs_train = pickle.load(f)
@@ -106,10 +97,7 @@ except:
     with open("./data/"+testset_name+"/"+testset_name+"_test.pkl","rb") as f:
         Vs_test = pickle.load(f, encoding='latin1')
 
-l_fishing = []
-for fishing_filename in l_fishing_filename:
-    l_fishing = np.append(l_fishing,np.load(fishing_filename))
-#l_fishing = np.append(l_fishing,[227610980,228259000,227988000,227312180])
+
 
 
 ## LOADING SAVED LOG_DENSITY MAP
@@ -253,9 +241,6 @@ plt.tight_layout()
 ## Loading coastline polygon.
 # For visualisation purpose, delete this part if you do not have the coastline
 # shapfile
-for point in l_coastline_poly:
-    poly = np.array(point)
-    plt.plot(poly[:,0],poly[:,1],color="k",linewidth=0.8)
 
 cmap_anomaly = plt.cm.get_cmap('autumn')
 N_anomaly = len(l_dict_anomaly)
