@@ -81,11 +81,12 @@ LON_MAX = -66.0
 D2C_MIN = 2000 #meters
 
 # Path to csv files.
-"""
+
 dataset_path = "./"
 l_csv_filename =["aruba_5x5deg_2017305_2018031.csv",
                  "aruba_5x5deg_2018305_2019031.csv",
                  "aruba_5x5deg_2019305_2020031.csv"]
+l_csv_filename =["aruba_5x5deg_2017305_2018031.csv"]
 pkl_filename = "aruba_20172020_track.pkl"
 pkl_filename_train = "aruba_20172020_train_track.pkl"
 pkl_filename_valid = "aruba_20172020_valid_track.pkl"
@@ -101,8 +102,8 @@ t_test_min  = time.mktime(time.strptime("01/01/2020 00:00:00", "%d/%m/%Y %H:%M:%
 t_test_max  = time.mktime(time.strptime("31/01/2020 23:59:59", "%d/%m/%Y %H:%M:%S"))
 t_min = time.mktime(time.strptime("01/01/2017 00:00:00", "%d/%m/%Y %H:%M:%S"))
 t_max = time.mktime(time.strptime("31/01/2020 23:59:59", "%d/%m/%Y %H:%M:%S"))
-"""
 
+"""
 dataset_path = "./"
 l_csv_filename =["aruba_zone1_5x5deg_2019121_2019244.csv"]
 pkl_filename = "aruba_2019_summer_track.pkl"
@@ -120,7 +121,7 @@ t_test_min  = time.mktime(time.strptime("01/07/2019 00:00:00", "%d/%m/%Y %H:%M:%
 t_test_max  = time.mktime(time.strptime("31/08/2019 23:59:59", "%d/%m/%Y %H:%M:%S"))
 t_min = time.mktime(time.strptime("01/01/2017 00:00:00", "%d/%m/%Y %H:%M:%S"))
 t_max = time.mktime(time.strptime("31/01/2020 23:59:59", "%d/%m/%Y %H:%M:%S"))
-
+"""
 #========================================================================
 LAT_RANGE = LAT_MAX - LAT_MIN
 LON_RANGE = LON_MAX - LON_MIN
@@ -180,6 +181,8 @@ print("Ts min: ",np.min(m_msg[:,TIMESTAMP]), "Ts max: ",np.max(m_msg[:,TIMESTAMP
 if m_msg[0,TIMESTAMP] > 1584720228: 
     m_msg[:,TIMESTAMP] = m_msg[:,TIMESTAMP]/1000 # Convert to suitable timestamp format
 
+    
+"""    
 ## Vessel Type    
 #======================================
 print("Selecting vessel type ...")
@@ -317,3 +320,4 @@ for filename, filedict in zip([pkl_filename_train,pkl_filename_valid,pkl_filenam
     print("Total number of tracks: ", len(filedict))
         
 
+"""
