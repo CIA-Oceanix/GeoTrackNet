@@ -3,7 +3,6 @@
 
 # In[1]:
 
-
 import numpy as np
 import matplotlib.pyplot as plt
 from math import radians, cos, sin, asin, sqrt
@@ -24,10 +23,37 @@ import time
 from io import StringIO
 
 from tqdm import tqdm
-
+import argparse
 
 # In[2]:
+def getConfig(args=sys.argv[1:]):
+    parser = argparse.ArgumentParser(description="Parses command.")
+    # ROI
+    parser.add_argument("--lat_min", type=float, default=9.0,
+                        help="Lat min.")
+    parser.add_argument("--lat_max", type=float, default=14.0,
+                        help="Lat max.")
+    parser.add_argument("--lon_min", type=float, default=-71.0,
+                        help="Lon min.")
+    parser.add_argument("--lon_max", type=float, default=-66.0,
+                        help="Lon max.")
+     
+    # File paths
+    parser.add_argument("--dataset_dir", type=str, 
+                        default="./",
+                        help="Dir to dataset.")    
+    parser.add_argument("--l_input_filepath", type=str, nargs='+',
+                        default=["ct_aruba_20172020_summer_valid_track.pkl"],
+                        help="List of path to input files.")
+    parser.add_argument("--output_filepath", type=str,
+                        default="./ct_aruba_20172020_summer/ct_aruba_20172020_summer_valid.pkl",
+                        help="Path to output file.")
+    
+    parser.add_argument("-v", "--verbose",dest='verbose',action='store_true', help="Verbose mode.")
+    config = parser.parse_args(args)
+    return config
 
+config = getConfig(sys.argv[1:])
 
 ## Bretagne dataset
 # LAT_MIN = 46.5
@@ -43,8 +69,8 @@ LON_MAX = -1.0
 FIG_W = 960
 FIG_H = 533 #768
 
-filename_list = ["ct_bretagneB_20170103_10_20_valid_track.pkl"]
-pkl_filepath = "./ct_bretagneB_20170103_10_20/ct_bretagneB_20170103_10_20_valid.pkl"
+config.l_input_filepath = ["ct_bretagneB_20170103_10_20_valid_track.pkl"]
+config.output_filepath = "./ct_bretagneB_20170103_10_20/ct_bretagneB_20170103_10_20_valid.pkl"
 
 t_min = time.mktime(time.strptime("01/01/2017 00:00:00", "%d/%m/%Y %H:%M:%S"))
 t_max = time.mktime(time.strptime("31/03/2017 23:59:59", "%d/%m/%Y %H:%M:%S"))
@@ -59,28 +85,29 @@ LON_MAX = -66.0
 FIG_W = 960
 FIG_H = int(960*5/5) #533 #768
 
-filename_list = ["ct_aruba_20172020_test_track.pkl"]
-pkl_filepath = "./ct_aruba_20172020/ct_aruba_20172020_test.pkl"
+config.l_input_filepath = ["ct_aruba_20172020_summer_valid_track.pkl"]
+config.output_filepath = "./ct_aruba_20172020_summer/ct_aruba_20172020_summer_valid.pkl"
 
-t_min = time.mktime(time.strptime("01/11/2017 00:00:00", "%d/%m/%Y %H:%M:%S"))
-t_max = time.mktime(time.strptime("31/01/2020 23:59:59", "%d/%m/%Y %H:%M:%S"))
+# t_min = time.mktime(time.strptime("01/11/2017 00:00:00", "%d/%m/%Y %H:%M:%S"))
+# t_max = time.mktime(time.strptime("31/01/2020 23:59:59", "%d/%m/%Y %H:%M:%S"))
 """
 
+"""
 LAT_MIN = 9.0
 LAT_MAX = 14.0
 LON_MIN = -71.0
 LON_MAX = -66.0
 
-FIG_W = 960
-FIG_H = int(960*5/5) #533 #768
 
-filename_list = ["ct_aruba_2019_summer_valid_track.pkl"]
-pkl_filepath = "./ct_aruba_2019_summer/ct_aruba_2019_summer_valid.pkl"
+
+config.l_input_filepath = ["ct_aruba_2019_summer_valid_track.pkl"]
+config.output_filepath = "./ct_aruba_2019_summer/ct_aruba_2019_summer_valid.pkl"
 
 t_min = time.mktime(time.strptime("01/05/2019 00:00:00", "%d/%m/%Y %H:%M:%S"))
 t_max = time.mktime(time.strptime("30/06/2019 23:59:59", "%d/%m/%Y %H:%M:%S"))
-
+"""
 #=====================================================================
+LAT_MIN,LAT_MAX,LON_MIN,LON_MAX = config.lat_min,config.lat_max,config.lon_min,config.lon_max
 
 LAT_RANGE = LAT_MAX - LAT_MIN
 LON_RANGE = LON_MAX - LON_MIN
@@ -90,14 +117,12 @@ DURATION_MAX = 24 #h
 EPOCH = datetime(1970, 1, 1)
 LAT, LON, SOG, COG, HEADING, ROT, NAV_STT, TIMESTAMP, MMSI = list(range(9))
 
-# DATA PATH
-## Bretagne
-dataset_path = "./"
-
+FIG_W = 960
+FIG_H = int(960*LAT_RANGE/LON_RANGE) #533 #768
 
 dict_list = []
-for filename in filename_list:
-    with open(os.path.join(dataset_path,filename),"rb") as f:
+for filename in config.l_input_filepath:
+    with open(os.path.join(config.dataset_dir,filename),"rb") as f:
         temp = pickle.load(f)
         dict_list.append(temp)
 
@@ -107,7 +132,7 @@ for filename in filename_list:
 
 print(" Remove erroneous timestamps and erroneous speeds...")
 Vs = dict()
-for Vi,filename in zip(dict_list, filename_list):
+for Vi,filename in zip(dict_list, config.l_input_filepath):
     print(filename)
     for mmsi in list(Vi.keys()):       
         # Boundary
@@ -117,10 +142,10 @@ for Vi,filename in zip(dict_list, filename_list):
         lon_idx = np.logical_or((Vi[mmsi][:,LON] > LON_MAX),
                                 (Vi[mmsi][:,LON] < LON_MIN))
         Vi[mmsi] = Vi[mmsi][np.logical_not(lon_idx)]
-        # Abnormal timestamps
-        abnormal_timestamp_idx = np.logical_or((Vi[mmsi][:,TIMESTAMP] > t_max),
-                                               (Vi[mmsi][:,TIMESTAMP] < t_min))
-        Vi[mmsi] = Vi[mmsi][np.logical_not(abnormal_timestamp_idx)]
+#         # Abnormal timestamps
+#         abnormal_timestamp_idx = np.logical_or((Vi[mmsi][:,TIMESTAMP] > t_max),
+#                                                (Vi[mmsi][:,TIMESTAMP] < t_min))
+#         Vi[mmsi] = Vi[mmsi][np.logical_not(abnormal_timestamp_idx)]
         # Abnormal speeds
         abnormal_speed_idx = Vi[mmsi][:,SOG] > SPEED_MAX
         Vi[mmsi] = Vi[mmsi][np.logical_not(abnormal_speed_idx)]
@@ -134,7 +159,7 @@ for Vi,filename in zip(dict_list, filename_list):
         else:
             Vs[mmsi] = np.concatenate((Vs[mmsi],Vi[mmsi]),axis = 0)
             del Vi[mmsi]
-del dict_list, Vi, abnormal_speed_idx, abnormal_timestamp_idx
+del dict_list, Vi, abnormal_speed_idx
 
 
 # In[4]:
@@ -332,7 +357,7 @@ for k in tqdm(list(Data.keys())):
 # In[22]:
 
 
-print(pkl_filepath)
+print(config.output_filepath)
 
 
 # In[23]:
@@ -350,20 +375,20 @@ print(len(Data))
 # In[25]:
 
 
-print(os.path.dirname(pkl_filepath))
+print(os.path.dirname(config.output_filepath))
 
 
 # In[26]:
 
 
-os.path.exists(os.path.dirname(pkl_filepath))
+os.path.exists(os.path.dirname(config.output_filepath))
 
 
 # In[27]:
 
 
-if not os.path.exists(os.path.dirname(pkl_filepath)):
-    os.makedirs(os.path.dirname(pkl_filepath))
+if not os.path.exists(os.path.dirname(config.output_filepath)):
+    os.makedirs(os.path.dirname(config.output_filepath))
 
 
 # In[28]:
@@ -371,7 +396,7 @@ if not os.path.exists(os.path.dirname(pkl_filepath)):
 
 ## STEP 10: WRITING TO DISK
 #======================================
-with open(pkl_filepath,"wb") as f:
+with open(config.output_filepath,"wb") as f:
     pickle.dump(Data,f)
 
 
@@ -430,7 +455,7 @@ except:
 # In[35]:
 
 
-pkl_filepath
+config.output_filepath
 
 
 # In[36]:
@@ -452,7 +477,7 @@ for d_i in range(N):
     plt.plot(v_lon,v_lat,color=c,linewidth=0.8)
 
 ## Coastlines
-if "bretagne" in pkl_filepath:
+if "bretagne" in config.output_filepath:
     for point in l_coastline_poly:
         poly = np.array(point)
         plt.plot(poly[:,0],poly[:,1],color="k",linewidth=0.8)
@@ -462,5 +487,5 @@ plt.ylim([LAT_MIN,LAT_MAX])
 plt.xlabel("Longitude")
 plt.ylabel("Latitude")
 plt.tight_layout()
-plt.savefig(pkl_filepath.replace(".pkl",".png"))
+plt.savefig(config.output_filepath.replace(".pkl",".png"))
 

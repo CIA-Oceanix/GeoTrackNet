@@ -82,6 +82,7 @@ D2C_MIN = 2000 #meters
 
 # Path to csv files.
 
+"""
 dataset_path = "./"
 l_csv_filename =["aruba_5x5deg_2017305_2018031.csv",
                  "aruba_5x5deg_2018305_2019031.csv",
@@ -104,24 +105,28 @@ t_min = time.mktime(time.strptime("01/01/2017 00:00:00", "%d/%m/%Y %H:%M:%S"))
 t_max = time.mktime(time.strptime("31/01/2020 23:59:59", "%d/%m/%Y %H:%M:%S"))
 
 """
-dataset_path = "./"
-l_csv_filename =["aruba_zone1_5x5deg_2019121_2019244.csv"]
-pkl_filename = "aruba_2019_summer_track.pkl"
-pkl_filename_train = "aruba_2019_summer_train_track.pkl"
-pkl_filename_valid = "aruba_2019_summer_valid_track.pkl"
-pkl_filename_test  = "aruba_2019_summer_test_track.pkl"
 
-cargo_tanker_filename = "aruba_2019_summer_cargo_tanker.npy"
+dataset_path = "./"
+l_csv_filename =["aruba_zone1_5x5deg_2017121_2017244.csv",
+                 "aruba_5x5deg_2018121_2018244.csv",
+                 "aruba_zone1_5x5deg_2019121_2019244.csv"]
+#l_csv_filename =["aruba_5x5deg_2018121_2018244.csv"]
+pkl_filename = "aruba_20172020_summer_track.pkl"
+pkl_filename_train = "aruba_20172020_summer_train_track.pkl"
+pkl_filename_valid = "aruba_20172020_summer_valid_track.pkl"
+pkl_filename_test  = "aruba_20172020_summer_test_track.pkl"
+
+cargo_tanker_filename = "aruba_20172020_summer_cargo_tanker.npy"
 
 t_train_min = time.mktime(time.strptime("01/01/2017 00:00:00", "%d/%m/%Y %H:%M:%S"))
-t_train_max = time.mktime(time.strptime("31/01/2019 23:59:59", "%d/%m/%Y %H:%M:%S"))
+t_train_max = time.mktime(time.strptime("31/08/2018 23:59:59", "%d/%m/%Y %H:%M:%S"))
 t_valid_min = time.mktime(time.strptime("01/05/2019 00:00:00", "%d/%m/%Y %H:%M:%S"))
-t_valid_max = time.mktime(time.strptime("30/06/2019 23:59:59", "%d/%m/%Y %H:%M:%S"))
-t_test_min  = time.mktime(time.strptime("01/07/2019 00:00:00", "%d/%m/%Y %H:%M:%S"))
+t_valid_max = time.mktime(time.strptime("31/07/2019 23:59:59", "%d/%m/%Y %H:%M:%S"))
+t_test_min  = time.mktime(time.strptime("01/08/2019 00:00:00", "%d/%m/%Y %H:%M:%S"))
 t_test_max  = time.mktime(time.strptime("31/08/2019 23:59:59", "%d/%m/%Y %H:%M:%S"))
 t_min = time.mktime(time.strptime("01/01/2017 00:00:00", "%d/%m/%Y %H:%M:%S"))
 t_max = time.mktime(time.strptime("31/01/2020 23:59:59", "%d/%m/%Y %H:%M:%S"))
-"""
+
 #========================================================================
 LAT_RANGE = LAT_MAX - LAT_MIN
 LON_RANGE = LON_MAX - LON_MIN
@@ -181,8 +186,10 @@ print("Ts min: ",np.min(m_msg[:,TIMESTAMP]), "Ts max: ",np.max(m_msg[:,TIMESTAMP
 if m_msg[0,TIMESTAMP] > 1584720228: 
     m_msg[:,TIMESTAMP] = m_msg[:,TIMESTAMP]/1000 # Convert to suitable timestamp format
 
-    
-"""    
+print("Time min: ",datetime.utcfromtimestamp(np.min(m_msg[:,TIMESTAMP])).strftime('%Y-%m-%d %H:%M:%SZ'))
+print("Time max: ",datetime.utcfromtimestamp(np.max(m_msg[:,TIMESTAMP])).strftime('%Y-%m-%d %H:%M:%SZ'))
+
+   
 ## Vessel Type    
 #======================================
 print("Selecting vessel type ...")
@@ -318,6 +325,3 @@ for filename, filedict in zip([pkl_filename_train,pkl_filename_valid,pkl_filenam
     with open(os.path.join(dataset_path,filename),"wb") as f:
         pickle.dump(filedict,f)
     print("Total number of tracks: ", len(filedict))
-        
-
-"""
