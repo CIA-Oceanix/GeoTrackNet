@@ -1,6 +1,7 @@
 # MultitaskAIS
 
 TensorFlow implementation of the model proposed in "A Multi-Task Deep Learning Architecture for Maritime Surveillance Using AIS Data Streams" (https://ieeexplore.ieee.org/abstract/document/8631498) and "GeoTrackNet—A Maritime Anomaly Detector using Probabilistic Neural Network Representation of AIS Tracks and A Contrario Detection" (https://arxiv.org/abs/1912.00682).
+(GeoTrackNet is the anomaly detection module of MultitaskAIS).
 
 All the codes related to the Embedding block are adapted from the source code of Filtering Variational Objectives:
 https://github.com/tensorflow/models/tree/master/research/fivo
@@ -47,7 +48,7 @@ Converting to csv:
 * MarineC dataset: we use QGIS (https://qgis.org/en/site/) to convert the original metadata format to csv files.
 * Brittany dataset: we use libais (https://github.com/schwehr/libais) to parse raw AIS messages to csv files (see avidm_decoder.py).
 
-`csv2pkl.py` then loads the data from csv files, selects AIS messages in the pre-defined ROI then saves them as pickle format.
+`csv2pkl.py` then loads the data from csv files, selects AIS messages in the pre-defined ROI, creates AIS trajectories (keyed by the MMSI) then saves them in pickle format.
 
 Preprocessing steps: the data are processed as described in the paper by `dataset_preprocessing.py`.
 
@@ -57,11 +58,15 @@ First we must train the Embedding layer:
 ```
 python multitaskAIS.py \
   --mode=train \
-  --logdir=./chkpt \
-  --bound=elbo \
-  --summarize_every=100 \
+  --dataset_dir=./data 
+  --trainingset_name=ct_2017010203_10_20/ct_2017010203_10_20_train.pkl \
+  --testset_name=ct_2017010203_10_20/ct_2017010203_10_20_valid.pkl \
+  --lat_min=47.5 \
+  --lat_max=49.5 \
+  --lon_min=-7.0 \
+  --lon_max=-4.0 \
   --latent_size=100 \
-  --batch_size=50 \
+  --batch_size=32 \
   --num_samples=16 \
   --learning_rate=0.0003 \
 ```
@@ -73,40 +78,60 @@ A model trained on the dataset comprising AIS messages of cargo and tanker vesse
 After the Embedding layer is trained, we can run task-specific blocks.
 
 
-#### save_outcomes
+#### save_logprob
 To avoid re-caculating <img src="/tex/7170cb0578591c3ef08c6b900abb2023.svg?invert_in_darkmode&sanitize=true" align=middle width=86.82290429999999pt height=24.65753399999998pt/> for each task, we calculate them once and save the results as a .pkl file. 
 ```
 python multitaskAIS.py \
-  --mode=save_outcomes \
-  --logdir=./chkpt \
+  --mode=save_logprob \
+  --dataset_dir=./data 
   --trainingset_name=ct_2017010203_10_20/ct_2017010203_10_20_train.pkl \
-  --testset_name=ct_2017010203_10_20/ct_2017010203_10_20_valid.pkl \
-  --bound=elbo \
+  --test_name=ct_2017010203_10_20/ct_2017010203_10_20_valid.pkl \
+  --lat_min=47.5 \
+  --lat_max=49.5 \
+  --lon_min=-7.0 \
+  --lon_max=-4.0 \
   --latent_size=100 \
-  --batch_size=1 \
+  --batch_size=32 \
   --num_samples=16 \
-``` 
+  --learning_rate=0.0003 \
+```
 Similarly for the test set (```testset_name=ct_2017010203_10_20/ct_2017010203_10_20_test.pkl```).
 
-#### log_density
-*log_density* calculates the distribution of <img src="/tex/7170cb0578591c3ef08c6b900abb2023.svg?invert_in_darkmode&sanitize=true" align=middle width=86.82290429999999pt height=24.65753399999998pt/> in each small cells of the ROI.
+#### local_logprob
+*log_logprob* divides the ROI into small cells and saves the <img src="/tex/7170cb0578591c3ef08c6b900abb2023.svg?invert_in_darkmode&sanitize=true" align=middle width=86.82290429999999pt height=24.65753399999998pt/> of AIS messages in each cell.
 ```
 python multitaskAIS.py \
-  --mode=log_density \
-  --logdir=./chkpt \
+  --mode=local_logprob \
+  --dataset_dir=./data 
   --trainingset_name=ct_2017010203_10_20/ct_2017010203_10_20_train.pkl \
-  --testset_name=ct_2017010203_10_20/ct_2017010203_10_20_valid.pkl \
-  --bound=elbo \
+  --test_name=ct_2017010203_10_20/ct_2017010203_10_20_valid.pkl \
+  --lat_min=47.5 \
+  --lat_max=49.5 \
+  --lon_min=-7.0 \
+  --lon_max=-4.0 \
   --latent_size=100 \
-  --batch_size=1 \
+  --batch_size=32 \
   --num_samples=16 \
-``` 
-
-#### contrario detection
-*contrario_kde.py* performs the a contrario detection and plots the results.
+  --learning_rate=0.0003 \
 ```
-python contrario_kde.py \
-``` 
+
+#### contrario_detection
+*contrario_detection* detects abnormal vessels' behaviors using *a contrario* detection and plots the results.
+```
+python multitaskAIS.py \
+  --mode=local_logprob \
+  --dataset_dir=./data 
+  --trainingset_name=ct_2017010203_10_20/ct_2017010203_10_20_train.pkl \
+  --testset_name=ct_2017010203_10_20/ct_2017010203_10_20_test.pkl \
+  --lat_min=47.5 \
+  --lat_max=49.5 \
+  --lon_min=-7.0 \
+  --lon_max=-4.0 \
+  --latent_size=100 \
+  --batch_size=32 \
+  --num_samples=16 \
+  --learning_rate=0.0003 \
+```
 #### traj_reconstruction
 *traj_reconstruction* performs the trajectory reconstruction.
 
