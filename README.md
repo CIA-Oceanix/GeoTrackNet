@@ -11,7 +11,7 @@ https://github.com/tensorflow/models/tree/master/research/fivo
 The elements of the code are organized as follows:
 
 ```
-multitaskAIS.py                   # script to run the model (except the A contrario detection).
+geotracknet.py                   # script to run the model (except the A contrario detection).
 runners.py                        # graph construction code for training and evaluation.
 bounds.py                         # code for computing each bound.
 contrario_kde.py                  # script to run the A contrario detection.
@@ -56,7 +56,7 @@ Preprocessing steps: the data are processed as described in the paper by `datase
 
 First we must train the Embedding layer:
 ```
-python multitaskAIS.py \
+python geotracknet.py \
   --mode=train \
   --dataset_dir=./data 
   --trainingset_name=ct_2017010203_10_20/ct_2017010203_10_20_train.pkl \
@@ -81,7 +81,7 @@ After the Embedding layer is trained, we can run task-specific blocks.
 #### save_logprob
 To avoid re-caculating <img src="/tex/7170cb0578591c3ef08c6b900abb2023.svg?invert_in_darkmode&sanitize=true" align=middle width=86.82290429999999pt height=24.65753399999998pt/> for each task, we calculate them once and save the results as a .pkl file. 
 ```
-python multitaskAIS.py \
+python geotracknet.py \
   --mode=save_logprob \
   --dataset_dir=./data 
   --trainingset_name=ct_2017010203_10_20/ct_2017010203_10_20_train.pkl \
@@ -100,7 +100,7 @@ Similarly for the test set (```testset_name=ct_2017010203_10_20/ct_2017010203_10
 #### local_logprob
 *log_logprob* divides the ROI into small cells and saves the <img src="/tex/7170cb0578591c3ef08c6b900abb2023.svg?invert_in_darkmode&sanitize=true" align=middle width=86.82290429999999pt height=24.65753399999998pt/> of AIS messages in each cell.
 ```
-python multitaskAIS.py \
+python geotracknet.py \
   --mode=local_logprob \
   --dataset_dir=./data 
   --trainingset_name=ct_2017010203_10_20/ct_2017010203_10_20_train.pkl \
@@ -118,7 +118,7 @@ python multitaskAIS.py \
 #### contrario_detection
 *contrario_detection* detects abnormal vessels' behaviors using *a contrario* detection and plots the results.
 ```
-python multitaskAIS.py \
+python geotracknet.py \
   --mode=local_logprob \
   --dataset_dir=./data 
   --trainingset_name=ct_2017010203_10_20/ct_2017010203_10_20_train.pkl \
