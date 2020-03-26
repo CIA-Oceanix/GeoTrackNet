@@ -1,4 +1,4 @@
-# MultitaskAIS
+# GeoTrackNet
 
 TensorFlow implementation of the model proposed in "A Multi-Task Deep Learning Architecture for Maritime Surveillance Using AIS Data Streams" (https://ieeexplore.ieee.org/abstract/document/8631498) and "GeoTrackNet—A Maritime Anomaly Detector using Probabilistic Neural Network Representation of AIS Tracks and A Contrario Detection" (https://arxiv.org/abs/1912.00682).
 (GeoTrackNet is the anomaly detection module of MultitaskAIS).
@@ -132,22 +132,6 @@ python multitaskAIS.py \
   --num_samples=16 \
   --learning_rate=0.0003 \
 ```
-#### traj_reconstruction
-*traj_reconstruction* performs the trajectory reconstruction.
-
-*Note: this task works only in busy traffic regions. Since our main focus is anomaly detection, we put little effort into this task.*
-
-```
-python multitaskAIS.py \
-  --mode=traj_reconstruction \
-  --logdir=./chkpt \
-  --trainingset_name=ct_2017010203_10_20/ct_2017010203_10_20_train.pkl \
-  --testset_name=ct_2017010203_10_20/ct_2017010203_10_20_valid.pkl \
-  --bound=elbo \
-  --latent_size=100 \
-  --batch_size=1 \
-  --num_samples=16 \
-``` 
 
 
 ### Acknowledgement
