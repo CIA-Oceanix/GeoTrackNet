@@ -119,7 +119,7 @@ python geotracknet.py \
 *contrario_detection* detects abnormal vessels' behaviors using *a contrario* detection and plots the results.
 ```
 python geotracknet.py \
-  --mode=local_logprob \
+  --mode=contrario_detection \
   --dataset_dir=./data 
   --trainingset_name=ct_2017010203_10_20/ct_2017010203_10_20_train.pkl \
   --testset_name=ct_2017010203_10_20/ct_2017010203_10_20_test.pkl \
@@ -127,6 +127,7 @@ python geotracknet.py \
   --lat_max=49.5 \
   --lon_min=-7.0 \
   --lon_max=-4.0 \
+  --contrario_eps=1e-10 \
   --latent_size=100 \
   --batch_size=32 \
   --num_samples=16 \
