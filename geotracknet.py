@@ -224,9 +224,12 @@ elif config.mode == "local_logprob":
         tmp = D["seq"]
         log_weights_np = D["log_weights"]
         for d_timestep in range(2*6,len(tmp)):
-            row = int(tmp[d_timestep,0]*0.01/config.cell_lat_reso)
-            col = int((tmp[d_timestep,1]-config.onehot_lat_bins)*0.01/config.cell_lat_reso)
-            Map_logprob[str(row)+","+str(col)].append(np.mean(log_weights_np[d_timestep,:]))
+            try:
+                row = int(tmp[d_timestep,0]*0.01/config.cell_lat_reso)
+                col = int((tmp[d_timestep,1]-config.onehot_lat_bins)*0.01/config.cell_lat_reso)
+                Map_logprob[str(row)+","+str(col)].append(np.mean(log_weights_np[d_timestep,:]))
+            except:
+                continue
 
     # Remove outliers
     for row  in range(config.n_lat_cells):
