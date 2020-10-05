@@ -58,7 +58,7 @@ First we must train the Embedding layer:
 ```
 python geotracknet.py \
   --mode=train \
-  --dataset_dir=./data 
+  --dataset_dir=./data \
   --trainingset_name=ct_2017010203_10_20/ct_2017010203_10_20_train.pkl \
   --testset_name=ct_2017010203_10_20/ct_2017010203_10_20_valid.pkl \
   --lat_min=47.5 \
@@ -83,7 +83,7 @@ To avoid re-caculating <img src="/tex/7170cb0578591c3ef08c6b900abb2023.svg?inver
 ```
 python geotracknet.py \
   --mode=save_logprob \
-  --dataset_dir=./data 
+  --dataset_dir=./data \
   --trainingset_name=ct_2017010203_10_20/ct_2017010203_10_20_train.pkl \
   --testset_name=ct_2017010203_10_20/ct_2017010203_10_20_valid.pkl \
   --lat_min=47.5 \
@@ -102,7 +102,7 @@ Similarly for the test set (```testset_name=ct_2017010203_10_20/ct_2017010203_10
 ```
 python geotracknet.py \
   --mode=local_logprob \
-  --dataset_dir=./data 
+  --dataset_dir=./data \
   --trainingset_name=ct_2017010203_10_20/ct_2017010203_10_20_train.pkl \
   --testset_name=ct_2017010203_10_20/ct_2017010203_10_20_valid.pkl \
   --lat_min=47.5 \
@@ -120,7 +120,7 @@ python geotracknet.py \
 ```
 python geotracknet.py \
   --mode=contrario_detection \
-  --dataset_dir=./data 
+  --dataset_dir=./data \
   --trainingset_name=ct_2017010203_10_20/ct_2017010203_10_20_train.pkl \
   --testset_name=ct_2017010203_10_20/ct_2017010203_10_20_test.pkl \
   --lat_min=47.5 \
