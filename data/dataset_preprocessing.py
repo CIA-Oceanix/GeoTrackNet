@@ -29,24 +29,24 @@ import argparse
 def getConfig(args=sys.argv[1:]):
     parser = argparse.ArgumentParser(description="Parses command.")
     # ROI
-    parser.add_argument("--lat_min", type=float, default=9.0,
+    parser.add_argument("--lat_min", type=float, default=47.5,
                         help="Lat min.")
-    parser.add_argument("--lat_max", type=float, default=14.0,
+    parser.add_argument("--lat_max", type=float, default=49.5,
                         help="Lat max.")
-    parser.add_argument("--lon_min", type=float, default=-71.0,
+    parser.add_argument("--lon_min", type=float, default=-7.0,
                         help="Lon min.")
-    parser.add_argument("--lon_max", type=float, default=-66.0,
+    parser.add_argument("--lon_max", type=float, default=-4.0,
                         help="Lon max.")
      
     # File paths
     parser.add_argument("--dataset_dir", type=str, 
-                        default="./",
+                        default="/users/local/dnguyen/Datasets/AIS_datasets/mt314/aivdm/2017/",
                         help="Dir to dataset.")    
     parser.add_argument("--l_input_filepath", type=str, nargs='+',
-                        default=["ct_aruba_20172020_summer_valid_track.pkl"],
+                        default=["ct_2017010203_10_20_test_track.pkl"],
                         help="List of path to input files.")
     parser.add_argument("--output_filepath", type=str,
-                        default="./ct_aruba_20172020_summer/ct_aruba_20172020_summer_valid.pkl",
+                        default="./ct_2017010203_10_20/ct_2017010203_10_20_test.pkl",
                         help="Path to output file.")
     
     parser.add_argument("-v", "--verbose",dest='verbose',action='store_true', help="Verbose mode.")
@@ -55,57 +55,6 @@ def getConfig(args=sys.argv[1:]):
 
 config = getConfig(sys.argv[1:])
 
-## Bretagne dataset
-# LAT_MIN = 46.5
-# LAT_MAX = 50.5
-# LON_MIN = -8.0
-# LON_MAX = -3.0
-"""
-LAT_MIN = 45.5
-LAT_MAX = 50.5
-LON_MIN = -10.0
-LON_MAX = -1.0
-
-FIG_W = 960
-FIG_H = 533 #768
-
-config.l_input_filepath = ["ct_bretagneB_20170103_10_20_valid_track.pkl"]
-config.output_filepath = "./ct_bretagneB_20170103_10_20/ct_bretagneB_20170103_10_20_valid.pkl"
-
-t_min = time.mktime(time.strptime("01/01/2017 00:00:00", "%d/%m/%Y %H:%M:%S"))
-t_max = time.mktime(time.strptime("31/03/2017 23:59:59", "%d/%m/%Y %H:%M:%S"))
-"""
-# ## Aruba
-"""
-LAT_MIN = 9.0
-LAT_MAX = 14.0
-LON_MIN = -71.0
-LON_MAX = -66.0
-
-FIG_W = 960
-FIG_H = int(960*5/5) #533 #768
-
-config.l_input_filepath = ["ct_aruba_20172020_summer_valid_track.pkl"]
-config.output_filepath = "./ct_aruba_20172020_summer/ct_aruba_20172020_summer_valid.pkl"
-
-# t_min = time.mktime(time.strptime("01/11/2017 00:00:00", "%d/%m/%Y %H:%M:%S"))
-# t_max = time.mktime(time.strptime("31/01/2020 23:59:59", "%d/%m/%Y %H:%M:%S"))
-"""
-
-"""
-LAT_MIN = 9.0
-LAT_MAX = 14.0
-LON_MIN = -71.0
-LON_MAX = -66.0
-
-
-
-config.l_input_filepath = ["ct_aruba_2019_summer_valid_track.pkl"]
-config.output_filepath = "./ct_aruba_2019_summer/ct_aruba_2019_summer_valid.pkl"
-
-t_min = time.mktime(time.strptime("01/05/2019 00:00:00", "%d/%m/%Y %H:%M:%S"))
-t_max = time.mktime(time.strptime("30/06/2019 23:59:59", "%d/%m/%Y %H:%M:%S"))
-"""
 #=====================================================================
 LAT_MIN,LAT_MAX,LON_MIN,LON_MAX = config.lat_min,config.lat_max,config.lon_min,config.lon_max
 
@@ -444,13 +393,9 @@ print("min len: ",minlen)
 
 coastline_filename = "./streetmap_coastline_Bretagne.pkl"
 
-try:
+if "bretagne" in config.output_filepath:
     with open(coastline_filename, 'rb') as f:
         l_coastline_poly = pickle.load(f)
-except:
-    with open(coastline_filename, 'rb') as f:
-        l_coastline_poly = pickle.load(f, encoding='latin1')
-
 
 # In[35]:
 

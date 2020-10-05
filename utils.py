@@ -344,6 +344,7 @@ def plot_abnormal_tracks(Vs_background,l_dict_anomaly,
                          onehot_lat_bins,onehot_lon_bins,
                          background_cmap = "Blues",
                          anomaly_cmap = "autumn",
+                         l_coastline_poly = None,
                          fig_w = 960, fig_h = 960,
                          fig_dpi = 150,
                         ):
@@ -366,6 +367,14 @@ def plot_abnormal_tracks(Vs_background,l_dict_anomaly,
     plt.xlabel("Longitude")
     plt.ylabel("Latitude")
     plt.tight_layout() 
+
+    ## Coastlines
+    try:
+        for point in l_coastline_poly:
+            poly = np.array(point)
+            plt.plot(poly[:,0],poly[:,1],color="k",linewidth=0.8)
+    except:
+        pass
     
     ## Plot abnormal tracks
     cmap_anomaly = plt.cm.get_cmap(anomaly_cmap)

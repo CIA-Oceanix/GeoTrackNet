@@ -34,10 +34,10 @@ import pickle
 import os
 import sys
 sys.path.append("./data/")
-dataset_path = "/homes/vnguye04/Bureau/Sanssauvegarde/Codes/MultitaskAIS/data/ct_010203_24/ct_010203_24_train.pkl"
+dataset_path = "./ct_2017010203_10_20/ct_2017010203_10_20_train.pkl"
 import tensorflow as tf
 
-LAT_BINS = 300; LON_BINS = 300; SOG_BINS = 30; COG_BINS = 72
+LAT_BINS = 200; LON_BINS = 300; SOG_BINS = 30; COG_BINS = 72
 #LAT_BINS = 350; LON_BINS = 1050; SOG_BINS = 30; COG_BINS = 72
 
 def sparse_AIS_to_dense(msgs_,num_timesteps, mmsis):
