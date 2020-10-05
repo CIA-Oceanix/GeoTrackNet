@@ -85,7 +85,7 @@ python geotracknet.py \
   --mode=save_logprob \
   --dataset_dir=./data 
   --trainingset_name=ct_2017010203_10_20/ct_2017010203_10_20_train.pkl \
-  --test_name=ct_2017010203_10_20/ct_2017010203_10_20_valid.pkl \
+  --testset_name=ct_2017010203_10_20/ct_2017010203_10_20_valid.pkl \
   --lat_min=47.5 \
   --lat_max=49.5 \
   --lon_min=-7.0 \
@@ -104,7 +104,7 @@ python geotracknet.py \
   --mode=local_logprob \
   --dataset_dir=./data 
   --trainingset_name=ct_2017010203_10_20/ct_2017010203_10_20_train.pkl \
-  --test_name=ct_2017010203_10_20/ct_2017010203_10_20_valid.pkl \
+  --testset_name=ct_2017010203_10_20/ct_2017010203_10_20_valid.pkl \
   --lat_min=47.5 \
   --lat_max=49.5 \
   --lon_min=-7.0 \
