@@ -1,0 +1,1936 @@
+Create CheckpointSaverHook.
+Graph was finalized.
+Running local_init_op.
+Done running local_init_op.
+Saving checkpoints for 0 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+Step 1, elbo bound per timestep: -21.905266
+global_step/sec: 2.39085
+Step 101, elbo bound per timestep: -20.447897
+global_step/sec: 2.38043
+Step 201, elbo bound per timestep: -20.351427
+Create CheckpointSaverHook.
+Graph was finalized.
+Restoring parameters from ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt-0
+Running local_init_op.
+Done running local_init_op.
+Saving checkpoints for 0 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+Step 1, elbo bound per timestep: -21.648682
+global_step/sec: 2.42602
+Step 101, elbo bound per timestep: -20.142857
+global_step/sec: 2.75591
+Step 201, elbo bound per timestep: -20.003767
+global_step/sec: 2.98921
+Step 301, elbo bound per timestep: -20.370268
+Saving checkpoints for 322 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.81154
+Step 401, elbo bound per timestep: -18.084705
+global_step/sec: 2.72629
+Step 501, elbo bound per timestep: -16.126968
+global_step/sec: 2.88101
+Step 601, elbo bound per timestep: -15.296423
+Saving checkpoints for 656 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.61215
+Step 701, elbo bound per timestep: -14.728939
+global_step/sec: 2.62503
+Step 801, elbo bound per timestep: -14.101186
+global_step/sec: 2.5153
+Step 901, elbo bound per timestep: -13.354748
+Saving checkpoints for 961 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.48465
+Step 1001, elbo bound per timestep: -14.589489
+global_step/sec: 2.49277
+Step 1101, elbo bound per timestep: -13.392605
+global_step/sec: 2.86138
+Step 1201, elbo bound per timestep: -13.287980
+Saving checkpoints for 1287 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.92114
+Step 1301, elbo bound per timestep: -12.751595
+global_step/sec: 2.91122
+Step 1401, elbo bound per timestep: -12.641566
+global_step/sec: 2.60186
+Step 1501, elbo bound per timestep: -12.670384
+global_step/sec: 2.88825
+Step 1601, elbo bound per timestep: -12.678047
+Saving checkpoints for 1624 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.86429
+Step 1701, elbo bound per timestep: -12.323413
+global_step/sec: 2.77263
+Step 1801, elbo bound per timestep: -12.353364
+global_step/sec: 2.5748
+Step 1901, elbo bound per timestep: -11.834417
+Saving checkpoints for 1947 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.56799
+Step 2001, elbo bound per timestep: -12.001265
+global_step/sec: 2.60089
+Step 2101, elbo bound per timestep: -11.653019
+global_step/sec: 2.57331
+Step 2201, elbo bound per timestep: -10.660101
+Saving checkpoints for 2261 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.6933
+Step 2301, elbo bound per timestep: -10.728203
+global_step/sec: 2.80308
+Step 2401, elbo bound per timestep: -11.988544
+global_step/sec: 2.71366
+Step 2501, elbo bound per timestep: -10.434410
+Saving checkpoints for 2598 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.95413
+Step 2601, elbo bound per timestep: -10.859814
+global_step/sec: 2.98671
+Step 2701, elbo bound per timestep: -10.912752
+global_step/sec: 3.14659
+Step 2801, elbo bound per timestep: -10.240414
+global_step/sec: 3.05185
+Step 2901, elbo bound per timestep: -10.613682
+Saving checkpoints for 2958 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.66832
+Step 3001, elbo bound per timestep: -9.865828
+global_step/sec: 2.74608
+Step 3101, elbo bound per timestep: -10.042350
+global_step/sec: 2.85871
+Step 3201, elbo bound per timestep: -10.111940
+Saving checkpoints for 3295 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.91239
+Step 3301, elbo bound per timestep: -9.834906
+global_step/sec: 2.58769
+Step 3401, elbo bound per timestep: -10.347629
+global_step/sec: 2.58562
+Step 3501, elbo bound per timestep: -10.371111
+global_step/sec: 3.037
+Step 3601, elbo bound per timestep: -9.476987
+Saving checkpoints for 3622 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 3.098
+Step 3701, elbo bound per timestep: -9.641203
+global_step/sec: 2.7551
+Step 3801, elbo bound per timestep: -10.674052
+global_step/sec: 2.89846
+Step 3901, elbo bound per timestep: -9.689655
+Saving checkpoints for 3965 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.52046
+Step 4001, elbo bound per timestep: -9.592523
+global_step/sec: 2.58251
+Step 4101, elbo bound per timestep: -9.624046
+global_step/sec: 2.53711
+Step 4201, elbo bound per timestep: -9.936386
+Saving checkpoints for 4269 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.49009
+Step 4301, elbo bound per timestep: -9.355537
+global_step/sec: 2.57118
+Step 4401, elbo bound per timestep: -9.293728
+global_step/sec: 2.4808
+Step 4501, elbo bound per timestep: -8.945130
+Saving checkpoints for 4575 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.64378
+Step 4601, elbo bound per timestep: -9.914928
+global_step/sec: 2.59741
+Step 4701, elbo bound per timestep: -8.961015
+global_step/sec: 2.72982
+Step 4801, elbo bound per timestep: -9.021502
+Saving checkpoints for 4896 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.7143
+Step 4901, elbo bound per timestep: -8.577761
+global_step/sec: 2.82154
+Step 5001, elbo bound per timestep: -8.537472
+global_step/sec: 2.84796
+Step 5101, elbo bound per timestep: -9.190092
+global_step/sec: 2.71311
+Step 5201, elbo bound per timestep: -9.682716
+Saving checkpoints for 5235 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.82136
+Step 5301, elbo bound per timestep: -9.083252
+global_step/sec: 2.672
+Step 5401, elbo bound per timestep: -9.340044
+global_step/sec: 2.81643
+Step 5501, elbo bound per timestep: -8.954826
+Saving checkpoints for 5567 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.9575
+Step 5601, elbo bound per timestep: -9.017439
+global_step/sec: 2.55833
+Step 5701, elbo bound per timestep: -8.226213
+global_step/sec: 2.61577
+Step 5801, elbo bound per timestep: -9.520199
+Saving checkpoints for 5881 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.47516
+Step 5901, elbo bound per timestep: -9.079168
+global_step/sec: 2.57362
+Step 6001, elbo bound per timestep: -8.521751
+global_step/sec: 2.58934
+Step 6101, elbo bound per timestep: -8.034196
+Saving checkpoints for 6191 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.60828
+Step 6201, elbo bound per timestep: -8.898098
+global_step/sec: 2.52106
+Step 6301, elbo bound per timestep: -8.516497
+global_step/sec: 2.51785
+Step 6401, elbo bound per timestep: -7.800539
+Saving checkpoints for 6493 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.49707
+Step 6501, elbo bound per timestep: -8.362869
+global_step/sec: 2.55846
+Step 6601, elbo bound per timestep: -8.176947
+global_step/sec: 2.48107
+Step 6701, elbo bound per timestep: -8.149311
+Saving checkpoints for 6799 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.59422
+Step 6801, elbo bound per timestep: -7.920062
+global_step/sec: 2.57292
+Step 6901, elbo bound per timestep: -8.568100
+global_step/sec: 2.54118
+Step 7001, elbo bound per timestep: -8.274815
+global_step/sec: 2.54586
+Step 7101, elbo bound per timestep: -8.346640
+Saving checkpoints for 7105 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.45866
+Step 7201, elbo bound per timestep: -8.273494
+global_step/sec: 2.57406
+Step 7301, elbo bound per timestep: -7.887078
+global_step/sec: 2.52359
+Step 7401, elbo bound per timestep: -8.149982
+Saving checkpoints for 7408 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.50252
+Step 7501, elbo bound per timestep: -8.194845
+global_step/sec: 2.60554
+Step 7601, elbo bound per timestep: -8.183936
+global_step/sec: 2.41905
+Step 7701, elbo bound per timestep: -7.932625
+Saving checkpoints for 7711 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.54924
+Step 7801, elbo bound per timestep: -7.722528
+global_step/sec: 2.55256
+Step 7901, elbo bound per timestep: -7.615381
+global_step/sec: 2.49769
+Step 8001, elbo bound per timestep: -7.843794
+Saving checkpoints for 8014 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.47146
+Step 8101, elbo bound per timestep: -7.688735
+global_step/sec: 2.56952
+Step 8201, elbo bound per timestep: -7.452193
+global_step/sec: 2.51864
+Step 8301, elbo bound per timestep: -8.275579
+Saving checkpoints for 8317 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.5302
+Step 8401, elbo bound per timestep: -7.932329
+global_step/sec: 2.60743
+Step 8501, elbo bound per timestep: -8.019961
+global_step/sec: 2.56469
+Step 8601, elbo bound per timestep: -7.677645
+Saving checkpoints for 8625 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.47317
+Step 8701, elbo bound per timestep: -7.439452
+global_step/sec: 2.45145
+Step 8801, elbo bound per timestep: -7.469661
+global_step/sec: 2.49006
+Step 8901, elbo bound per timestep: -7.860852
+Saving checkpoints for 8924 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.57362
+Step 9001, elbo bound per timestep: -7.404118
+global_step/sec: 2.61327
+Step 9101, elbo bound per timestep: -7.293033
+global_step/sec: 2.47071
+Step 9201, elbo bound per timestep: -7.432517
+Saving checkpoints for 9229 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.41856
+Step 9301, elbo bound per timestep: -8.041377
+global_step/sec: 2.31805
+Step 9401, elbo bound per timestep: -8.131510
+global_step/sec: 2.36374
+Step 9501, elbo bound per timestep: -7.782306
+Saving checkpoints for 9513 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.44473
+Step 9601, elbo bound per timestep: -7.390257
+global_step/sec: 2.41071
+Step 9701, elbo bound per timestep: -7.792958
+global_step/sec: 2.39846
+Step 9801, elbo bound per timestep: -7.095273
+Saving checkpoints for 9803 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.35043
+Step 9901, elbo bound per timestep: -7.689123
+global_step/sec: 2.48483
+Step 10001, elbo bound per timestep: -7.694042
+Saving checkpoints for 10095 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.44404
+Step 10101, elbo bound per timestep: -7.613210
+global_step/sec: 2.42728
+Step 10201, elbo bound per timestep: -7.535524
+global_step/sec: 2.44395
+Step 10301, elbo bound per timestep: -7.882753
+Saving checkpoints for 10388 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.4504
+Step 10401, elbo bound per timestep: -7.431592
+global_step/sec: 2.42865
+Step 10501, elbo bound per timestep: -7.246132
+global_step/sec: 2.33381
+Step 10601, elbo bound per timestep: -7.904490
+Saving checkpoints for 10675 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.37633
+Step 10701, elbo bound per timestep: -7.594476
+global_step/sec: 2.44917
+Step 10801, elbo bound per timestep: -7.339097
+global_step/sec: 2.40089
+Step 10901, elbo bound per timestep: -7.551665
+Saving checkpoints for 10967 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.45996
+Step 11001, elbo bound per timestep: -7.256829
+global_step/sec: 2.31944
+Step 11101, elbo bound per timestep: -7.391903
+global_step/sec: 2.53854
+Step 11201, elbo bound per timestep: -7.126365
+Saving checkpoints for 11258 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.36623
+Step 11301, elbo bound per timestep: -7.442203
+global_step/sec: 2.36932
+Step 11401, elbo bound per timestep: -6.971464
+global_step/sec: 2.38316
+Step 11501, elbo bound per timestep: -7.757580
+Saving checkpoints for 11546 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.51294
+Step 11601, elbo bound per timestep: -7.407266
+global_step/sec: 2.37152
+Step 11701, elbo bound per timestep: -6.745802
+global_step/sec: 2.39549
+Step 11801, elbo bound per timestep: -7.296862
+Saving checkpoints for 11837 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.37326
+Step 11901, elbo bound per timestep: -7.814345
+global_step/sec: 2.35591
+Step 12001, elbo bound per timestep: -7.318466
+global_step/sec: 2.43627
+Step 12101, elbo bound per timestep: -7.200721
+Saving checkpoints for 12125 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.43486
+Step 12201, elbo bound per timestep: -7.914620
+global_step/sec: 2.38413
+Step 12301, elbo bound per timestep: -7.347595
+global_step/sec: 2.42995
+Step 12401, elbo bound per timestep: -7.132810
+Saving checkpoints for 12414 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.38469
+Step 12501, elbo bound per timestep: -6.981221
+global_step/sec: 2.40331
+Step 12601, elbo bound per timestep: -7.136289
+global_step/sec: 2.47368
+Step 12701, elbo bound per timestep: -7.250939
+Saving checkpoints for 12705 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.34838
+Step 12801, elbo bound per timestep: -6.882997
+global_step/sec: 2.42386
+Step 12901, elbo bound per timestep: -6.722353
+Saving checkpoints for 12990 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.34413
+Step 13001, elbo bound per timestep: -7.129109
+global_step/sec: 2.46599
+Step 13101, elbo bound per timestep: -7.495969
+global_step/sec: 2.41653
+Step 13201, elbo bound per timestep: -6.567933
+Saving checkpoints for 13281 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.39765
+Step 13301, elbo bound per timestep: -7.021593
+global_step/sec: 2.35371
+Step 13401, elbo bound per timestep: -7.360215
+global_step/sec: 2.42756
+Step 13501, elbo bound per timestep: -7.093607
+Saving checkpoints for 13573 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.50413
+Step 13601, elbo bound per timestep: -7.148263
+global_step/sec: 2.38368
+Step 13701, elbo bound per timestep: -7.015609
+global_step/sec: 2.35265
+Step 13801, elbo bound per timestep: -7.069797
+Saving checkpoints for 13858 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.34384
+Step 13901, elbo bound per timestep: -7.311242
+global_step/sec: 2.39571
+Step 14001, elbo bound per timestep: -7.035775
+global_step/sec: 2.4371
+Step 14101, elbo bound per timestep: -7.392310
+Saving checkpoints for 14147 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.38552
+Step 14201, elbo bound per timestep: -7.319633
+global_step/sec: 2.43916
+Step 14301, elbo bound per timestep: -7.296289
+global_step/sec: 2.37229
+Step 14401, elbo bound per timestep: -6.621364
+Saving checkpoints for 14436 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.37261
+Step 14501, elbo bound per timestep: -6.816636
+global_step/sec: 2.46753
+Step 14601, elbo bound per timestep: -7.419731
+global_step/sec: 2.41577
+Step 14701, elbo bound per timestep: -7.284082
+Saving checkpoints for 14727 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.39336
+Step 14801, elbo bound per timestep: -7.121606
+global_step/sec: 2.38867
+Step 14901, elbo bound per timestep: -6.974458
+global_step/sec: 2.45297
+Step 15001, elbo bound per timestep: -6.811380
+Saving checkpoints for 15017 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.3959
+Step 15101, elbo bound per timestep: -6.806369
+global_step/sec: 2.45242
+Step 15201, elbo bound per timestep: -7.119706
+global_step/sec: 2.47831
+Step 15301, elbo bound per timestep: -6.843938
+Saving checkpoints for 15309 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.30021
+Step 15401, elbo bound per timestep: -6.719831
+global_step/sec: 2.38632
+Step 15501, elbo bound per timestep: -7.077723
+Saving checkpoints for 15598 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.50666
+Step 15601, elbo bound per timestep: -6.697688
+global_step/sec: 2.37776
+Step 15701, elbo bound per timestep: -6.850501
+global_step/sec: 2.45295
+Step 15801, elbo bound per timestep: -6.653279
+Saving checkpoints for 15887 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.41105
+Step 15901, elbo bound per timestep: -6.649756
+global_step/sec: 2.47933
+Step 16001, elbo bound per timestep: -6.942297
+global_step/sec: 2.39203
+Step 16101, elbo bound per timestep: -7.208683
+Saving checkpoints for 16180 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.41994
+Step 16201, elbo bound per timestep: -6.616748
+global_step/sec: 2.40227
+Step 16301, elbo bound per timestep: -6.975256
+global_step/sec: 2.54441
+Step 16401, elbo bound per timestep: -7.140274
+Saving checkpoints for 16475 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.41203
+Step 16501, elbo bound per timestep: -6.696837
+global_step/sec: 2.50634
+Step 16601, elbo bound per timestep: -6.671990
+global_step/sec: 2.41308
+Step 16701, elbo bound per timestep: -6.615419
+Saving checkpoints for 16768 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.35493
+Step 16801, elbo bound per timestep: -6.788633
+global_step/sec: 2.50983
+Step 16901, elbo bound per timestep: -7.107567
+global_step/sec: 2.41179
+Step 17001, elbo bound per timestep: -6.844261
+Saving checkpoints for 17060 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.41841
+Step 17101, elbo bound per timestep: -6.736537
+global_step/sec: 2.39355
+Step 17201, elbo bound per timestep: -6.989960
+global_step/sec: 2.52743
+Step 17301, elbo bound per timestep: -6.523660
+Saving checkpoints for 17355 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.41785
+Step 17401, elbo bound per timestep: -7.174636
+global_step/sec: 2.41998
+Step 17501, elbo bound per timestep: -6.780094
+global_step/sec: 2.39984
+Step 17601, elbo bound per timestep: -6.642237
+Saving checkpoints for 17644 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.4117
+Step 17701, elbo bound per timestep: -6.563006
+global_step/sec: 2.43443
+Step 17801, elbo bound per timestep: -6.606517
+global_step/sec: 2.31147
+Step 17901, elbo bound per timestep: -6.777873
+Saving checkpoints for 17930 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.40609
+Step 18001, elbo bound per timestep: -6.813808
+global_step/sec: 2.40593
+Step 18101, elbo bound per timestep: -6.695686
+global_step/sec: 2.46334
+Step 18201, elbo bound per timestep: -6.708397
+Saving checkpoints for 18220 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.22892
+Step 18301, elbo bound per timestep: -6.383934
+global_step/sec: 2.29571
+Step 18401, elbo bound per timestep: -6.726825
+Saving checkpoints for 18494 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.26655
+Step 18501, elbo bound per timestep: -6.520726
+global_step/sec: 2.50001
+Step 18601, elbo bound per timestep: -6.736538
+global_step/sec: 2.8151
+Step 18701, elbo bound per timestep: -6.518210
+global_step/sec: 2.48636
+Step 18801, elbo bound per timestep: -6.071659
+Saving checkpoints for 18803 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.56042
+Step 18901, elbo bound per timestep: -6.524804
+global_step/sec: 2.62628
+Step 19001, elbo bound per timestep: -6.422884
+global_step/sec: 2.4699
+Step 19101, elbo bound per timestep: -6.994184
+Saving checkpoints for 19110 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.38092
+Step 19201, elbo bound per timestep: -6.423934
+global_step/sec: 2.4859
+Step 19301, elbo bound per timestep: -7.010919
+global_step/sec: 2.54362
+Step 19401, elbo bound per timestep: -6.768877
+Saving checkpoints for 19407 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.48928
+Step 19501, elbo bound per timestep: -6.566587
+global_step/sec: 2.49727
+Step 19601, elbo bound per timestep: -6.829004
+global_step/sec: 2.60189
+Step 19701, elbo bound per timestep: -6.468998
+Saving checkpoints for 19710 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.44202
+Step 19801, elbo bound per timestep: -6.958332
+global_step/sec: 2.58747
+Step 19901, elbo bound per timestep: -6.826223
+global_step/sec: 2.46229
+Step 20001, elbo bound per timestep: -6.731787
+Saving checkpoints for 20010 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.47158
+Step 20101, elbo bound per timestep: -6.685730
+global_step/sec: 2.62229
+Step 20201, elbo bound per timestep: -6.885659
+global_step/sec: 2.54163
+Step 20301, elbo bound per timestep: -6.032443
+Saving checkpoints for 20316 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.47675
+Step 20401, elbo bound per timestep: -6.514216
+global_step/sec: 2.48858
+Step 20501, elbo bound per timestep: -6.156404
+global_step/sec: 2.43196
+Step 20601, elbo bound per timestep: -6.660184
+Saving checkpoints for 20612 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.47335
+Step 20701, elbo bound per timestep: -6.743846
+global_step/sec: 2.49915
+Step 20801, elbo bound per timestep: -6.428610
+global_step/sec: 2.52197
+Step 20901, elbo bound per timestep: -6.628819
+Saving checkpoints for 20912 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.43695
+Step 21001, elbo bound per timestep: -6.789804
+global_step/sec: 2.57867
+Step 21101, elbo bound per timestep: -6.512866
+global_step/sec: 2.52945
+Step 21201, elbo bound per timestep: -6.116132
+Saving checkpoints for 21215 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.52594
+Step 21301, elbo bound per timestep: -6.463896
+global_step/sec: 2.54956
+Step 21401, elbo bound per timestep: -6.261044
+global_step/sec: 2.49964
+Step 21501, elbo bound per timestep: -6.355154
+Saving checkpoints for 21518 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.46485
+Step 21601, elbo bound per timestep: -6.196935
+global_step/sec: 2.61983
+Step 21701, elbo bound per timestep: -6.174140
+global_step/sec: 2.58269
+Step 21801, elbo bound per timestep: -6.556119
+Saving checkpoints for 21825 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.55004
+Step 21901, elbo bound per timestep: -6.218097
+global_step/sec: 2.51343
+Step 22001, elbo bound per timestep: -6.351826
+global_step/sec: 2.4238
+Step 22101, elbo bound per timestep: -6.793165
+Saving checkpoints for 22125 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.52207
+Step 22201, elbo bound per timestep: -6.927615
+global_step/sec: 2.40833
+Step 22301, elbo bound per timestep: -6.744648
+global_step/sec: 2.51254
+Step 22401, elbo bound per timestep: -6.704445
+Saving checkpoints for 22426 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.76159
+Step 22501, elbo bound per timestep: -6.370381
+global_step/sec: 2.7105
+Step 22601, elbo bound per timestep: -6.060339
+global_step/sec: 2.77126
+Step 22701, elbo bound per timestep: -6.480324
+Saving checkpoints for 22752 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.62575
+Step 22801, elbo bound per timestep: -6.449035
+Create CheckpointSaverHook.
+Graph was finalized.
+Create CheckpointSaverHook.
+Graph was finalized.
+Restoring parameters from ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt-22752
+Running local_init_op.
+Done running local_init_op.
+Saving checkpoints for 22752 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+Step 22752, elbo bound per timestep: -6.116664
+global_step/sec: 1.86424
+Step 22852, elbo bound per timestep: -6.358061
+global_step/sec: 1.87576
+Step 22952, elbo bound per timestep: -6.485650
+Saving checkpoints for 22971 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 1.92124
+Step 23052, elbo bound per timestep: -5.887563
+global_step/sec: 1.97139
+Step 23152, elbo bound per timestep: -6.749924
+Saving checkpoints for 23206 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 1.95875
+Step 23252, elbo bound per timestep: -6.620531
+global_step/sec: 2.04403
+Step 23352, elbo bound per timestep: -6.287722
+Saving checkpoints for 23447 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 1.9904
+Step 23452, elbo bound per timestep: -6.848013
+global_step/sec: 1.92772
+Step 23552, elbo bound per timestep: -6.388576
+global_step/sec: 1.96161
+Step 23652, elbo bound per timestep: -6.068504
+Saving checkpoints for 23681 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 1.95286
+Step 23752, elbo bound per timestep: -6.427958
+global_step/sec: 2.01459
+Step 23852, elbo bound per timestep: -6.711722
+Saving checkpoints for 23920 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 1.95805
+Step 23952, elbo bound per timestep: -6.460697
+global_step/sec: 1.93898
+Step 24052, elbo bound per timestep: -6.603841
+global_step/sec: 2.01783
+Step 24152, elbo bound per timestep: -6.755647
+Saving checkpoints for 24156 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 1.95933
+Step 24252, elbo bound per timestep: -6.305207
+global_step/sec: 1.95782
+Step 24352, elbo bound per timestep: -6.439327
+Saving checkpoints for 24393 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.03729
+Step 24452, elbo bound per timestep: -6.455192
+global_step/sec: 2.06219
+Step 24552, elbo bound per timestep: -6.246840
+Saving checkpoints for 24638 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 1.98921
+Step 24652, elbo bound per timestep: -6.298678
+global_step/sec: 2.06158
+Step 24752, elbo bound per timestep: -6.197163
+global_step/sec: 2.01894
+Step 24852, elbo bound per timestep: -6.462238
+Saving checkpoints for 24882 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.01963
+Step 24952, elbo bound per timestep: -6.290423
+global_step/sec: 1.9889
+Step 25052, elbo bound per timestep: -6.284248
+Saving checkpoints for 25122 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.01176
+Step 25152, elbo bound per timestep: -6.254704
+global_step/sec: 2.00085
+Step 25252, elbo bound per timestep: -6.270229
+global_step/sec: 1.98245
+Step 25352, elbo bound per timestep: -6.216139
+Saving checkpoints for 25363 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.02338
+Step 25452, elbo bound per timestep: -6.283772
+global_step/sec: 2.02316
+Step 25552, elbo bound per timestep: -6.356474
+Saving checkpoints for 25607 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.01552
+Step 25652, elbo bound per timestep: -6.590683
+global_step/sec: 1.97649
+Step 25752, elbo bound per timestep: -5.908958
+Saving checkpoints for 25844 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 1.96722
+Step 25852, elbo bound per timestep: -6.280109
+global_step/sec: 1.96826
+Step 25952, elbo bound per timestep: -6.977268
+global_step/sec: 1.98315
+Step 26052, elbo bound per timestep: -6.762467
+Saving checkpoints for 26082 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 1.97353
+Step 26152, elbo bound per timestep: -6.060812
+global_step/sec: 1.95384
+Step 26252, elbo bound per timestep: -6.169503
+Saving checkpoints for 26320 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.02151
+Step 26352, elbo bound per timestep: -6.191221
+global_step/sec: 1.99675
+Step 26452, elbo bound per timestep: -6.917984
+global_step/sec: 1.92968
+Step 26552, elbo bound per timestep: -6.391766
+Saving checkpoints for 26556 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.04176
+Step 26652, elbo bound per timestep: -6.032531
+global_step/sec: 2.01138
+Step 26752, elbo bound per timestep: -6.048469
+Saving checkpoints for 26801 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.02891
+Step 26852, elbo bound per timestep: -6.099733
+global_step/sec: 2.03665
+Step 26952, elbo bound per timestep: -6.019280
+Saving checkpoints for 27042 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 1.94741
+Step 27052, elbo bound per timestep: -6.817498
+global_step/sec: 2.00798
+Step 27152, elbo bound per timestep: -5.928297
+global_step/sec: 2.02992
+Step 27252, elbo bound per timestep: -6.339125
+Saving checkpoints for 27283 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.03018
+Step 27352, elbo bound per timestep: -5.570173
+global_step/sec: 2.03573
+Step 27452, elbo bound per timestep: -6.346641
+Saving checkpoints for 27526 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 1.98346
+Step 27552, elbo bound per timestep: -5.879869
+global_step/sec: 1.95358
+Step 27652, elbo bound per timestep: -5.804109
+global_step/sec: 1.95999
+Step 27752, elbo bound per timestep: -6.271709
+Saving checkpoints for 27761 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 1.93362
+Step 27852, elbo bound per timestep: -5.778320
+global_step/sec: 2.01684
+Step 27952, elbo bound per timestep: -6.050469
+Saving checkpoints for 27998 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.01258
+Step 28052, elbo bound per timestep: -5.986547
+global_step/sec: 1.99483
+Step 28152, elbo bound per timestep: -6.361991
+Saving checkpoints for 28240 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.01191
+Step 28252, elbo bound per timestep: -5.853465
+global_step/sec: 1.95942
+Step 28352, elbo bound per timestep: -5.958719
+global_step/sec: 1.91871
+Step 28452, elbo bound per timestep: -5.678472
+Saving checkpoints for 28474 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.04206
+Step 28552, elbo bound per timestep: -6.025091
+global_step/sec: 1.95925
+Step 28652, elbo bound per timestep: -5.907475
+Saving checkpoints for 28717 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.01037
+Step 28752, elbo bound per timestep: -6.081741
+global_step/sec: 2.07483
+Step 28852, elbo bound per timestep: -6.114532
+global_step/sec: 2.03263
+Step 28952, elbo bound per timestep: -5.632475
+Saving checkpoints for 28960 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 1.98962
+Step 29052, elbo bound per timestep: -6.276511
+global_step/sec: 2.02573
+Step 29152, elbo bound per timestep: -6.043489
+Saving checkpoints for 29202 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 1.9855
+Step 29252, elbo bound per timestep: -6.255682
+global_step/sec: 1.97022
+Step 29352, elbo bound per timestep: -5.965610
+Saving checkpoints for 29443 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.07028
+Step 29452, elbo bound per timestep: -6.175842
+global_step/sec: 1.99138
+Step 29552, elbo bound per timestep: -6.274780
+global_step/sec: 1.9395
+Step 29652, elbo bound per timestep: -6.038083
+Saving checkpoints for 29681 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.02916
+Step 29752, elbo bound per timestep: -5.745789
+global_step/sec: 1.95066
+Step 29852, elbo bound per timestep: -6.016963
+Saving checkpoints for 29918 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 1.96406
+Step 29952, elbo bound per timestep: -6.329756
+global_step/sec: 2.0193
+Step 30052, elbo bound per timestep: -6.055970
+global_step/sec: 1.9999
+Step 30152, elbo bound per timestep: -5.760164
+Saving checkpoints for 30159 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 1.9974
+Step 30252, elbo bound per timestep: -5.691920
+global_step/sec: 1.94823
+Step 30352, elbo bound per timestep: -6.216541
+Saving checkpoints for 30396 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 1.98681
+Step 30452, elbo bound per timestep: -6.198724
+global_step/sec: 2.01021
+Step 30552, elbo bound per timestep: -5.859493
+Saving checkpoints for 30636 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 1.92726
+Step 30652, elbo bound per timestep: -5.698171
+global_step/sec: 1.98763
+Step 30752, elbo bound per timestep: -6.322130
+global_step/sec: 1.98714
+Step 30852, elbo bound per timestep: -6.367481
+Saving checkpoints for 30873 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 1.97215
+Step 30952, elbo bound per timestep: -5.823893
+global_step/sec: 2.02068
+Step 31052, elbo bound per timestep: -6.224399
+Saving checkpoints for 31114 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.00683
+Step 31152, elbo bound per timestep: -5.866129
+global_step/sec: 2.03076
+Step 31252, elbo bound per timestep: -5.726313
+global_step/sec: 1.9978
+Step 31352, elbo bound per timestep: -5.569266
+Saving checkpoints for 31355 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 1.97322
+Step 31452, elbo bound per timestep: -5.729816
+global_step/sec: 2.00369
+Step 31552, elbo bound per timestep: -5.962408
+Saving checkpoints for 31594 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 1.96572
+Step 31652, elbo bound per timestep: -6.126990
+global_step/sec: 2.00355
+Step 31752, elbo bound per timestep: -5.686923
+Saving checkpoints for 31834 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.02716
+Step 31852, elbo bound per timestep: -5.899752
+global_step/sec: 1.96476
+Step 31952, elbo bound per timestep: -5.491551
+global_step/sec: 2.00886
+Step 32052, elbo bound per timestep: -5.475178
+Saving checkpoints for 32076 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 1.96864
+Step 32152, elbo bound per timestep: -5.828694
+global_step/sec: 2.02399
+Step 32252, elbo bound per timestep: -6.000391
+Saving checkpoints for 32314 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 1.97741
+Step 32352, elbo bound per timestep: -5.714067
+global_step/sec: 2.00315
+Step 32452, elbo bound per timestep: -5.810448
+global_step/sec: 2.01622
+Step 32552, elbo bound per timestep: -5.763538
+Saving checkpoints for 32555 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 1.98215
+Step 32652, elbo bound per timestep: -5.881950
+global_step/sec: 1.96828
+Step 32752, elbo bound per timestep: -5.875051
+Saving checkpoints for 32794 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.03066
+Step 32852, elbo bound per timestep: -5.519417
+Create CheckpointSaverHook.
+Graph was finalized.
+Restoring parameters from ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt-32794
+Running local_init_op.
+Done running local_init_op.
+Saving checkpoints for 32794 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+Step 32795, elbo bound per timestep: -5.718702
+global_step/sec: 2.06269
+Step 32895, elbo bound per timestep: -5.790370
+global_step/sec: 2.19477
+Step 32995, elbo bound per timestep: -5.698107
+Saving checkpoints for 33048 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.1736
+Step 33095, elbo bound per timestep: -6.051136
+global_step/sec: 2.21046
+Step 33195, elbo bound per timestep: -5.336416
+global_step/sec: 2.14497
+Step 33295, elbo bound per timestep: -5.828259
+Saving checkpoints for 33308 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.23107
+Step 33395, elbo bound per timestep: -5.566473
+global_step/sec: 2.19557
+Step 33495, elbo bound per timestep: -5.557711
+Saving checkpoints for 33576 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.21429
+Step 33595, elbo bound per timestep: -5.304367
+global_step/sec: 2.14662
+Step 33695, elbo bound per timestep: -5.636363
+global_step/sec: 2.22739
+Step 33795, elbo bound per timestep: -5.567916
+Saving checkpoints for 33838 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.1832
+Step 33895, elbo bound per timestep: -5.677052
+global_step/sec: 2.19109
+Step 33995, elbo bound per timestep: -5.466693
+global_step/sec: 2.21062
+Step 34095, elbo bound per timestep: -5.962064
+Saving checkpoints for 34103 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.16135
+Step 34195, elbo bound per timestep: -5.634352
+global_step/sec: 2.20984
+Step 34295, elbo bound per timestep: -6.196657
+Saving checkpoints for 34364 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.13265
+Step 34395, elbo bound per timestep: -6.169707
+global_step/sec: 2.34165
+Step 34495, elbo bound per timestep: -5.856277
+global_step/sec: 2.21252
+Step 34595, elbo bound per timestep: -6.168665
+Saving checkpoints for 34632 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.14151
+Step 34695, elbo bound per timestep: -6.206550
+global_step/sec: 2.16449
+Step 34795, elbo bound per timestep: -5.582931
+Saving checkpoints for 34892 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.14425
+Step 34895, elbo bound per timestep: -5.729360
+global_step/sec: 2.10227
+Step 34995, elbo bound per timestep: -5.691816
+global_step/sec: 2.10132
+Step 35095, elbo bound per timestep: -5.282920
+Saving checkpoints for 35147 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.15839
+Step 35195, elbo bound per timestep: -5.578626
+global_step/sec: 2.15226
+Step 35295, elbo bound per timestep: -5.878673
+global_step/sec: 2.12182
+Step 35395, elbo bound per timestep: -5.555520
+Saving checkpoints for 35404 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.14378
+Step 35495, elbo bound per timestep: -6.128962
+global_step/sec: 2.20224
+Step 35595, elbo bound per timestep: -5.656890
+Saving checkpoints for 35663 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.14099
+Step 35695, elbo bound per timestep: -5.325162
+global_step/sec: 2.16565
+Step 35795, elbo bound per timestep: -5.619534
+global_step/sec: 2.20415
+Step 35895, elbo bound per timestep: -5.335474
+Saving checkpoints for 35926 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.15113
+Step 35995, elbo bound per timestep: -5.250567
+global_step/sec: 2.14661
+Step 36095, elbo bound per timestep: -5.589501
+Saving checkpoints for 36183 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.13713
+Step 36195, elbo bound per timestep: -5.740317
+global_step/sec: 2.1199
+Step 36295, elbo bound per timestep: -6.034563
+global_step/sec: 2.10962
+Step 36395, elbo bound per timestep: -5.904095
+Saving checkpoints for 36440 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.17518
+Step 36495, elbo bound per timestep: -5.841918
+global_step/sec: 2.0799
+Step 36595, elbo bound per timestep: -5.628046
+Saving checkpoints for 36694 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.13162
+Step 36695, elbo bound per timestep: -5.888256
+global_step/sec: 2.15064
+Step 36795, elbo bound per timestep: -5.486155
+global_step/sec: 2.21525
+Step 36895, elbo bound per timestep: -5.693495
+Saving checkpoints for 36952 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.05175
+Step 36995, elbo bound per timestep: -5.845143
+global_step/sec: 2.1672
+Step 37095, elbo bound per timestep: -5.752707
+global_step/sec: 2.12647
+Step 37195, elbo bound per timestep: -5.710143
+Saving checkpoints for 37209 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.13848
+Step 37295, elbo bound per timestep: -5.605642
+global_step/sec: 2.14724
+Step 37395, elbo bound per timestep: -5.651914
+Saving checkpoints for 37468 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.19001
+Step 37495, elbo bound per timestep: -5.539667
+global_step/sec: 2.15466
+Step 37595, elbo bound per timestep: -5.686568
+global_step/sec: 2.21208
+Step 37695, elbo bound per timestep: -5.454692
+Saving checkpoints for 37731 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.15075
+Step 37795, elbo bound per timestep: -5.829206
+global_step/sec: 2.18258
+Step 37895, elbo bound per timestep: -5.620749
+Saving checkpoints for 37988 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.11284
+Step 37995, elbo bound per timestep: -5.461387
+global_step/sec: 2.02848
+Step 38095, elbo bound per timestep: -5.403261
+global_step/sec: 2.22248
+Step 38195, elbo bound per timestep: -5.418154
+Saving checkpoints for 38243 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.13123
+Step 38295, elbo bound per timestep: -5.593567
+global_step/sec: 2.16276
+Step 38395, elbo bound per timestep: -5.564678
+global_step/sec: 2.13128
+Step 38495, elbo bound per timestep: -5.707246
+Saving checkpoints for 38501 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.07351
+Step 38595, elbo bound per timestep: -5.453156
+global_step/sec: 2.12292
+Step 38695, elbo bound per timestep: -5.569907
+Saving checkpoints for 38754 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.09605
+Step 38795, elbo bound per timestep: -5.761119
+global_step/sec: 2.18646
+Step 38895, elbo bound per timestep: -5.188920
+global_step/sec: 2.14859
+Step 38995, elbo bound per timestep: -5.669600
+Saving checkpoints for 39012 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.14057
+Step 39095, elbo bound per timestep: -5.689110
+global_step/sec: 2.16847
+Step 39195, elbo bound per timestep: -5.523686
+Saving checkpoints for 39270 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.12724
+Step 39295, elbo bound per timestep: -5.526830
+global_step/sec: 2.13381
+Step 39395, elbo bound per timestep: -5.572445
+global_step/sec: 2.10425
+Step 39495, elbo bound per timestep: -5.502788
+Saving checkpoints for 39525 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.13717
+Step 39595, elbo bound per timestep: -5.632070
+global_step/sec: 2.11878
+Step 39695, elbo bound per timestep: -5.732065
+Saving checkpoints for 39781 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.12949
+Step 39795, elbo bound per timestep: -5.701199
+global_step/sec: 2.14304
+Step 39895, elbo bound per timestep: -5.424132
+global_step/sec: 2.14813
+Step 39995, elbo bound per timestep: -5.643287
+Saving checkpoints for 40041 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.2086
+Step 40095, elbo bound per timestep: -5.733650
+global_step/sec: 2.15108
+Step 40195, elbo bound per timestep: -5.711828
+global_step/sec: 2.16859
+Step 40295, elbo bound per timestep: -5.519080
+Saving checkpoints for 40301 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.16724
+Step 40395, elbo bound per timestep: -5.627594
+global_step/sec: 2.09345
+Step 40495, elbo bound per timestep: -5.721376
+Saving checkpoints for 40558 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.17668
+Step 40595, elbo bound per timestep: -5.669411
+global_step/sec: 2.13614
+Step 40695, elbo bound per timestep: -5.360121
+global_step/sec: 2.13356
+Step 40795, elbo bound per timestep: -5.677297
+Saving checkpoints for 40815 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.09348
+Step 40895, elbo bound per timestep: -5.766135
+global_step/sec: 2.14414
+Step 40995, elbo bound per timestep: -5.544048
+Saving checkpoints for 41070 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.10729
+Step 41095, elbo bound per timestep: -5.388518
+global_step/sec: 2.11639
+Step 41195, elbo bound per timestep: -5.422720
+global_step/sec: 2.14878
+Step 41295, elbo bound per timestep: -5.590560
+Saving checkpoints for 41325 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.10464
+Step 41395, elbo bound per timestep: -5.653988
+global_step/sec: 2.16225
+Step 41495, elbo bound per timestep: -5.444831
+Saving checkpoints for 41583 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.15749
+Step 41595, elbo bound per timestep: -5.362922
+global_step/sec: 2.18591
+Step 41695, elbo bound per timestep: -5.469151
+global_step/sec: 2.1181
+Step 41795, elbo bound per timestep: -5.808038
+Saving checkpoints for 41840 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.10879
+Step 41895, elbo bound per timestep: -5.705131
+global_step/sec: 2.09591
+Step 41995, elbo bound per timestep: -5.696303
+global_step/sec: 2.17001
+Step 42095, elbo bound per timestep: -5.641128
+Saving checkpoints for 42096 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.21202
+Step 42195, elbo bound per timestep: -5.452785
+global_step/sec: 2.16019
+Step 42295, elbo bound per timestep: -5.614673
+Saving checkpoints for 42357 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.10393
+Step 42395, elbo bound per timestep: -5.298779
+global_step/sec: 2.13417
+Step 42495, elbo bound per timestep: -5.338166
+global_step/sec: 2.11513
+Step 42595, elbo bound per timestep: -5.320258
+Saving checkpoints for 42613 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.16156
+Step 42695, elbo bound per timestep: -5.494332
+global_step/sec: 2.2048
+Step 42795, elbo bound per timestep: -5.712298
+Saving checkpoints for 42872 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.10286
+Step 42895, elbo bound per timestep: -5.654072
+global_step/sec: 2.15114
+Step 42995, elbo bound per timestep: -5.251997
+global_step/sec: 2.13059
+Step 43095, elbo bound per timestep: -5.743262
+Saving checkpoints for 43129 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.08518
+Step 43195, elbo bound per timestep: -5.359043
+global_step/sec: 2.16046
+Step 43295, elbo bound per timestep: -5.693263
+Saving checkpoints for 43386 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.13968
+Step 43395, elbo bound per timestep: -5.437661
+global_step/sec: 2.21179
+Step 43495, elbo bound per timestep: -5.678329
+global_step/sec: 2.13495
+Step 43595, elbo bound per timestep: -5.421598
+Saving checkpoints for 43647 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.14498
+Step 43695, elbo bound per timestep: -5.368585
+global_step/sec: 2.09873
+Step 43795, elbo bound per timestep: -4.965198
+global_step/sec: 2.07186
+Step 43895, elbo bound per timestep: -5.731931
+Saving checkpoints for 43898 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.19219
+Step 43995, elbo bound per timestep: -5.681068
+global_step/sec: 2.11015
+Step 44095, elbo bound per timestep: -5.358253
+Saving checkpoints for 44156 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.09421
+Step 44195, elbo bound per timestep: -5.161822
+global_step/sec: 2.1875
+Step 44295, elbo bound per timestep: -5.321710
+global_step/sec: 2.13741
+Step 44395, elbo bound per timestep: -5.720702
+Saving checkpoints for 44413 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.12342
+Step 44495, elbo bound per timestep: -5.487657
+global_step/sec: 2.12707
+Step 44595, elbo bound per timestep: -6.073298
+Saving checkpoints for 44669 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.13339
+Step 44695, elbo bound per timestep: -5.665469
+global_step/sec: 2.16405
+Step 44795, elbo bound per timestep: -5.466536
+global_step/sec: 2.13533
+Step 44895, elbo bound per timestep: -5.225681
+Saving checkpoints for 44925 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.16159
+Step 44995, elbo bound per timestep: -5.491390
+global_step/sec: 2.17818
+Step 45095, elbo bound per timestep: -5.638599
+Saving checkpoints for 45188 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.16806
+Step 45195, elbo bound per timestep: -5.159606
+global_step/sec: 2.16762
+Step 45295, elbo bound per timestep: -5.594699
+global_step/sec: 2.15289
+Step 45395, elbo bound per timestep: -5.480847
+Saving checkpoints for 45446 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.08727
+Step 45495, elbo bound per timestep: -5.874084
+global_step/sec: 2.13812
+Step 45595, elbo bound per timestep: -5.051837
+global_step/sec: 2.18634
+Step 45695, elbo bound per timestep: -5.695866
+Saving checkpoints for 45703 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.08884
+Step 45795, elbo bound per timestep: -5.618515
+global_step/sec: 2.15624
+Step 45895, elbo bound per timestep: -5.145727
+Saving checkpoints for 45957 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.08407
+Step 45995, elbo bound per timestep: -5.383213
+global_step/sec: 2.10141
+Step 46095, elbo bound per timestep: -5.353626
+global_step/sec: 2.1686
+Step 46195, elbo bound per timestep: -5.481205
+Saving checkpoints for 46213 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.14052
+Step 46295, elbo bound per timestep: -5.554381
+global_step/sec: 2.1622
+Step 46395, elbo bound per timestep: -5.646036
+Saving checkpoints for 46468 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.05516
+Step 46495, elbo bound per timestep: -5.638868
+global_step/sec: 2.1488
+Step 46595, elbo bound per timestep: -5.481337
+global_step/sec: 2.16906
+Step 46695, elbo bound per timestep: -5.224994
+Saving checkpoints for 46726 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.18396
+Step 46795, elbo bound per timestep: -5.411091
+global_step/sec: 2.11752
+Step 46895, elbo bound per timestep: -5.445575
+Saving checkpoints for 46981 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.08803
+Step 46995, elbo bound per timestep: -5.157440
+global_step/sec: 2.16308
+Step 47095, elbo bound per timestep: -5.508440
+global_step/sec: 2.09469
+Step 47195, elbo bound per timestep: -5.440400
+Saving checkpoints for 47236 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.11416
+Step 47295, elbo bound per timestep: -5.699920
+global_step/sec: 2.13933
+Step 47395, elbo bound per timestep: -5.278613
+Saving checkpoints for 47494 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.1599
+Step 47495, elbo bound per timestep: -5.233042
+global_step/sec: 2.13581
+Step 47595, elbo bound per timestep: -5.810753
+global_step/sec: 2.19389
+Step 47695, elbo bound per timestep: -5.562598
+Saving checkpoints for 47754 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.11425
+Step 47795, elbo bound per timestep: -5.349610
+global_step/sec: 2.16589
+Step 47895, elbo bound per timestep: -5.389027
+global_step/sec: 2.04006
+Step 47995, elbo bound per timestep: -5.195241
+Saving checkpoints for 48007 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.12453
+Step 48095, elbo bound per timestep: -5.364792
+global_step/sec: 2.22628
+Step 48195, elbo bound per timestep: -5.581144
+Saving checkpoints for 48265 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.10106
+Step 48295, elbo bound per timestep: -5.283470
+global_step/sec: 2.18289
+Step 48395, elbo bound per timestep: -5.551619
+global_step/sec: 2.1246
+Step 48495, elbo bound per timestep: -5.797222
+Saving checkpoints for 48523 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.13223
+Step 48595, elbo bound per timestep: -5.482439
+global_step/sec: 2.20706
+Step 48695, elbo bound per timestep: -5.487473
+Saving checkpoints for 48785 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.16265
+Step 48795, elbo bound per timestep: -5.525047
+global_step/sec: 2.09813
+Step 48895, elbo bound per timestep: -5.609104
+global_step/sec: 2.12663
+Step 48995, elbo bound per timestep: -5.317213
+Saving checkpoints for 49037 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.1055
+Step 49095, elbo bound per timestep: -5.298086
+global_step/sec: 2.17941
+Step 49195, elbo bound per timestep: -5.593256
+global_step/sec: 2.14203
+Step 49295, elbo bound per timestep: -5.158905
+Saving checkpoints for 49297 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.19364
+Step 49395, elbo bound per timestep: -5.358048
+global_step/sec: 2.10745
+Step 49495, elbo bound per timestep: -5.194923
+Saving checkpoints for 49557 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.18527
+Step 49595, elbo bound per timestep: -5.301979
+global_step/sec: 2.14358
+Step 49695, elbo bound per timestep: -5.221565
+global_step/sec: 2.15695
+Step 49795, elbo bound per timestep: -5.362226
+Saving checkpoints for 49815 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.13682
+Step 49895, elbo bound per timestep: -5.593596
+global_step/sec: 2.16553
+Step 49995, elbo bound per timestep: -5.326511
+Saving checkpoints for 50074 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.13199
+Step 50095, elbo bound per timestep: -5.103456
+global_step/sec: 2.12686
+Step 50195, elbo bound per timestep: -5.309250
+global_step/sec: 2.18978
+Step 50295, elbo bound per timestep: -5.343056
+Saving checkpoints for 50332 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.10701
+Step 50395, elbo bound per timestep: -5.269215
+global_step/sec: 2.08177
+Step 50495, elbo bound per timestep: -5.617151
+Saving checkpoints for 50587 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.17252
+Step 50595, elbo bound per timestep: -5.419090
+global_step/sec: 2.13111
+Step 50695, elbo bound per timestep: -5.625592
+global_step/sec: 2.20801
+Step 50795, elbo bound per timestep: -5.620246
+Saving checkpoints for 50845 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.14469
+Step 50895, elbo bound per timestep: -5.304214
+global_step/sec: 2.15092
+Step 50995, elbo bound per timestep: -5.279722
+global_step/sec: 2.12633
+Step 51095, elbo bound per timestep: -5.165611
+Saving checkpoints for 51103 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.12306
+Step 51195, elbo bound per timestep: -5.545818
+global_step/sec: 2.13837
+Step 51295, elbo bound per timestep: -5.592609
+Saving checkpoints for 51361 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.13327
+Step 51395, elbo bound per timestep: -5.888970
+global_step/sec: 2.09851
+Step 51495, elbo bound per timestep: -5.065022
+global_step/sec: 2.24517
+Step 51595, elbo bound per timestep: -5.297710
+Saving checkpoints for 51619 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.10669
+Step 51695, elbo bound per timestep: -5.455695
+global_step/sec: 2.16312
+Step 51795, elbo bound per timestep: -5.684124
+Saving checkpoints for 51876 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.14088
+Step 51895, elbo bound per timestep: -5.391081
+global_step/sec: 2.20429
+Step 51995, elbo bound per timestep: -5.369689
+global_step/sec: 2.15971
+Step 52095, elbo bound per timestep: -5.303819
+Saving checkpoints for 52140 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.1546
+Step 52195, elbo bound per timestep: -5.411029
+global_step/sec: 2.15133
+Step 52295, elbo bound per timestep: -5.301194
+Saving checkpoints for 52393 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.06756
+Step 52395, elbo bound per timestep: -5.176442
+global_step/sec: 2.18197
+Step 52495, elbo bound per timestep: -5.509140
+global_step/sec: 2.19476
+Step 52595, elbo bound per timestep: -5.236631
+Saving checkpoints for 52656 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.19285
+Step 52695, elbo bound per timestep: -5.442460
+global_step/sec: 2.16043
+Step 52795, elbo bound per timestep: -5.184300
+global_step/sec: 2.14318
+Step 52895, elbo bound per timestep: -5.497302
+Saving checkpoints for 52915 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.14102
+Step 52995, elbo bound per timestep: -5.442385
+global_step/sec: 2.19674
+Step 53095, elbo bound per timestep: -5.760149
+Saving checkpoints for 53178 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.187
+Step 53195, elbo bound per timestep: -5.411998
+global_step/sec: 2.20543
+Step 53295, elbo bound per timestep: -5.113843
+global_step/sec: 2.17543
+Step 53395, elbo bound per timestep: -5.532360
+Saving checkpoints for 53440 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.12443
+Step 53495, elbo bound per timestep: -5.298188
+global_step/sec: 2.17327
+Step 53595, elbo bound per timestep: -5.305704
+global_step/sec: 2.16995
+Step 53695, elbo bound per timestep: -5.374558
+Saving checkpoints for 53699 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.09639
+Step 53795, elbo bound per timestep: -4.901269
+global_step/sec: 2.11089
+Step 53895, elbo bound per timestep: -5.340065
+Saving checkpoints for 53952 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.12402
+Step 53995, elbo bound per timestep: -5.358030
+global_step/sec: 2.11013
+Step 54095, elbo bound per timestep: -4.842984
+global_step/sec: 2.09495
+Step 54195, elbo bound per timestep: -5.400709
+Saving checkpoints for 54205 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.16143
+Step 54295, elbo bound per timestep: -5.040305
+global_step/sec: 2.12812
+Step 54395, elbo bound per timestep: -5.269739
+Saving checkpoints for 54464 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.1405
+Step 54495, elbo bound per timestep: -5.497952
+global_step/sec: 2.13068
+Step 54595, elbo bound per timestep: -5.489238
+global_step/sec: 2.18111
+Step 54695, elbo bound per timestep: -5.202680
+Saving checkpoints for 54721 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.11385
+Step 54795, elbo bound per timestep: -5.389468
+global_step/sec: 2.09985
+Step 54895, elbo bound per timestep: -5.346921
+Saving checkpoints for 54975 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.1401
+Step 54995, elbo bound per timestep: -5.300950
+global_step/sec: 2.18305
+Step 55095, elbo bound per timestep: -4.938588
+global_step/sec: 2.12462
+Step 55195, elbo bound per timestep: -4.940609
+Saving checkpoints for 55234 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.1202
+Step 55295, elbo bound per timestep: -5.733557
+global_step/sec: 2.14995
+Step 55395, elbo bound per timestep: -5.295361
+Saving checkpoints for 55492 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.18559
+Step 55495, elbo bound per timestep: -5.292190
+global_step/sec: 2.08642
+Step 55595, elbo bound per timestep: -5.109947
+global_step/sec: 2.12063
+Step 55695, elbo bound per timestep: -5.571701
+Saving checkpoints for 55746 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.12997
+Step 55795, elbo bound per timestep: -5.358339
+global_step/sec: 2.18656
+Step 55895, elbo bound per timestep: -5.550883
+global_step/sec: 2.15915
+Step 55995, elbo bound per timestep: -5.117664
+Saving checkpoints for 56006 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.12535
+Step 56095, elbo bound per timestep: -5.287577
+global_step/sec: 2.09333
+Step 56195, elbo bound per timestep: -5.469058
+Saving checkpoints for 56261 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.13103
+Step 56295, elbo bound per timestep: -5.361488
+global_step/sec: 2.16006
+Step 56395, elbo bound per timestep: -5.180973
+global_step/sec: 2.12946
+Step 56495, elbo bound per timestep: -5.503627
+Saving checkpoints for 56520 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.20461
+Step 56595, elbo bound per timestep: -5.062794
+global_step/sec: 2.1247
+Step 56695, elbo bound per timestep: -5.650568
+Saving checkpoints for 56780 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.17296
+Step 56795, elbo bound per timestep: -4.948529
+global_step/sec: 2.11754
+Step 56895, elbo bound per timestep: -5.426022
+global_step/sec: 2.16952
+Step 56995, elbo bound per timestep: -5.521199
+Saving checkpoints for 57038 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.10861
+Step 57095, elbo bound per timestep: -5.311159
+global_step/sec: 2.14684
+Step 57195, elbo bound per timestep: -5.236013
+Saving checkpoints for 57291 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.11088
+Step 57295, elbo bound per timestep: -5.249267
+global_step/sec: 2.15841
+Step 57395, elbo bound per timestep: -5.141580
+global_step/sec: 2.17468
+Step 57495, elbo bound per timestep: -5.331084
+Saving checkpoints for 57551 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.09153
+Step 57595, elbo bound per timestep: -5.353680
+global_step/sec: 2.2004
+Step 57695, elbo bound per timestep: -5.382751
+global_step/sec: 2.12599
+Step 57795, elbo bound per timestep: -5.050234
+Saving checkpoints for 57809 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.13864
+Step 57895, elbo bound per timestep: -5.629585
+global_step/sec: 2.09618
+Step 57995, elbo bound per timestep: -4.916184
+Saving checkpoints for 58065 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.16124
+Step 58095, elbo bound per timestep: -5.238334
+global_step/sec: 2.15606
+Step 58195, elbo bound per timestep: -5.221130
+global_step/sec: 2.17233
+Step 58295, elbo bound per timestep: -5.286627
+Saving checkpoints for 58324 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.11915
+Step 58395, elbo bound per timestep: -5.377453
+global_step/sec: 2.16078
+Step 58495, elbo bound per timestep: -5.154866
+Saving checkpoints for 58581 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.12481
+Step 58595, elbo bound per timestep: -5.113476
+global_step/sec: 2.12898
+Step 58695, elbo bound per timestep: -5.197301
+global_step/sec: 2.06499
+Step 58795, elbo bound per timestep: -5.542439
+Saving checkpoints for 58834 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.15312
+Step 58895, elbo bound per timestep: -5.706570
+global_step/sec: 2.18386
+Step 58995, elbo bound per timestep: -5.209852
+global_step/sec: 2.1936
+Step 59095, elbo bound per timestep: -5.022364
+Saving checkpoints for 59096 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.11066
+Step 59195, elbo bound per timestep: -5.170343
+global_step/sec: 2.17001
+Step 59295, elbo bound per timestep: -5.332195
+Saving checkpoints for 59354 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.1094
+Step 59395, elbo bound per timestep: -5.138792
+global_step/sec: 2.12437
+Step 59495, elbo bound per timestep: -5.227325
+global_step/sec: 2.14532
+Step 59595, elbo bound per timestep: -5.270729
+Saving checkpoints for 59609 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.18376
+Step 59695, elbo bound per timestep: -5.175667
+global_step/sec: 2.14292
+Step 59795, elbo bound per timestep: -5.367497
+Saving checkpoints for 59869 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.15246
+Step 59895, elbo bound per timestep: -5.317567
+global_step/sec: 2.1636
+Step 59995, elbo bound per timestep: -5.440076
+global_step/sec: 2.16104
+Step 60095, elbo bound per timestep: -5.302508
+Saving checkpoints for 60127 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.08062
+Step 60195, elbo bound per timestep: -5.240120
+global_step/sec: 2.12064
+Step 60295, elbo bound per timestep: -5.533645
+Saving checkpoints for 60381 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.09747
+Step 60395, elbo bound per timestep: -5.264900
+global_step/sec: 2.11488
+Step 60495, elbo bound per timestep: -5.111512
+global_step/sec: 2.20278
+Step 60595, elbo bound per timestep: -5.267368
+Saving checkpoints for 60640 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.18428
+Step 60695, elbo bound per timestep: -5.651632
+global_step/sec: 2.16442
+Step 60795, elbo bound per timestep: -5.224629
+global_step/sec: 2.12164
+Step 60895, elbo bound per timestep: -5.344807
+Saving checkpoints for 60898 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.12816
+Step 60995, elbo bound per timestep: -5.217062
+global_step/sec: 2.12484
+Step 61095, elbo bound per timestep: -5.121725
+Saving checkpoints for 61153 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.08791
+Step 61195, elbo bound per timestep: -5.519021
+global_step/sec: 2.16664
+Step 61295, elbo bound per timestep: -4.929523
+global_step/sec: 2.11698
+Step 61395, elbo bound per timestep: -5.161680
+Saving checkpoints for 61408 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.14079
+Step 61495, elbo bound per timestep: -5.545124
+global_step/sec: 2.15012
+Step 61595, elbo bound per timestep: -4.885664
+Saving checkpoints for 61667 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.14534
+Step 61695, elbo bound per timestep: -5.024483
+global_step/sec: 2.1605
+Step 61795, elbo bound per timestep: -5.094620
+global_step/sec: 2.19907
+Step 61895, elbo bound per timestep: -5.451593
+Saving checkpoints for 61928 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.12042
+Step 61995, elbo bound per timestep: -5.618731
+global_step/sec: 2.16877
+Step 62095, elbo bound per timestep: -5.074973
+Saving checkpoints for 62184 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.11407
+Step 62195, elbo bound per timestep: -5.428281
+global_step/sec: 2.16451
+Step 62295, elbo bound per timestep: -5.391002
+global_step/sec: 2.14714
+Step 62395, elbo bound per timestep: -5.498552
+Saving checkpoints for 62441 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.10166
+Step 62495, elbo bound per timestep: -5.124655
+global_step/sec: 2.16452
+Step 62595, elbo bound per timestep: -5.597605
+global_step/sec: 2.12656
+Step 62695, elbo bound per timestep: -5.089674
+Saving checkpoints for 62698 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.08971
+Step 62795, elbo bound per timestep: -5.394783
+global_step/sec: 2.21282
+Step 62895, elbo bound per timestep: -5.265330
+Saving checkpoints for 62958 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.17611
+Step 62995, elbo bound per timestep: -4.926033
+global_step/sec: 2.09768
+Step 63095, elbo bound per timestep: -5.215764
+global_step/sec: 2.14887
+Step 63195, elbo bound per timestep: -5.537573
+Saving checkpoints for 63212 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.09807
+Step 63295, elbo bound per timestep: -5.263029
+global_step/sec: 2.11102
+Step 63395, elbo bound per timestep: -5.426567
+Saving checkpoints for 63467 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.13438
+Step 63495, elbo bound per timestep: -5.080523
+global_step/sec: 2.19458
+Step 63595, elbo bound per timestep: -4.969284
+global_step/sec: 2.16146
+Step 63695, elbo bound per timestep: -5.205326
+Saving checkpoints for 63727 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.06964
+Step 63795, elbo bound per timestep: -5.180347
+global_step/sec: 2.18891
+Step 63895, elbo bound per timestep: -5.199704
+Saving checkpoints for 63986 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.18426
+Step 63995, elbo bound per timestep: -5.438231
+global_step/sec: 2.09901
+Step 64095, elbo bound per timestep: -5.074833
+global_step/sec: 2.11419
+Step 64195, elbo bound per timestep: -5.483160
+Saving checkpoints for 64241 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.13135
+Step 64295, elbo bound per timestep: -5.179155
+global_step/sec: 2.1272
+Step 64395, elbo bound per timestep: -4.956212
+global_step/sec: 2.12487
+Step 64495, elbo bound per timestep: -5.059324
+Saving checkpoints for 64496 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.11512
+Step 64595, elbo bound per timestep: -5.076298
+global_step/sec: 2.1197
+Step 64695, elbo bound per timestep: -5.293922
+Saving checkpoints for 64752 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.15802
+Step 64795, elbo bound per timestep: -5.095154
+global_step/sec: 2.18897
+Step 64895, elbo bound per timestep: -5.131433
+global_step/sec: 2.1408
+Step 64995, elbo bound per timestep: -5.003429
+Saving checkpoints for 65012 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.19155
+Step 65095, elbo bound per timestep: -5.012387
+global_step/sec: 2.1268
+Step 65195, elbo bound per timestep: -5.413641
+Saving checkpoints for 65272 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.17407
+Step 65295, elbo bound per timestep: -5.217789
+global_step/sec: 2.11628
+Step 65395, elbo bound per timestep: -5.067691
+global_step/sec: 2.09689
+Step 65495, elbo bound per timestep: -5.365325
+Saving checkpoints for 65526 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.17568
+Step 65595, elbo bound per timestep: -5.311414
+global_step/sec: 2.14829
+Step 65695, elbo bound per timestep: -5.083247
+Saving checkpoints for 65787 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.1562
+Step 65795, elbo bound per timestep: -4.757854
+global_step/sec: 2.14981
+Step 65895, elbo bound per timestep: -5.045848
+global_step/sec: 2.15739
+Step 65995, elbo bound per timestep: -4.949042
+Saving checkpoints for 66044 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.11058
+Step 66095, elbo bound per timestep: -5.312802
+global_step/sec: 2.12873
+Step 66195, elbo bound per timestep: -5.106300
+global_step/sec: 2.11159
+Step 66295, elbo bound per timestep: -4.994026
+Saving checkpoints for 66298 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.13566
+Step 66395, elbo bound per timestep: -5.030726
+global_step/sec: 2.09515
+Step 66495, elbo bound per timestep: -5.089931
+Saving checkpoints for 66555 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.16465
+Step 66595, elbo bound per timestep: -5.478741
+global_step/sec: 2.17977
+Step 66695, elbo bound per timestep: -5.161347
+global_step/sec: 2.17029
+Step 66795, elbo bound per timestep: -5.180201
+Saving checkpoints for 66815 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.05676
+Step 66895, elbo bound per timestep: -5.331190
+global_step/sec: 2.19841
+Step 66995, elbo bound per timestep: -5.217325
+Saving checkpoints for 67069 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.06339
+Step 67095, elbo bound per timestep: -5.129441
+global_step/sec: 2.18391
+Step 67195, elbo bound per timestep: -5.209651
+global_step/sec: 2.09721
+Step 67295, elbo bound per timestep: -5.329363
+Saving checkpoints for 67325 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.17023
+Step 67395, elbo bound per timestep: -4.974203
+global_step/sec: 2.16459
+Step 67495, elbo bound per timestep: -5.003723
+Saving checkpoints for 67584 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.09051
+Step 67595, elbo bound per timestep: -4.793297
+global_step/sec: 2.18794
+Step 67695, elbo bound per timestep: -4.720090
+global_step/sec: 2.05245
+Step 67795, elbo bound per timestep: -5.167667
+Saving checkpoints for 67838 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.17403
+Step 67895, elbo bound per timestep: -5.420897
+global_step/sec: 2.1818
+Step 67995, elbo bound per timestep: -5.150758
+global_step/sec: 2.11488
+Step 68095, elbo bound per timestep: -5.040773
+Saving checkpoints for 68097 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.14306
+Step 68195, elbo bound per timestep: -5.453702
+global_step/sec: 2.05654
+Step 68295, elbo bound per timestep: -5.134066
+Saving checkpoints for 68350 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.15442
+Step 68395, elbo bound per timestep: -5.377544
+global_step/sec: 2.1717
+Step 68495, elbo bound per timestep: -5.282054
+global_step/sec: 2.19387
+Step 68595, elbo bound per timestep: -5.493783
+Saving checkpoints for 68612 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.12847
+Step 68695, elbo bound per timestep: -5.288840
+global_step/sec: 2.21425
+Step 68795, elbo bound per timestep: -5.679587
+Saving checkpoints for 68871 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.10693
+Step 68895, elbo bound per timestep: -5.198144
+global_step/sec: 2.09425
+Step 68995, elbo bound per timestep: -5.334625
+global_step/sec: 2.12056
+Step 69095, elbo bound per timestep: -4.957467
+Saving checkpoints for 69125 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.10911
+Step 69195, elbo bound per timestep: -5.059078
+global_step/sec: 2.15827
+Step 69295, elbo bound per timestep: -5.079906
+Saving checkpoints for 69385 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.18471
+Step 69395, elbo bound per timestep: -5.402325
+global_step/sec: 2.16015
+Step 69495, elbo bound per timestep: -5.409666
+global_step/sec: 2.07227
+Step 69595, elbo bound per timestep: -5.159244
+Saving checkpoints for 69640 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.05021
+Step 69695, elbo bound per timestep: -5.140896
+global_step/sec: 2.17076
+Step 69795, elbo bound per timestep: -5.178457
+Saving checkpoints for 69893 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.10421
+Step 69895, elbo bound per timestep: -5.087127
+global_step/sec: 2.13255
+Step 69995, elbo bound per timestep: -5.106168
+global_step/sec: 2.16466
+Step 70095, elbo bound per timestep: -5.059258
+Saving checkpoints for 70154 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.23146
+Step 70195, elbo bound per timestep: -4.923684
+global_step/sec: 2.1397
+Step 70295, elbo bound per timestep: -5.519648
+global_step/sec: 2.12678
+Step 70395, elbo bound per timestep: -5.221780
+Saving checkpoints for 70411 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.15099
+Step 70495, elbo bound per timestep: -5.004282
+global_step/sec: 2.1495
+Step 70595, elbo bound per timestep: -5.056141
+Saving checkpoints for 70671 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.1316
+Step 70695, elbo bound per timestep: -5.226896
+global_step/sec: 2.12827
+Step 70795, elbo bound per timestep: -5.114986
+global_step/sec: 2.17683
+Step 70895, elbo bound per timestep: -5.133998
+Saving checkpoints for 70929 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.14679
+Step 70995, elbo bound per timestep: -5.283575
+global_step/sec: 2.1567
+Step 71095, elbo bound per timestep: -5.687105
+Saving checkpoints for 71185 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.07625
+Step 71195, elbo bound per timestep: -5.176468
+global_step/sec: 2.17227
+Step 71295, elbo bound per timestep: -5.160827
+global_step/sec: 2.10421
+Step 71395, elbo bound per timestep: -5.502497
+Saving checkpoints for 71442 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.10984
+Step 71495, elbo bound per timestep: -4.996323
+global_step/sec: 2.16652
+Step 71595, elbo bound per timestep: -4.845289
+global_step/sec: 2.09252
+Step 71695, elbo bound per timestep: -4.911325
+Saving checkpoints for 71696 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.13484
+Step 71795, elbo bound per timestep: -5.462677
+global_step/sec: 2.12304
+Step 71895, elbo bound per timestep: -5.102429
+Saving checkpoints for 71953 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.1505
+Step 71995, elbo bound per timestep: -4.994362
+global_step/sec: 2.14976
+Step 72095, elbo bound per timestep: -5.141853
+global_step/sec: 2.17874
+Step 72195, elbo bound per timestep: -5.001651
+Saving checkpoints for 72214 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.11813
+Step 72295, elbo bound per timestep: -5.364302
+global_step/sec: 2.14036
+Step 72395, elbo bound per timestep: -5.281751
+Saving checkpoints for 72470 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.15273
+Step 72495, elbo bound per timestep: -5.271121
+global_step/sec: 2.18334
+Step 72595, elbo bound per timestep: -4.989831
+global_step/sec: 2.14787
+Step 72695, elbo bound per timestep: -4.993774
+Saving checkpoints for 72730 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.14908
+Step 72795, elbo bound per timestep: -5.059623
+global_step/sec: 2.22968
+Step 72895, elbo bound per timestep: -5.413597
+Saving checkpoints for 72989 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.07822
+Step 72995, elbo bound per timestep: -5.280090
+global_step/sec: 2.17775
+Step 73095, elbo bound per timestep: -5.398454
+global_step/sec: 2.2023
+Step 73195, elbo bound per timestep: -5.182285
+Saving checkpoints for 73251 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.12223
+Step 73295, elbo bound per timestep: -5.009439
+global_step/sec: 2.09605
+Step 73395, elbo bound per timestep: -4.818440
+global_step/sec: 2.13166
+Step 73495, elbo bound per timestep: -5.232347
+Saving checkpoints for 73504 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.11262
+Step 73595, elbo bound per timestep: -5.066026
+global_step/sec: 2.15059
+Step 73695, elbo bound per timestep: -5.001296
+Saving checkpoints for 73759 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.11695
+Step 73795, elbo bound per timestep: -5.129520
+global_step/sec: 2.13233
+Step 73895, elbo bound per timestep: -4.830739
+global_step/sec: 2.15402
+Step 73995, elbo bound per timestep: -4.715607
+Saving checkpoints for 74018 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.17528
+Step 74095, elbo bound per timestep: -5.227519
+global_step/sec: 2.11165
+Step 74195, elbo bound per timestep: -5.138431
+Saving checkpoints for 74275 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.12889
+Step 74295, elbo bound per timestep: -5.592458
+global_step/sec: 2.13265
+Step 74395, elbo bound per timestep: -5.374818
+global_step/sec: 2.12186
+Step 74495, elbo bound per timestep: -5.226267
+Saving checkpoints for 74529 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.1745
+Step 74595, elbo bound per timestep: -4.811377
+global_step/sec: 2.123
+Step 74695, elbo bound per timestep: -5.328903
+Saving checkpoints for 74788 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.15291
+Step 74795, elbo bound per timestep: -5.085877
+global_step/sec: 2.16736
+Step 74895, elbo bound per timestep: -5.077236
+global_step/sec: 2.15913
+Step 74995, elbo bound per timestep: -5.038720
+Saving checkpoints for 75048 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.11881
+Step 75095, elbo bound per timestep: -5.240188
+global_step/sec: 2.16021
+Step 75195, elbo bound per timestep: -5.189610
+global_step/sec: 2.13931
+Step 75295, elbo bound per timestep: -5.204183
+Saving checkpoints for 75304 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.13286
+Step 75395, elbo bound per timestep: -4.977833
+global_step/sec: 2.09199
+Step 75495, elbo bound per timestep: -4.852662
+Saving checkpoints for 75560 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.13519
+Step 75595, elbo bound per timestep: -4.986638
+global_step/sec: 2.10586
+Step 75695, elbo bound per timestep: -5.115099
+global_step/sec: 2.15271
+Step 75795, elbo bound per timestep: -4.996241
+Saving checkpoints for 75815 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.15713
+Step 75895, elbo bound per timestep: -5.087134
+global_step/sec: 2.13146
+Step 75995, elbo bound per timestep: -5.465786
+Saving checkpoints for 76075 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.15835
+Step 76095, elbo bound per timestep: -5.042951
+global_step/sec: 2.12903
+Step 76195, elbo bound per timestep: -5.020445
+global_step/sec: 2.1028
+Step 76295, elbo bound per timestep: -5.085298
+Saving checkpoints for 76330 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.13053
+Step 76395, elbo bound per timestep: -5.456962
+global_step/sec: 2.21381
+Step 76495, elbo bound per timestep: -4.807308
+Saving checkpoints for 76589 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.12011
+Step 76595, elbo bound per timestep: -5.055811
+global_step/sec: 2.16692
+Step 76695, elbo bound per timestep: -5.172626
+global_step/sec: 2.1394
+Step 76795, elbo bound per timestep: -5.406084
+Saving checkpoints for 76846 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.08641
+Step 76895, elbo bound per timestep: -4.807776
+global_step/sec: 2.094
+Step 76995, elbo bound per timestep: -5.110456
+global_step/sec: 2.11196
+Step 77095, elbo bound per timestep: -5.089073
+Saving checkpoints for 77098 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.07945
+Step 77195, elbo bound per timestep: -4.995568
+global_step/sec: 2.16046
+Step 77295, elbo bound per timestep: -4.932293
+Saving checkpoints for 77353 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.09489
+Step 77395, elbo bound per timestep: -4.999021
+global_step/sec: 2.19704
+Step 77495, elbo bound per timestep: -5.173925
+global_step/sec: 2.14178
+Step 77595, elbo bound per timestep: -4.999877
+Saving checkpoints for 77612 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.18018
+Step 77695, elbo bound per timestep: -5.059088
+global_step/sec: 2.15211
+Step 77795, elbo bound per timestep: -5.271610
+Saving checkpoints for 77870 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.12962
+Step 77895, elbo bound per timestep: -5.140269
+global_step/sec: 2.0825
+Step 77995, elbo bound per timestep: -5.046115
+global_step/sec: 2.11503
+Step 78095, elbo bound per timestep: -4.833981
+Saving checkpoints for 78123 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.09385
+Step 78195, elbo bound per timestep: -5.181165
+global_step/sec: 2.1639
+Step 78295, elbo bound per timestep: -5.543517
+Saving checkpoints for 78378 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.07
+Step 78395, elbo bound per timestep: -5.434922
+global_step/sec: 2.22375
+Step 78495, elbo bound per timestep: -4.878719
+global_step/sec: 2.12313
+Step 78595, elbo bound per timestep: -5.013352
+Saving checkpoints for 78638 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.15614
+Step 78695, elbo bound per timestep: -5.379974
+global_step/sec: 2.13105
+Step 78795, elbo bound per timestep: -5.087133
+Saving checkpoints for 78893 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.10304
+Step 78895, elbo bound per timestep: -5.572751
+global_step/sec: 2.11485
+Step 78995, elbo bound per timestep: -5.427171
+global_step/sec: 2.12117
+Step 79095, elbo bound per timestep: -5.043892
+Saving checkpoints for 79148 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.17593
+Step 79195, elbo bound per timestep: -5.087744
+global_step/sec: 2.12608
+Step 79295, elbo bound per timestep: -5.033136
+global_step/sec: 2.1854
+Step 79395, elbo bound per timestep: -5.231422
+Saving checkpoints for 79408 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.12654
+Step 79495, elbo bound per timestep: -5.285352
+global_step/sec: 2.2087
+Step 79595, elbo bound per timestep: -4.895453
+Saving checkpoints for 79667 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.09796
+Step 79695, elbo bound per timestep: -4.753716
+global_step/sec: 2.17643
+Step 79795, elbo bound per timestep: -5.213864
+global_step/sec: 2.12374
+Step 79895, elbo bound per timestep: -5.284536
+Saving checkpoints for 79927 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
+global_step/sec: 2.2003
+Step 79995, elbo bound per timestep: -5.035886
+Saving checkpoints for 80001 into ./chkpt/elbo-ct_2017010203_10_20_train.pkl-data_dim-602-latent_size-100-batch_size-32/model.ckpt.
