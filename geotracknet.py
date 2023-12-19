@@ -52,14 +52,20 @@ import contrario_utils
 
 import runners
 from flags_config import config
+# flags_configx中使用了，tf.app.flags用于处理命令行参数。
+# 在flags_config中已经设定了许多的预设参数
 
+
+# 下面是经度维度的范围，会根据config中的lat_max/min和lon_max/min自动计算，暂时不用再geotracknet.py中修改
 LAT_RANGE = config.lat_max - config.lat_min
 LON_RANGE = config.lon_max - config.lon_min
 
+# 分辨率设定
 FIG_DPI = 150
 FIG_W = 960
 FIG_H = int(FIG_W*LAT_RANGE/LON_RANGE)
 
+# 概率模型参数设置，std、mean的阈值设定
 LOGPROB_MEAN_MIN = -10.0
 LOGPROB_STD_MAX = 5
 
@@ -82,7 +88,7 @@ else:
 
 ## RUN TASK-SPECIFIC SUBMODEL
 #======================================
-  
+# 该部分主要设置了与学习模型相关的参数
 step = None
 if config.mode in ["save_logprob","traj_reconstruction"]:
     tf.Graph().as_default()
