@@ -58,6 +58,7 @@ SPEED_MAX = 30.0  # knots
 FIG_DPI = 150
 
 # Shared flags.
+# 使用格式如下：tf.app.flags.DEFINE_string("param_name", "default_val", "description")
 tf.app.flags.DEFINE_string("mode", "train",
                            "The mode of the binary. Must be 'train'"
                            "'save_logprob','local_logprob'"

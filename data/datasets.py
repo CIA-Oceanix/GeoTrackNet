@@ -38,6 +38,7 @@ import pickle
 import tensorflow as tf
 
 
+#使每个AIS变量名称对应一个整数索引，从0开始。
 LAT, LON, SOG, COG, HEADING, ROT, NAV_STT, TIMESTAMP, MMSI = list(range(9))
 
 
@@ -60,7 +61,8 @@ def create_AIS_dataset(dataset_path,
                        repeat=True):
     total_bins = lat_bins+lon_bins+sog_bins+cog_bins
     def sparse_AIS_to_dense(msgs_,num_timesteps, mmsis, time_start, time_end):
-#        lat_bins = 200; lon_bins = 300; sog_bins = 30; cog_bins = 72
+        # 实现论文中提到的four-hot编码
+        #lat_bins = 200; lon_bins = 300; sog_bins = 30; cog_bins = 72
         def create_dense_vect(msg,lat_bins = 300, lon_bins = 300, sog_bins = 30 ,cog_bins = 72):
             lat, lon, sog, cog = msg[0], msg[1], msg[2], msg[3]
             data_dim = lat_bins + lon_bins + sog_bins + cog_bins
@@ -95,28 +97,24 @@ def create_AIS_dataset(dataset_path,
 
     def aistrack_generator():
         for k in list(raw_data.keys()):
+            # ::2表示间隔一条数据进行选取。该语句后是选出需要的四个字段。
             tmp = raw_data[k][::2,[LAT,LON,SOG,COG]] # 10 min
             tmp[tmp == 1] = 0.99999
             yield tmp, len(tmp), raw_data[k][0,MMSI], raw_data[k][0,TIMESTAMP], raw_data[k][-1,TIMESTAMP]
-
+            ## tmp是位置有关数据；长度；MMSI识别码；开始时间戳；结束时间戳。
     dataset = tf.data.Dataset.from_generator(
                               aistrack_generator,
                               output_types=(tf.float64, tf.int64, tf.int64, tf.float32, tf.float32))
             
     if repeat: dataset = dataset.repeat()
-    if shuffle: dataset = dataset.shuffle(num_examples)             
-              
-    dataset = dataset.map(
-            lambda msg_, num_timesteps, mmsis, time_start, time_end: tuple(tf.py_func(sparse_AIS_to_dense,
-                                                   [msg_, num_timesteps, mmsis, time_start, time_end],
-                                                   [tf.float64, tf.int64, tf.int64, tf.float32, tf.float32])),
-                                                num_parallel_calls=num_parallel_calls)
-              
+    if shuffle: dataset = dataset.shuffle(num_examples)
 
     # Batch sequences togther, padding them to a common length in time.
+    #用于批量创建数据集不同长度的数据会被填充
     dataset = dataset.padded_batch(batch_size,
                                    padded_shapes=([None, total_bins ], [], [], [], [])
                                   )
+    
 
 
     def process_AIS_batch(data, lengths, mmsis, time_start, time_end):
@@ -126,13 +124,13 @@ def create_AIS_dataset(dataset_path,
         mmsis = tf.to_int32(mmsis)
         targets = data
 
-        # Mean center the inputs.
+        # Mean center the inputs. 减去均值使数据更稳定
         inputs = data - tf.constant(mean, dtype=tf.float32,
                                     shape=[1, 1, mean.shape[0]])
         # Shift the inputs one step forward in time. Also remove the last
         # timestep so that targets and inputs are the same length.
         inputs = tf.pad(data, [[1, 0], [0, 0], [0, 0]], mode="CONSTANT")[:-1]
-        # Mask out unused timesteps.
+        # Mask out unused timesteps.用于处理不同长度的序列
         inputs *= tf.expand_dims(tf.transpose(
             tf.sequence_mask(lengths, dtype=inputs.dtype)), 2)
         return inputs, targets, lengths, mmsis, time_start, time_end
@@ -142,8 +140,14 @@ def create_AIS_dataset(dataset_path,
 
 
 #    dataset = dataset.prefetch(num_examples)
+    # 预取
     dataset = dataset.prefetch(50)
+
+    #创建单次迭代器用于遍历其中的元素
     itr = dataset.make_one_shot_iterator()
+
+    #从迭代器中取出下一个元素
     inputs, targets, lengths, mmsis, time_starts, time_ends = itr.get_next()
+        
     return inputs, targets, mmsis, time_starts, time_ends, lengths, tf.constant(mean, dtype=tf.float32)
 

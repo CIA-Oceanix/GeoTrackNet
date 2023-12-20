@@ -61,7 +61,9 @@ def tile_tensors(tensors, multiples):
   """
   def tile_fn(x):
     return tf.tile(x, multiples + [1]*(x.shape.ndims - len(multiples)))
-
+# tile 操作，multiples设定了在x张量每一个维度的操作次数，同时保证multiples的长度和x的维度一致
+# 如果multiples的长度比x维度更小，需要再尾部添加合适数量的 ‘1’
+  
   return map_nested(tile_fn, tensors)
 
 
@@ -91,6 +93,9 @@ def tas_for_tensors(tensors, length):
       same structure as 'tensors'. Contains the result of unstacking each Tensor
       in 'tensors'.
   """
+  # 作用是将一组tensor张量转换为tensorArray对象。
+  # 目的：可以更灵活地处理变长数据。
+
   def map_fn(x):
     ta = tf.TensorArray(x.dtype, length, name=x.name.split(':')[0] + '_ta')
     return ta.unstack(x[:length, :])

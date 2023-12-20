@@ -38,9 +38,14 @@ def create_eval_graph(inputs, targets, lengths, model, config):
     max_seq_len = tf.reduce_max(lengths)
     init_states = model.zero_state(batch_size * num_samples, tf.float32)
 
+
+    # 在处理变长序列时，例如在 RNN 中处理文本数据或时间序列数据，通常需要一个掩码来指示每个序列中的有效元素。
+    # 这样，RNN 就可以忽略超出实际长度的部分，从而准确处理不同长度的序列。
+    # 序列掩码在计算损失函数、评估模型性能时尤其重要，因为它确保了只有有效的序列元素被考虑在内。
     seq_mask = tf.transpose(
             tf.sequence_mask(lengths, maxlen=max_seq_len, dtype=tf.float32),
             perm=[1, 0])
+    
     if num_samples > 1:
         inputs_tmp, seq_mask = nested.tile_tensors([(inputs,targets), seq_mask], [1, num_samples])
         inputs_ta, mask_ta = nested.tas_for_tensors([inputs_tmp, seq_mask], max_seq_len)
@@ -83,6 +88,10 @@ def create_eval_graph(inputs, targets, lengths, model, config):
             log_weights_acc, log_p_hat_acc, kl_acc = accs
         cur_inputs, cur_mask = nested.read_tas([inputs_ta, mask_ta], t)
 
+
+        # 这段代码在处理具有时间依赖的序列数据时特别有用，尤其是在这些数据可能包含缺失部分的情况下。
+        # 它允许模型在特定的时间范围内动态地切换输入数据，
+        # 这在执行某些特定的序列处理任务（如填充缺失数据、时间序列预测等）时非常重要。
         if config.missing_data:
             cur_inputs = tf.cond(tf.logical_and(t < max_seq_len - 6,t >= max_seq_len - 18),
                                  lambda: while_samples,
@@ -101,12 +110,19 @@ def create_eval_graph(inputs, targets, lengths, model, config):
                                               config.onehot_lon_bins,
                                               config.onehot_sog_bins,
                                               config.onehot_cog_bins)
+        # 将重新采样的张量转换为float32类型
         new_sample0 = tf.cast(new_sample0, tf.float32)
+
+        # 创建一个相同形状但是所有元素是0的张量
         new_sample_ = (new_sample0, tf.zeros_like(new_sample0, dtype = tf.float32))
 
         # Compute the incremental weight and use it to update the current
         # accumulated weight
+
+        # 计算累加KL散度
         kl_acc += kl * cur_mask
+
+        # 计算增量权重，且只处理有效的部分（cur_mask控制）
         log_alpha = (log_p_x_given_z + log_p_z - log_q_z) * cur_mask
         log_alpha = tf.reshape(log_alpha, [config.num_samples, batch_size])
         log_weights_acc += log_alpha
@@ -114,6 +130,7 @@ def create_eval_graph(inputs, targets, lengths, model, config):
         ess_num = 2 * tf.reduce_logsumexp(log_weights_acc, axis=0)
         ess_denom = tf.reduce_logsumexp(2 * log_weights_acc, axis=0)
         log_ess = ess_num - ess_denom
+
         if config.bound == "fivo":
             # Calculate the ancestor indices via resampling. Because we maintain the
             # log unnormalized weights, we pass the weights in as logits, allowing
@@ -153,6 +170,7 @@ def create_eval_graph(inputs, targets, lengths, model, config):
         if config.bound == "fivo":
             # For the particle filters that resampled, update log_p_hat and
             # reset weights to zero.
+            # 更新参数
             log_p_hat_update = tf.reduce_logsumexp(
                     log_weights_acc, axis=0) - tf.log(tf.to_float(num_samples))
             log_p_hat_acc += log_p_hat_update * float_should_resample
@@ -174,6 +192,7 @@ def create_eval_graph(inputs, targets, lengths, model, config):
     log_weights, track_sample, track_true, \
             rnn_state_tf, rnn_latent_tf, rnn_out_tf = [x.stack() for x in tas]
 
+    # 处理最终的对数权重和散度
     #log_weights, log_ess, resampled = [x.stack() for x in tas]
     if config.bound == "fivo":
         final_log_weights, log_p_hat, kl = accs
@@ -187,10 +206,13 @@ def create_eval_graph(inputs, targets, lengths, model, config):
                                      tf.log(tf.to_float(num_samples)))
         kl = tf.reduce_mean(tf.reshape(kl, [num_samples, batch_size]), axis=0)
 
+    # 计算每序列和每时间步的对数似然
     ll_per_seq = log_p_hat
     ll_per_t = ll_per_seq / tf.to_float(lengths)
     #        ll_per_t = tf.reduce_mean(ll_per_seq / tf.to_float(lengths))
     #        ll_per_seq = tf.reduce_mean(ll_per_seq)
+
+    # 返回值
     return track_sample, track_true, log_weights, ll_per_t, \
             final_log_weights/tf.to_float(lengths), rnn_state_tf, rnn_latent_tf, rnn_out_tf
 
