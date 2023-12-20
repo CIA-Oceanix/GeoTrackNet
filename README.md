@@ -24,7 +24,7 @@ data
 ├── calculate_AIS_mean.py         # calculates the mean of the AIS "four-hot" vectors.
 ├── dataset_preprocessing.py      # preprocesses the AIS datasets.
 └── csv2pkl.py                    # parse raw AIS messages from aivdm format to csv files.
-└── csv2pkl.py                    # loads AIS data from *.csv files.
+                                  # loads AIS data from *.csv files.
 models
 └── vrnn.py                       # VRNN implementation.
 chkpt
