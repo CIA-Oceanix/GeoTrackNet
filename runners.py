@@ -232,6 +232,7 @@ def create_dataset_and_model(config, shuffle, repeat):
     # initialize the bias of the generative distribution.
     generative_bias_init = -tf.log(1. / tf.clip_by_value(mean, 0.0001, 0.9999) - 1)
     generative_distribution_class = vrnn.ConditionalBernoulliDistribution
+    # 创建模型
     model = vrnn.create_vrnn(inputs.get_shape().as_list()[2],
                              config.latent_size,
                              generative_distribution_class,
@@ -295,6 +296,7 @@ def run_train(config):
             loss: A float Tensor that when differentiated yields the gradients
                 to apply to the model. Should be optimized via gradient descent.
         """
+        # 创建、计算损失函数
         inputs, targets, mmsis, time_starts, time_ends, lengths, model = create_dataset_and_model(config,
                                                                shuffle=True,
                                                                repeat=True)
